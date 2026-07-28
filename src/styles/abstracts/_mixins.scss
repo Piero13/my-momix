@@ -1,0 +1,36 @@
+@use "./breakpoints" as *;
+@use "./variables" as *;
+
+@mixin mobile {
+  @media (max-width: #{$breakpoint-md - 0.02}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: $breakpoint-md) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: $breakpoint-lg) {
+    @content;
+  }
+}
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin truncate {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@mixin transition($property: all) {
+  transition: $property $transition-normal;
+}

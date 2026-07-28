@@ -12,6 +12,8 @@
     "check-format": "prettier --check ."
   },
   "dependencies": {
+    "@fontsource/poppins": "^5.3.0",
+    "@fontsource/roboto": "^5.3.0",
     "@supabase/supabase-js": "^2.110.8",
     "bootstrap": "^5.3.8",
     "browser-image-compression": "^2.0.2",

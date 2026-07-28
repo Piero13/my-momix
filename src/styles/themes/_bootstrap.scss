@@ -1,0 +1,47 @@
+@use "../abstracts" as *;
+
+/* ==========================================================================
+   Bootstrap Theme Variables
+   ========================================================================== */
+
+// Colors
+$primary: $color-primary;
+$secondary: $color-secondary;
+
+$success: $color-success;
+$warning: $color-warning;
+$danger: $color-danger;
+$info: $color-info;
+
+$light: $color-background;
+$dark: $color-text;
+
+// Typography
+$font-family-sans-serif: $font-body;
+
+$headings-font-family: $font-heading;
+$headings-font-weight: $font-weight-semibold;
+
+// Borders
+$border-radius: $radius-md;
+$border-radius-sm: $radius-sm;
+$border-radius-lg: $radius-lg;
+
+// Inputs
+$input-border-radius: $input-radius;
+$input-focus-border-color: $input-focus;
+
+// Cards
+$card-border-radius: $card-radius;
+$card-border-color: $card-border;
+
+// Buttons
+$btn-border-radius: $button-radius;
+$btn-font-weight: $font-weight-medium;
+
+// Links
+$link-color: $link-color;
+$link-hover-color: $link-hover;
+
+// Bootstrap
+@import "bootstrap/scss/bootstrap";

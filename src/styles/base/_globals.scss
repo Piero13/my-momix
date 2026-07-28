@@ -1,0 +1,75 @@
+@use "../abstracts" as *;
+
+/*
+|--------------------------------------------------------------------------
+| Global Elements
+|--------------------------------------------------------------------------
+*/
+
+body {
+  overflow-x: hidden;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Links
+|--------------------------------------------------------------------------
+*/
+
+a {
+  color: $link-color;
+  transition: color $transition-normal;
+
+  &:hover {
+    color: $link-hover;
+  }
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Accessibility
+|--------------------------------------------------------------------------
+*/
+
+:focus-visible {
+  outline: 3px solid $color-primary;
+  outline-offset: 3px;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Selection
+|--------------------------------------------------------------------------
+*/
+
+::selection {
+  background-color: $color-primary-light;
+  color: $color-text;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Scrollbar
+|--------------------------------------------------------------------------
+*/
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: $color-background;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $color-primary-light;
+  border-radius: $radius-pill;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: $color-primary;
+}
