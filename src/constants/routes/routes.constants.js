@@ -14,7 +14,7 @@ export const ROUTES = {
   TERMS: "/mentions-legales",
 
   // Admin
-  LOGIN: "/admin",
+  LOGIN: "/connexion",
   DASHBOARD: "/admin/dashboard",
   RECIPES: "/admin/recipes",
   CATEGORIES: "/admin/categories",

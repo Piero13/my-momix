@@ -2,12 +2,11 @@
  * Global application providers.
  */
 
-import { BrowserRouter } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 
 export default function AppProviders({ children }) {
   return (
-    <BrowserRouter>
+    <>
       {children}
 
       <Toaster
@@ -18,6 +17,6 @@ export default function AppProviders({ children }) {
           duration: 3000,
         }}
       />
-    </BrowserRouter>
+    </>
   );
 }

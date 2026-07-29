@@ -1,8 +1,8 @@
 /**
- * Browse page.
+ * Recipes page.
  */
 
-import styles from "./Browse.module.scss";
+import styles from "./Recipes.module.scss";
 
 // Constants
 
@@ -15,10 +15,10 @@ import styles from "./Browse.module.scss";
 // Handlers
 
 
-export default function Browse() {
+export default function Recipes() {
   return (
     <main className={styles.page}>
-      <h1>Browse</h1>
+      <h1>Recipes</h1>
     </main>
   );
 }
