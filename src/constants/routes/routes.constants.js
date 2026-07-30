@@ -7,20 +7,23 @@ export const ROUTES = {
   // Public
   HOME: "/",
   BROWSE: "/recettes",
-  RECIPE: "/recette/:slug",
+  RECIPE_DETAILS: "/recette/:slug",
   ABOUT: "/a-propos",
   CONTACT: "/contact",
   PRIVACY: "/confidentialite",
   TERMS: "/mentions-legales",
 
-  // Admin
+  // Authentication
   LOGIN: "/connexion",
-  DASHBOARD: "/admin/dashboard",
-  RECIPES: "/admin/recipes",
+
+  // Admin routes
+  ADMIN: "/admin",
+  DASHBOARD: "/admin",
+  RECIPES: "/admin/recettes",
   CATEGORIES: "/admin/categories",
   INGREDIENTS: "/admin/ingredients",
-  COMMENTS: "/admin/comments",
-  SETTINGS: "/admin/settings",
+  COMMENTS: "/admin/commentaires",
+  SETTINGS: "/admin/parametres",
 
   // Fallback
   NOT_FOUND: "*",
