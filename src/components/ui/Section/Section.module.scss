@@ -1,0 +1,21 @@
+@use "@/styles/abstracts" as *;
+
+/* ==========================================================================
+   Section
+   ========================================================================== */
+
+.section {
+  width: 100%;
+}
+
+.compact {
+  padding-block: $spacing-lg;
+}
+
+.default {
+  padding-block: $spacing-2xl;
+}
+
+.large {
+  padding-block: $spacing-3xl;
+}

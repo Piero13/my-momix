@@ -1,0 +1,37 @@
+@use "@/styles/abstracts" as *;
+
+/* ==========================================================================
+   App Card
+   ========================================================================== */
+
+.card {
+  height: 100%;
+
+  background: $card-bg;
+  border: 1px solid $card-border;
+  border-radius: $card-radius;
+  box-shadow: $card-shadow;
+}
+
+.none {
+  padding: 0;
+}
+
+.compact {
+  padding: $spacing-md;
+}
+
+.default {
+  padding: $spacing-lg;
+}
+
+.hoverable {
+  transition:
+    transform $transition-normal,
+    box-shadow $transition-normal;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $shadow-lg;
+  }
+}

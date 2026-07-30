@@ -1,0 +1,37 @@
+@use "@/styles/abstracts" as *;
+
+/* ==========================================================================
+   App Button
+   ========================================================================== */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-sm;
+
+  min-height: 44px;
+  padding-inline: $spacing-lg;
+
+  font-weight: $font-weight-medium;
+
+  transition:
+    transform $transition-fast,
+    box-shadow $transition-fast,
+    background-color $transition-fast,
+    border-color $transition-fast;
+
+  &:not(:disabled):hover {
+    transform: translateY(-1px);
+    box-shadow: $button-shadow;
+  }
+
+  &:not(:disabled):active {
+    transform: translateY(0);
+  }
+}
+
+.icon,
+.spinner {
+  flex-shrink: 0;
+}
