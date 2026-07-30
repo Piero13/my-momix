@@ -1,0 +1,78 @@
+@use "@/styles/abstracts" as *;
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+
+.footer {
+  margin-top: auto;
+  padding: $spacing-xl 0;
+
+  background: $color-surface;
+  border-top: 1px solid $color-border;
+}
+
+.top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-lg;
+}
+
+.navigation {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: $spacing-md;
+}
+
+.separator {
+  margin: $spacing-xl 0;
+  border-color: $color-border;
+}
+
+.bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-md;
+
+  text-align: center;
+}
+
+.copy {
+  margin: 0;
+  color: $color-text-muted;
+  font-size: $font-size-sm;
+}
+
+.legal {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: $spacing-md;
+}
+
+.link {
+  color: $color-text;
+  text-decoration: none;
+  transition: color $transition-normal;
+
+  &:hover {
+    color: $color-primary;
+  }
+}
+
+@media (min-width: 768px) {
+
+  .top {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .bottom {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+}

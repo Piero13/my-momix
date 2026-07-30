@@ -1,0 +1,24 @@
+@use "../../../styles/abstracts" as *;
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+
+  text-decoration: none;
+
+  transition: transform .2s ease;
+
+  &:hover {
+    transform: scale(1.02);
+  }
+}
+
+.text {
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: $color-text;
+}
+
+.highlight {
+  color: $color-primary;
+}
