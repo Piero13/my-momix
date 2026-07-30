@@ -1,0 +1,174 @@
+@use "@/styles/abstracts" as *;
+
+/* ==========================================================================
+   Search Input
+   ========================================================================== */
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+
+  width: 100%;
+}
+
+.field {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+}
+
+.searchIcon {
+  position: absolute;
+  left: $spacing-md;
+
+  z-index: 1;
+
+  color: $color-text-light;
+  font-size: $font-size-lg;
+
+  pointer-events: none;
+}
+
+.input {
+  width: 100%;
+  min-height: 3rem;
+
+  padding:
+    $spacing-sm
+    3rem
+    $spacing-sm
+    3rem;
+
+  color: $color-text;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-pill;
+  outline: none;
+
+  transition:
+    border-color $transition-fast,
+    box-shadow $transition-fast;
+
+  &::placeholder {
+    color: $color-text-light;
+  }
+
+  &:hover:not(:disabled) {
+    border-color: rgba($color-primary, 0.6);
+  }
+
+  &:focus {
+    border-color: $color-primary;
+    box-shadow: 0 0 0 0.2rem rgba($color-primary, 0.15);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+  }
+
+  /*
+   * Removes the native clear button to keep the component consistent
+   * across browsers.
+   */
+  &::-webkit-search-cancel-button {
+    appearance: none;
+  }
+}
+
+.clearButton {
+  position: absolute;
+  right: $spacing-sm;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+
+  color: $color-text-light;
+  background: transparent;
+  border: 0;
+  border-radius: $radius-circle;
+
+  transition:
+    color $transition-fast,
+    background-color $transition-fast;
+
+  &:hover:not(:disabled) {
+    color: $color-primary;
+    background: rgba($color-primary, 0.1);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+.submitButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-sm;
+
+  min-height: 3rem;
+  padding: $spacing-sm $spacing-xl;
+
+  color: $color-surface;
+  background: $color-primary;
+  border: 1px solid $color-primary;
+  border-radius: $radius-pill;
+
+  font-weight: $font-weight-semibold;
+
+  transition:
+    transform $transition-fast,
+    background-color $transition-fast,
+    border-color $transition-fast,
+    box-shadow $transition-fast;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: $shadow-sm;
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+  }
+}
+
+@media (min-width: $breakpoint-sm) {
+  .wrapper {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .field {
+    flex: 1;
+  }
+
+  .submitButton {
+    flex-shrink: 0;
+  }
+}

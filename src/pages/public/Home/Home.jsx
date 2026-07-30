@@ -2,12 +2,13 @@
  * Public home page.
  */
 
-import { Hero } from "@/components/home";
+import { Hero, QuickSearch } from "@/components/home";
 
 export default function Home() {
   return (
     <>
       <Hero />
+      <QuickSearch />
     </>
   );
 }
