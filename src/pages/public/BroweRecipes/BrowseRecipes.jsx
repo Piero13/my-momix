@@ -5,9 +5,10 @@
 import { useSearchParams } from "react-router-dom";
 import { useMemo } from "react";
 
-import { 
+import {
   RecipeFilters,
-  RecipeGrid
+  RecipeGrid,
+  RecipeSort,
 } from "@/components/recipe";
 
 import {
@@ -17,10 +18,18 @@ import {
   AppPagination,
 } from "@/components/ui";
 
-import { PAGINATION } from "@/constants";
+import {
+  DEFAULT_RECIPE_SORT,
+  PAGINATION,
+  RECIPE_SORT_VALUES,
+} from "@/constants";
+
 import { BROWSE_RECIPES } from "./browseRecipes.data";
 
-import { normalizeText } from "@/utils";
+import {
+  normalizeText,
+  sortRecipes,
+} from "@/utils";
 
 import styles from "./BrowseRecipes.module.scss";
 
@@ -46,6 +55,12 @@ export default function BrowseRecipes() {
     requestedMaxTime > 0
       ? requestedMaxTime
       : null;
+
+  const requestedSort = searchParams.get("sort");
+
+  const currentSort = RECIPE_SORT_VALUES.includes(requestedSort)
+    ? requestedSort
+    : DEFAULT_RECIPE_SORT;
 
   const hasActiveDifficulty = Boolean(difficultySlug);
   const hasActiveMaxTime = Boolean(maxTime);
@@ -110,6 +125,11 @@ export default function BrowseRecipes() {
     maxTime,
   ]);
 
+  const sortedRecipes = useMemo(
+    () => sortRecipes(filteredRecipes, currentSort),
+    [filteredRecipes, currentSort]
+  );
+
   const totalPages = Math.max(
     1,
     Math.ceil(filteredRecipes.length / pageSize)
@@ -123,7 +143,7 @@ export default function BrowseRecipes() {
   const startIndex =
     (safeCurrentPage - 1) * pageSize;
 
-  const paginatedRecipes = filteredRecipes.slice(
+  const paginatedRecipes = sortedRecipes.slice(
     startIndex,
     startIndex + pageSize
   );
@@ -213,6 +233,17 @@ export default function BrowseRecipes() {
           </aside>
 
           <div className={styles.results}>
+            <div className={styles.resultsToolbar}>
+              <p className={styles.resultsCount} aria-live="polite">
+                {filteredRecipes.length}{" "}
+                {filteredRecipes.length > 1
+                  ? "recettes trouvées"
+                  : "recette trouvée"}
+              </p>
+
+              <RecipeSort />
+            </div>
+
             <RecipeGrid recipes={paginatedRecipes} />
 
             <AppPagination

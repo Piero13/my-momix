@@ -1,0 +1,43 @@
+@use "@/styles/abstracts" as *;
+
+/* ==========================================================================
+   Recipe Sort
+   ========================================================================== */
+
+.wrapper {
+  display: flex;
+  align-items: flex-end;
+  gap: $spacing-sm;
+
+  width: 100%;
+}
+
+.icon {
+  flex-shrink: 0;
+
+  margin-bottom: $spacing-sm;
+
+  color: $color-primary;
+  font-size: $font-size-lg;
+}
+
+.group {
+  flex: 1;
+
+  min-width: 0;
+}
+
+.label {
+  margin-bottom: $spacing-xs;
+
+  color: $color-text;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+}
+
+@include tablet {
+  .wrapper {
+    width: auto;
+    min-width: 14rem;
+  }
+}

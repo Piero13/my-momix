@@ -58,6 +58,30 @@
   font-size: $font-size-sm;
 }
 
+.resultsToolbar {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+
+  margin-bottom: $spacing-lg;
+}
+
+.resultsCount {
+  margin: 0;
+
+  color: $color-text-light;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+}
+
+@include tablet {
+  .resultsToolbar {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+}
+
 @include desktop {
   .content {
     grid-template-columns: minmax(15rem, 18rem) minmax(0, 1fr);

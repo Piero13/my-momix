@@ -32,11 +32,16 @@ const BASE_RECIPES = [
   },
 ];
 
+const REFERENCE_DATE = new Date("2026-07-31T12:00:00.000Z");
+
 export const BROWSE_RECIPES = Array.from(
   { length: 36 },
   (_, index) => {
     const recipe = BASE_RECIPES[index % BASE_RECIPES.length];
     const iteration = Math.floor(index / BASE_RECIPES.length) + 1;
+
+    const createdAt = new Date(REFERENCE_DATE);
+    createdAt.setUTCDate(REFERENCE_DATE.getUTCDate() - index);
 
     return {
       ...recipe,
@@ -49,6 +54,7 @@ export const BROWSE_RECIPES = Array.from(
         iteration === 1
           ? recipe.slug
           : `${recipe.slug}-${iteration}`,
+      createdAt: createdAt.toISOString(),
     };
   }
 );
