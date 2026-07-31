@@ -2,177 +2,40 @@
  * Public recipe browsing page.
  */
 
-import { useSearchParams } from "react-router-dom";
-import { useMemo } from "react";
-
 import {
   RecipeFilters,
   RecipeGrid,
   RecipeSort,
 } from "@/components/recipe";
-
 import {
+  AppPagination,
   PageContainer,
   Section,
   SectionHeader,
-  AppPagination,
 } from "@/components/ui";
-
-import {
-  DEFAULT_RECIPE_SORT,
-  PAGINATION,
-  RECIPE_SORT_VALUES,
-} from "@/constants";
+import { useRecipeBrowser } from "@/hooks";
 
 import { BROWSE_RECIPES } from "./browseRecipes.data";
-
-import {
-  normalizeText,
-  sortRecipes,
-} from "@/utils";
-
 import styles from "./BrowseRecipes.module.scss";
 
 export default function BrowseRecipes() {
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  const searchQuery = searchParams.get("search")?.trim() ?? "";
-  const categorySlug =
-    searchParams.get("category")?.trim() ?? "";
-
-  const hasActiveSearch = Boolean(searchQuery);
-  const hasActiveCategory = Boolean(categorySlug);
-
-  const difficultySlug =
-    searchParams.get("difficulty")?.trim() ?? "";
-
-  const requestedMaxTime = Number(
-    searchParams.get("maxTime")
-  );
-
-  const maxTime =
-    Number.isFinite(requestedMaxTime) &&
-    requestedMaxTime > 0
-      ? requestedMaxTime
-      : null;
-
-  const requestedSort = searchParams.get("sort");
-
-  const currentSort = RECIPE_SORT_VALUES.includes(requestedSort)
-    ? requestedSort
-    : DEFAULT_RECIPE_SORT;
-
-  const hasActiveDifficulty = Boolean(difficultySlug);
-  const hasActiveMaxTime = Boolean(maxTime);
-
-  const requestedPage = Number(searchParams.get("page"));
-  const requestedPageSize = Number(searchParams.get("pageSize"));
-
-  const currentPage =
-    Number.isInteger(requestedPage) && requestedPage > 0
-      ? requestedPage
-      : PAGINATION.DEFAULT_PAGE;
-
-  const pageSize = PAGINATION.PAGE_SIZE_OPTIONS.includes(
-    requestedPageSize
-  )
-    ? requestedPageSize
-    : PAGINATION.DEFAULT_PAGE_SIZE;
-
-  const filteredRecipes = useMemo(() => {
-    const normalizedSearch = normalizeText(searchQuery);
-    const normalizedCategory = normalizeText(categorySlug);
-    const normalizedDifficulty = normalizeText(difficultySlug);
-
-    return BROWSE_RECIPES.filter((recipe) => {
-      const searchableContent = normalizeText(
-        [
-          recipe.title,
-          recipe.category,
-          recipe.difficulty,
-        ]
-          .filter(Boolean)
-          .join(" ")
-      );
-
-      const matchesSearch =
-        !normalizedSearch ||
-        searchableContent.includes(normalizedSearch);
-
-      const matchesCategory =
-        !normalizedCategory ||
-        normalizeText(recipe.category) === normalizedCategory;
-
-      const matchesDifficulty =
-        !normalizedDifficulty ||
-        normalizeText(recipe.difficulty) === normalizedDifficulty;
-
-      const matchesMaxTime =
-        !maxTime ||
-        recipe.totalTime <= maxTime;
-
-      return (
-        matchesSearch &&
-        matchesCategory &&
-        matchesDifficulty &&
-        matchesMaxTime
-      );
-    });
-  }, [
+  const {
     searchQuery,
     categorySlug,
     difficultySlug,
     maxTime,
-  ]);
-
-  const sortedRecipes = useMemo(
-    () => sortRecipes(filteredRecipes, currentSort),
-    [filteredRecipes, currentSort]
-  );
-
-  const totalPages = Math.max(
-    1,
-    Math.ceil(filteredRecipes.length / pageSize)
-  );
-
-  const safeCurrentPage = Math.min(
+    hasActiveSearch,
+    hasActiveCategory,
+    hasActiveDifficulty,
+    hasActiveMaxTime,
+    hasActiveFilters,
+    recipes,
+    totalRecipes,
     currentPage,
-    totalPages
-  );
-
-  const startIndex =
-    (safeCurrentPage - 1) * pageSize;
-
-  const paginatedRecipes = sortedRecipes.slice(
-    startIndex,
-    startIndex + pageSize
-  );
-
-  const handlePageChange = (nextPage) => {
-    const nextSearchParams = new URLSearchParams(searchParams);
-
-    if (nextPage <= PAGINATION.DEFAULT_PAGE) {
-      nextSearchParams.delete("page");
-    } else {
-      nextSearchParams.set("page", String(nextPage));
-    }
-
-    setSearchParams(nextSearchParams);
-  };
-
-  const handlePageSizeChange = (nextPageSize) => {
-    const nextSearchParams = new URLSearchParams(searchParams);
-
-    if (nextPageSize === PAGINATION.DEFAULT_PAGE_SIZE) {
-      nextSearchParams.delete("pageSize");
-    } else {
-      nextSearchParams.set("pageSize", String(nextPageSize));
-    }
-
-    nextSearchParams.delete("page");
-
-    setSearchParams(nextSearchParams);
-  };
+    pageSize,
+    handlePageChange,
+    handlePageSizeChange,
+  } = useRecipeBrowser(BROWSE_RECIPES);
 
   return (
     <Section
@@ -188,12 +51,7 @@ export default function BrowseRecipes() {
           description="Recherchez et filtrez les recettes selon vos envies, votre temps et votre niveau."
         />
 
-        {(
-          hasActiveSearch ||
-          hasActiveCategory ||
-          hasActiveDifficulty ||
-          hasActiveMaxTime
-        ) && (
+        {hasActiveFilters ? (
           <div
             className={styles.activeContext}
             aria-live="polite"
@@ -222,7 +80,7 @@ export default function BrowseRecipes() {
               </p>
             ) : null}
           </div>
-        )}
+        ) : null}
 
         <div className={styles.content}>
           <aside
@@ -234,9 +92,12 @@ export default function BrowseRecipes() {
 
           <div className={styles.results}>
             <div className={styles.resultsToolbar}>
-              <p className={styles.resultsCount} aria-live="polite">
-                {filteredRecipes.length}{" "}
-                {filteredRecipes.length > 1
+              <p
+                className={styles.resultsCount}
+                aria-live="polite"
+              >
+                {totalRecipes}{" "}
+                {totalRecipes > 1
                   ? "recettes trouvées"
                   : "recette trouvée"}
               </p>
@@ -244,11 +105,11 @@ export default function BrowseRecipes() {
               <RecipeSort />
             </div>
 
-            <RecipeGrid recipes={paginatedRecipes} />
+            <RecipeGrid recipes={recipes} />
 
             <AppPagination
-              currentPage={safeCurrentPage}
-              totalItems={filteredRecipes.length}
+              currentPage={currentPage}
+              totalItems={totalRecipes}
               pageSize={pageSize}
               onPageChange={handlePageChange}
               onPageSizeChange={handlePageSizeChange}
