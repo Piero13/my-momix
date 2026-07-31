@@ -24,8 +24,10 @@ function RecipeSearchForm({
 
     if (normalizedSearch) {
       nextSearchParams.set("search", normalizedSearch);
+      nextSearchParams.delete("page");
     } else {
       nextSearchParams.delete("search");
+      nextSearchParams.delete("page");
     }
 
     setSearchParams(nextSearchParams);
@@ -40,6 +42,7 @@ function RecipeSearchForm({
 
     setSearchValue("");
     nextSearchParams.delete("search");
+    nextSearchParams.delete("page");
 
     setSearchParams(nextSearchParams);
   };

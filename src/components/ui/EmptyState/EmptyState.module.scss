@@ -1,0 +1,55 @@
+@use "@/styles/abstracts" as *;
+
+/* ==========================================================================
+   Empty State
+   ========================================================================== */
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-sm;
+
+  min-height: 18rem;
+  padding: $spacing-2xl;
+
+  text-align: center;
+
+  background: $color-surface;
+  border: 1px dashed $color-border;
+  border-radius: $radius-lg;
+}
+
+.icon {
+  @include flex-center;
+
+  width: 4rem;
+  height: 4rem;
+
+  margin-bottom: $spacing-sm;
+
+  color: $color-primary;
+  background: rgba($color-primary, 0.1);
+  border-radius: $radius-circle;
+
+  font-size: $font-size-2xl;
+}
+
+.title {
+  margin: 0;
+
+  color: $color-text;
+  font-size: $font-size-xl;
+}
+
+.description {
+  max-width: 32rem;
+  margin: 0;
+
+  color: $color-text-light;
+}
+
+.action {
+  margin-top: $spacing-md;
+}

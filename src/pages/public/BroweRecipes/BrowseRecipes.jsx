@@ -3,18 +3,27 @@
  */
 
 import { useSearchParams } from "react-router-dom";
+import { useMemo } from "react";
 
-import { RecipeFilters } from "@/components/recipe";
+import { 
+  RecipeFilters,
+  RecipeGrid
+} from "@/components/recipe";
+
 import {
   PageContainer,
   Section,
   SectionHeader,
+  AppPagination,
 } from "@/components/ui";
+
+import { PAGINATION } from "@/constants";
+import { BROWSE_RECIPES } from "./browseRecipes.data";
 
 import styles from "./BrowseRecipes.module.scss";
 
 export default function BrowseRecipes() {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const searchQuery = searchParams.get("search")?.trim() ?? "";
   const categorySlug =
@@ -22,6 +31,82 @@ export default function BrowseRecipes() {
 
   const hasActiveSearch = Boolean(searchQuery);
   const hasActiveCategory = Boolean(categorySlug);
+
+  const requestedPage = Number(searchParams.get("page"));
+  const requestedPageSize = Number(searchParams.get("pageSize"));
+
+  const currentPage =
+    Number.isInteger(requestedPage) && requestedPage > 0
+      ? requestedPage
+      : PAGINATION.DEFAULT_PAGE;
+
+  const pageSize = PAGINATION.PAGE_SIZE_OPTIONS.includes(
+    requestedPageSize
+  )
+    ? requestedPageSize
+    : PAGINATION.DEFAULT_PAGE_SIZE;
+
+  const filteredRecipes = useMemo(() => {
+    const normalizedSearch = searchQuery.toLowerCase();
+    const normalizedCategory = categorySlug.toLowerCase();
+
+    return BROWSE_RECIPES.filter((recipe) => {
+      const matchesSearch =
+        !normalizedSearch ||
+        recipe.title.toLowerCase().includes(normalizedSearch) ||
+        recipe.category.toLowerCase().includes(normalizedSearch);
+
+      const matchesCategory =
+        !normalizedCategory ||
+        recipe.category.toLowerCase() === normalizedCategory;
+
+      return matchesSearch && matchesCategory;
+    });
+  }, [searchQuery, categorySlug]);
+
+  const totalPages = Math.max(
+    1,
+    Math.ceil(filteredRecipes.length / pageSize)
+  );
+
+  const safeCurrentPage = Math.min(
+    currentPage,
+    totalPages
+  );
+
+  const startIndex =
+    (safeCurrentPage - 1) * pageSize;
+
+  const paginatedRecipes = filteredRecipes.slice(
+    startIndex,
+    startIndex + pageSize
+  );
+
+  const handlePageChange = (nextPage) => {
+    const nextSearchParams = new URLSearchParams(searchParams);
+
+    if (nextPage <= PAGINATION.DEFAULT_PAGE) {
+      nextSearchParams.delete("page");
+    } else {
+      nextSearchParams.set("page", String(nextPage));
+    }
+
+    setSearchParams(nextSearchParams);
+  };
+
+  const handlePageSizeChange = (nextPageSize) => {
+    const nextSearchParams = new URLSearchParams(searchParams);
+
+    if (nextPageSize === PAGINATION.DEFAULT_PAGE_SIZE) {
+      nextSearchParams.delete("pageSize");
+    } else {
+      nextSearchParams.set("pageSize", String(nextPageSize));
+    }
+
+    nextSearchParams.delete("page");
+
+    setSearchParams(nextSearchParams);
+  };
 
   return (
     <Section
@@ -65,9 +150,15 @@ export default function BrowseRecipes() {
           </aside>
 
           <div className={styles.results}>
-            <p className={styles.placeholder}>
-              La grille des recettes sera ajoutée à la prochaine étape.
-            </p>
+            <RecipeGrid recipes={paginatedRecipes} />
+
+            <AppPagination
+              currentPage={safeCurrentPage}
+              totalItems={filteredRecipes.length}
+              pageSize={pageSize}
+              onPageChange={handlePageChange}
+              onPageSizeChange={handlePageSizeChange}
+            />
           </div>
         </div>
       </PageContainer>
