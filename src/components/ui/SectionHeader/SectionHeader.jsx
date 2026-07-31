@@ -1,5 +1,5 @@
 /**
- * Reusable section heading.
+ * Reusable section header.
  */
 
 import { classNames } from "@/utils";
@@ -7,32 +7,48 @@ import { classNames } from "@/utils";
 import styles from "./SectionHeader.module.scss";
 
 export default function SectionHeader({
+  eyebrow,
   title,
   description,
   action,
+  align = "left",
   headingId,
-  align = "start",
   className,
 }) {
   return (
     <header
       className={classNames(
         styles.header,
-        styles[align],
+        styles[`align-${align}`],
         className
       )}
     >
       <div className={styles.content}>
-        <h2 id={headingId} className={styles.title}>
+        {eyebrow ? (
+          <p className={styles.eyebrow}>
+            {eyebrow}
+          </p>
+        ) : null}
+
+        <h2
+          id={headingId}
+          className={styles.title}
+        >
           {title}
         </h2>
 
         {description ? (
-          <p className={styles.description}>{description}</p>
+          <p className={styles.description}>
+            {description}
+          </p>
         ) : null}
       </div>
 
-      {action ? <div className={styles.action}>{action}</div> : null}
+      {action ? (
+        <div className={styles.action}>
+          {action}
+        </div>
+      ) : null}
     </header>
   );
 }

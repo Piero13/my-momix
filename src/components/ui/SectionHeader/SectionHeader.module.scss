@@ -12,7 +12,20 @@
   margin-bottom: $spacing-xl;
 }
 
+.eyebrow {
+  margin: 0 0 $spacing-xs;
+
+  color: $color-primary;
+
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
 .content {
+  display: flex;
+  flex-direction: column;
   max-width: 48rem;
 }
 
