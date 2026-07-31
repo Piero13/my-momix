@@ -20,6 +20,8 @@ import {
 import { PAGINATION } from "@/constants";
 import { BROWSE_RECIPES } from "./browseRecipes.data";
 
+import { normalizeText } from "@/utils";
+
 import styles from "./BrowseRecipes.module.scss";
 
 export default function BrowseRecipes() {
@@ -31,6 +33,22 @@ export default function BrowseRecipes() {
 
   const hasActiveSearch = Boolean(searchQuery);
   const hasActiveCategory = Boolean(categorySlug);
+
+  const difficultySlug =
+    searchParams.get("difficulty")?.trim() ?? "";
+
+  const requestedMaxTime = Number(
+    searchParams.get("maxTime")
+  );
+
+  const maxTime =
+    Number.isFinite(requestedMaxTime) &&
+    requestedMaxTime > 0
+      ? requestedMaxTime
+      : null;
+
+  const hasActiveDifficulty = Boolean(difficultySlug);
+  const hasActiveMaxTime = Boolean(maxTime);
 
   const requestedPage = Number(searchParams.get("page"));
   const requestedPageSize = Number(searchParams.get("pageSize"));
@@ -47,22 +65,50 @@ export default function BrowseRecipes() {
     : PAGINATION.DEFAULT_PAGE_SIZE;
 
   const filteredRecipes = useMemo(() => {
-    const normalizedSearch = searchQuery.toLowerCase();
-    const normalizedCategory = categorySlug.toLowerCase();
+    const normalizedSearch = normalizeText(searchQuery);
+    const normalizedCategory = normalizeText(categorySlug);
+    const normalizedDifficulty = normalizeText(difficultySlug);
 
     return BROWSE_RECIPES.filter((recipe) => {
+      const searchableContent = normalizeText(
+        [
+          recipe.title,
+          recipe.category,
+          recipe.difficulty,
+        ]
+          .filter(Boolean)
+          .join(" ")
+      );
+
       const matchesSearch =
         !normalizedSearch ||
-        recipe.title.toLowerCase().includes(normalizedSearch) ||
-        recipe.category.toLowerCase().includes(normalizedSearch);
+        searchableContent.includes(normalizedSearch);
 
       const matchesCategory =
         !normalizedCategory ||
-        recipe.category.toLowerCase() === normalizedCategory;
+        normalizeText(recipe.category) === normalizedCategory;
 
-      return matchesSearch && matchesCategory;
+      const matchesDifficulty =
+        !normalizedDifficulty ||
+        normalizeText(recipe.difficulty) === normalizedDifficulty;
+
+      const matchesMaxTime =
+        !maxTime ||
+        recipe.totalTime <= maxTime;
+
+      return (
+        matchesSearch &&
+        matchesCategory &&
+        matchesDifficulty &&
+        matchesMaxTime
+      );
     });
-  }, [searchQuery, categorySlug]);
+  }, [
+    searchQuery,
+    categorySlug,
+    difficultySlug,
+    maxTime,
+  ]);
 
   const totalPages = Math.max(
     1,
@@ -122,22 +168,39 @@ export default function BrowseRecipes() {
           description="Recherchez et filtrez les recettes selon vos envies, votre temps et votre niveau."
         />
 
-        {(hasActiveSearch || hasActiveCategory) && (
+        {(
+          hasActiveSearch ||
+          hasActiveCategory ||
+          hasActiveDifficulty ||
+          hasActiveMaxTime
+        ) && (
           <div
             className={styles.activeContext}
             aria-live="polite"
           >
-            {hasActiveSearch && (
+            {hasActiveSearch ? (
               <p className={styles.contextItem}>
                 Recherche : <strong>{searchQuery}</strong>
               </p>
-            )}
+            ) : null}
 
-            {hasActiveCategory && (
+            {hasActiveCategory ? (
               <p className={styles.contextItem}>
                 Catégorie : <strong>{categorySlug}</strong>
               </p>
-            )}
+            ) : null}
+
+            {hasActiveDifficulty ? (
+              <p className={styles.contextItem}>
+                Difficulté : <strong>{difficultySlug}</strong>
+              </p>
+            ) : null}
+
+            {hasActiveMaxTime ? (
+              <p className={styles.contextItem}>
+                Durée maximum : <strong>{maxTime} min</strong>
+              </p>
+            ) : null}
           </div>
         )}
 

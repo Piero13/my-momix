@@ -3,9 +3,19 @@
  */
 
 import { useState } from "react";
+import Form from "react-bootstrap/Form";
+import { FiRotateCcw } from "react-icons/fi";
 import { useSearchParams } from "react-router-dom";
 
-import { SearchInput } from "@/components/ui";
+import {
+  AppButton,
+  SearchInput,
+} from "@/components/ui";
+import {
+  RECIPE_CATEGORY_OPTIONS,
+  RECIPE_DIFFICULTY_OPTIONS,
+  RECIPE_MAX_TIME_OPTIONS,
+} from "@/constants";
 
 import styles from "./RecipeFilters.module.scss";
 
@@ -24,11 +34,11 @@ function RecipeSearchForm({
 
     if (normalizedSearch) {
       nextSearchParams.set("search", normalizedSearch);
-      nextSearchParams.delete("page");
     } else {
       nextSearchParams.delete("search");
-      nextSearchParams.delete("page");
     }
+
+    nextSearchParams.delete("page");
 
     setSearchParams(nextSearchParams);
   };
@@ -41,6 +51,7 @@ function RecipeSearchForm({
     const nextSearchParams = new URLSearchParams(searchParams);
 
     setSearchValue("");
+
     nextSearchParams.delete("search");
     nextSearchParams.delete("page");
 
@@ -49,7 +60,7 @@ function RecipeSearchForm({
 
   return (
     <form
-      className={styles.form}
+      className={styles.searchForm}
       role="search"
       onSubmit={handleSubmit}
     >
@@ -58,7 +69,7 @@ function RecipeSearchForm({
           htmlFor="recipe-search"
           className={styles.label}
         >
-          Rechercher une recette
+          Rechercher
         </label>
 
         <SearchInput
@@ -82,13 +93,136 @@ export default function RecipeFilters() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const searchParam = searchParams.get("search") ?? "";
+  const categoryParam = searchParams.get("category") ?? "";
+  const difficultyParam = searchParams.get("difficulty") ?? "";
+  const maxTimeParam = searchParams.get("maxTime") ?? "";
+
+  const hasActiveFilters = Boolean(
+    searchParam ||
+    categoryParam ||
+    difficultyParam ||
+    maxTimeParam
+  );
+
+  const updateFilter = (name, value) => {
+    const nextSearchParams = new URLSearchParams(searchParams);
+
+    if (value) {
+      nextSearchParams.set(name, value);
+    } else {
+      nextSearchParams.delete(name);
+    }
+
+    nextSearchParams.delete("page");
+
+    setSearchParams(nextSearchParams);
+  };
+
+  const handleCategoryChange = (event) => {
+    updateFilter("category", event.target.value);
+  };
+
+  const handleDifficultyChange = (event) => {
+    updateFilter("difficulty", event.target.value);
+  };
+
+  const handleMaxTimeChange = (event) => {
+    updateFilter("maxTime", event.target.value);
+  };
+
+  const handleReset = () => {
+    const nextSearchParams = new URLSearchParams(searchParams);
+
+    nextSearchParams.delete("search");
+    nextSearchParams.delete("category");
+    nextSearchParams.delete("difficulty");
+    nextSearchParams.delete("maxTime");
+    nextSearchParams.delete("page");
+
+    setSearchParams(nextSearchParams);
+  };
 
   return (
-    <RecipeSearchForm
-      key={searchParam}
-      initialSearchValue={searchParam}
-      searchParams={searchParams}
-      setSearchParams={setSearchParams}
-    />
+    <div className={styles.filters}>
+      <RecipeSearchForm
+        key={searchParam}
+        initialSearchValue={searchParam}
+        searchParams={searchParams}
+        setSearchParams={setSearchParams}
+      />
+
+      <div className={styles.separator} />
+
+      <Form.Group
+        className={styles.group}
+        controlId="recipe-category-filter"
+      >
+        <Form.Label className={styles.label}>
+          Catégorie
+        </Form.Label>
+
+        <Form.Select
+          value={categoryParam}
+          onChange={handleCategoryChange}
+        >
+          {RECIPE_CATEGORY_OPTIONS.map(({ value, label }) => (
+            <option key={value || "all"} value={value}>
+              {label}
+            </option>
+          ))}
+        </Form.Select>
+      </Form.Group>
+
+      <Form.Group
+        className={styles.group}
+        controlId="recipe-difficulty-filter"
+      >
+        <Form.Label className={styles.label}>
+          Difficulté
+        </Form.Label>
+
+        <Form.Select
+          value={difficultyParam}
+          onChange={handleDifficultyChange}
+        >
+          {RECIPE_DIFFICULTY_OPTIONS.map(({ value, label }) => (
+            <option key={value || "all"} value={value}>
+              {label}
+            </option>
+          ))}
+        </Form.Select>
+      </Form.Group>
+
+      <Form.Group
+        className={styles.group}
+        controlId="recipe-time-filter"
+      >
+        <Form.Label className={styles.label}>
+          Durée maximale
+        </Form.Label>
+
+        <Form.Select
+          value={maxTimeParam}
+          onChange={handleMaxTimeChange}
+        >
+          {RECIPE_MAX_TIME_OPTIONS.map(({ value, label }) => (
+            <option key={value || "all"} value={value}>
+              {label}
+            </option>
+          ))}
+        </Form.Select>
+      </Form.Group>
+
+      {hasActiveFilters ? (
+        <AppButton
+          variant="outline-secondary"
+          icon={<FiRotateCcw />}
+          className={styles.resetButton}
+          onClick={handleReset}
+        >
+          Réinitialiser les filtres
+        </AppButton>
+      ) : null}
+    </div>
   );
 }

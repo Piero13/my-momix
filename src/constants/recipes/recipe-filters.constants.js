@@ -1,0 +1,68 @@
+/**
+ * Public recipe filter options.
+ */
+
+export const RECIPE_CATEGORY_OPTIONS = [
+  {
+    value: "",
+    label: "Toutes les catégories",
+  },
+  {
+    value: "entrees",
+    label: "Entrées",
+  },
+  {
+    value: "plats",
+    label: "Plats",
+  },
+  {
+    value: "desserts",
+    label: "Desserts",
+  },
+  {
+    value: "soupes",
+    label: "Soupes",
+  },
+];
+
+export const RECIPE_DIFFICULTY_OPTIONS = [
+  {
+    value: "",
+    label: "Toutes les difficultés",
+  },
+  {
+    value: "facile",
+    label: "Facile",
+  },
+  {
+    value: "intermediaire",
+    label: "Intermédiaire",
+  },
+  {
+    value: "difficile",
+    label: "Difficile",
+  },
+];
+
+export const RECIPE_MAX_TIME_OPTIONS = [
+  {
+    value: "",
+    label: "Toutes les durées",
+  },
+  {
+    value: "15",
+    label: "15 minutes maximum",
+  },
+  {
+    value: "30",
+    label: "30 minutes maximum",
+  },
+  {
+    value: "45",
+    label: "45 minutes maximum",
+  },
+  {
+    value: "60",
+    label: "1 heure maximum",
+  },
+];
