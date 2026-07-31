@@ -225,10 +225,13 @@
 
   display: flex;
   align-items: center;
-  gap: $spacing-sm;
+  justify-content: center;
+  gap: $spacing-md;
 
   width: max-content;
   max-width: 13rem;
+
+  height: 40%;
 }
 
 .searchCard {

@@ -1,0 +1,129 @@
+@use "@/styles/abstracts" as *;
+
+/* ==========================================================================
+   Category Card
+   ========================================================================== */
+
+.article {
+  height: 100%;
+}
+
+.card {
+  height: 100%;
+  overflow: hidden;
+}
+
+.link {
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+
+  color: inherit;
+  text-decoration: none;
+
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: -2px;
+    border-radius: inherit;
+  }
+}
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 8rem;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba($color-primary, 0.12),
+      rgba($color-secondary, 0.16)
+    );
+}
+
+.icon {
+  width: 3rem;
+  height: 3rem;
+
+  color: $color-primary;
+
+  transition: transform $transition-normal;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+
+  flex: 1;
+
+  padding: $spacing-lg;
+}
+
+.title {
+  margin: 0;
+
+  color: $color-text;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-bold;
+  line-height: 1.3;
+}
+
+.description {
+  margin: 0;
+
+  color: $color-text-light;
+  font-size: $font-size-sm;
+  line-height: 1.6;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-md;
+
+  width: 100%;
+  margin-top: auto;
+  padding-top: $spacing-md;
+
+  color: $color-primary;
+}
+
+.count {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+}
+
+.arrow {
+  flex-shrink: 0;
+
+  transition: transform $transition-fast;
+}
+
+.link:hover {
+  .icon {
+    transform: scale(1.08) rotate(-3deg);
+  }
+
+  .arrow {
+    transform: translateX($spacing-xs);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .icon,
+  .arrow {
+    transition: none;
+  }
+
+  .link:hover {
+    .icon,
+    .arrow {
+      transform: none;
+    }
+  }
+}
