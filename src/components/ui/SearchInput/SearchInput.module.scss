@@ -6,10 +6,19 @@
 
 .wrapper {
   display: flex;
-  flex-direction: column;
   gap: $spacing-sm;
 
   width: 100%;
+}
+
+.responsive,
+.stacked {
+  flex-direction: column;
+}
+
+.inline {
+  flex-direction: row;
+  align-items: center;
 }
 
 .field {
@@ -17,14 +26,15 @@
 
   display: flex;
   align-items: center;
+  flex: 1;
 
   width: 100%;
+  min-width: 0;
 }
 
 .searchIcon {
   position: absolute;
   left: $spacing-md;
-
   z-index: 1;
 
   color: $color-text-light;
@@ -35,6 +45,7 @@
 
 .input {
   width: 100%;
+  min-width: 0;
   min-height: 3rem;
 
   padding:
@@ -71,10 +82,6 @@
     opacity: 0.65;
   }
 
-  /*
-   * Removes the native clear button to keep the component consistent
-   * across browsers.
-   */
   &::-webkit-search-cancel-button {
     appearance: none;
   }
@@ -131,6 +138,7 @@
   border-radius: $radius-pill;
 
   font-weight: $font-weight-semibold;
+  white-space: nowrap;
 
   transition:
     transform $transition-fast,
@@ -158,17 +166,21 @@
   }
 }
 
-@media (min-width: $breakpoint-sm) {
-  .wrapper {
+.stacked .submitButton {
+  width: 100%;
+}
+
+.inline .submitButton {
+  flex-shrink: 0;
+}
+
+@include tablet {
+  .responsive {
     flex-direction: row;
     align-items: center;
   }
 
-  .field {
-    flex: 1;
-  }
-
-  .submitButton {
+  .responsive .submitButton {
     flex-shrink: 0;
   }
 }

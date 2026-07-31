@@ -24,6 +24,7 @@ const SearchInput = forwardRef(function SearchInput(
     autoComplete = "off",
     showSubmitButton = false,
     submitLabel = "Rechercher",
+    layout = "responsive",
     onChange,
     onClear,
     ...props
@@ -45,7 +46,13 @@ const SearchInput = forwardRef(function SearchInput(
   };
 
   return (
-    <div className={classNames(styles.wrapper, className)}>
+    <div
+      className={classNames(
+        styles.wrapper,
+        styles[layout],
+        className
+      )}
+    >
       <div className={styles.field}>
         <FiSearch
           className={styles.searchIcon}
@@ -53,20 +60,20 @@ const SearchInput = forwardRef(function SearchInput(
         />
 
         <input
-            {...props}
-            ref={ref}
-            id={id}
-            name={name}
-            type="search"
-            value={value}
-            defaultValue={defaultValue}
-            placeholder={placeholder}
-            aria-label={ariaLabel}
-            autoComplete={autoComplete}
-            disabled={disabled}
-            required={required}
-            className={classNames(styles.input, inputClassName)}
-            onChange={onChange}
+          {...props}
+          ref={ref}
+          id={id}
+          name={name}
+          type="search"
+          value={value}
+          defaultValue={defaultValue}
+          placeholder={placeholder}
+          aria-label={ariaLabel}
+          autoComplete={autoComplete}
+          disabled={disabled}
+          required={required}
+          className={classNames(styles.input, inputClassName)}
+          onChange={onChange}
         />
 
         {hasValue && onClear ? (

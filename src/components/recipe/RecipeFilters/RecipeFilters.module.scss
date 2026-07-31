@@ -1,0 +1,21 @@
+@use "@/styles/abstracts" as *;
+
+/* ==========================================================================
+   Recipe Filters
+   ========================================================================== */
+
+.form {
+  width: 100%;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+}
+
+.label {
+  color: $color-text;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+}

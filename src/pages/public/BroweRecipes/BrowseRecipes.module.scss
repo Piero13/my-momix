@@ -1,3 +1,71 @@
-.page {
-  padding: 2rem 0;
+@use "@/styles/abstracts" as *;
+
+/* ==========================================================================
+   Browse Recipes
+   ========================================================================== */
+
+.section {
+  min-height: 70vh;
+  background: $color-background;
+}
+
+.activeContext {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-sm $spacing-lg;
+
+  margin-bottom: $spacing-xl;
+  padding: $spacing-md $spacing-lg;
+
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+}
+
+.contextItem {
+  margin: 0;
+
+  color: $color-text-light;
+  font-size: $font-size-sm;
+
+  strong {
+    color: $color-text;
+    font-weight: $font-weight-semibold;
+  }
+}
+
+.content {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: $spacing-xl;
+}
+
+.filters,
+.results {
+  min-width: 0;
+
+  padding: $spacing-lg;
+
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+}
+
+.placeholder {
+  margin: 0;
+
+  color: $color-text-light;
+  font-size: $font-size-sm;
+}
+
+@include desktop {
+  .content {
+    grid-template-columns: minmax(15rem, 18rem) minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .filters {
+    position: sticky;
+    top: $spacing-lg;
+  }
 }

@@ -26,7 +26,7 @@ import ScrollToTop from "../ScrollToTop";
 import { ROUTES } from "@/constants";
 
 const Home = lazy(() => import("@/pages/public/Home"));
-const Recipes = lazy(() => import("@/pages/public/BroweRecipes"));
+const BrowseRecipes = lazy(() => import("@/pages/public/BroweRecipes"));
 const RecipeDetails = lazy(() => import("@/pages/public/RecipeDetails"));
 
 const About = lazy(() => import("@/pages/public/About"));
@@ -66,7 +66,7 @@ export default function AppRouter() {
 
             <Route
               path={ROUTES.BROWSE}
-              element={<Recipes />}
+              element={<BrowseRecipes />}
             />
 
             <Route
