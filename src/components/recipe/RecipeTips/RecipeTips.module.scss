@@ -1,0 +1,115 @@
+@use "@/styles/abstracts" as *;
+
+/* ==========================================================================
+   Recipe Tips
+   ========================================================================== */
+
+.section {
+  padding: $spacing-xl;
+
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-xl;
+  box-shadow: $shadow-sm;
+}
+
+.header {
+  margin-bottom: $spacing-xl;
+}
+
+.eyebrow {
+  margin-bottom: $spacing-xs;
+
+  color: $color-primary;
+
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+.title {
+  margin-bottom: $spacing-sm;
+}
+
+.description {
+  max-width: 42rem;
+
+  color: $color-text-light;
+}
+
+.list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $spacing-md;
+
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  gap: $spacing-md;
+  align-items: flex-start;
+
+  padding: $spacing-lg;
+
+  background: rgba($color-primary, .04);
+
+  border: 1px solid rgba($color-primary, .12);
+  border-radius: $radius-lg;
+}
+
+.icon {
+  @include flex-center;
+
+  width: 2.5rem;
+  height: 2.5rem;
+
+  flex-shrink: 0;
+
+  color: $color-primary;
+
+  background: rgba($color-primary, .12);
+
+  border-radius: $radius-circle;
+
+  font-size: $font-size-lg;
+}
+
+.content {
+  min-width: 0;
+
+  p {
+    margin: 0;
+
+    color: $color-text;
+
+    line-height: 1.7;
+  }
+}
+
+.number {
+  display: inline-block;
+
+  margin-bottom: $spacing-xs;
+
+  color: $color-primary-dark;
+
+  font-size: $font-size-xs;
+  font-weight: $font-weight-bold;
+
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+@include tablet {
+
+  .list {
+    grid-template-columns: repeat(2, minmax(0,1fr));
+  }
+
+}

@@ -5,3 +5,4 @@ export { default as RecipeSort } from "./RecipeSort";
 export { default as RecipeHero } from "./RecipeHero";
 export { default as RecipeIngredients } from "./RecipeIngredients";
 export { default as RecipeSteps } from "./RecipeSteps";
+export { default as RecipeTips } from "./RecipeTips";

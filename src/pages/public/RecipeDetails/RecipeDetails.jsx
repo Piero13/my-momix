@@ -11,6 +11,7 @@ import {
   RecipeHero,
   RecipeIngredients,
   RecipeSteps,
+  RecipeTips,
 } from "@/components/recipe";
 import {
   AppButton,
@@ -88,6 +89,8 @@ function RecipeDetailsContent({ recipe }) {
             />
 
             <RecipeSteps steps={recipe.steps} />
+
+            <RecipeTips tips={recipe.tips} />
           </div>
         </PageContainer>
       </Section>

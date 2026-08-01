@@ -114,8 +114,16 @@ export const RECIPE_DETAILS_DATA = [
       },
     ],
     tips: [
-      "Remplacez la crème fraîche par du fromage frais pour une texture différente.",
-      "Ajoutez quelques feuilles de basilic avant le mixage pour parfumer le velouté.",
+      {
+        id: "tip-1",
+        type: "variante",
+        text: "Remplacez la crème fraîche par du fromage frais pour une texture différente.",
+      },
+      {
+        id: "tip-2",
+        type: "astuce",
+        text: "Ajoutez quelques feuilles de basilic avant le mixage pour parfumer le velouté.",
+      },
     ],
     nutrition: {
       calories: 145,
