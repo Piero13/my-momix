@@ -1,0 +1,252 @@
+@use "@/styles/abstracts" as *;
+
+/* ==========================================================================
+   Recipe Hero
+   ========================================================================== */
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: $spacing-xl;
+
+  padding: $spacing-lg;
+
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-xl;
+  box-shadow: $shadow-sm;
+}
+
+.imageColumn,
+.content {
+  min-width: 0;
+}
+
+.imageWrapper {
+  position: relative;
+
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+
+  background: $color-background;
+  border-radius: $radius-lg;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+.difficultyBadge {
+  position: absolute;
+  top: $spacing-md;
+  left: $spacing-md;
+
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-xs;
+
+  padding: $spacing-xs $spacing-sm;
+
+  color: $color-text;
+  background: rgba($color-surface, 0.92);
+  border: 1px solid rgba($color-border, 0.8);
+  border-radius: $radius-pill;
+  box-shadow: $shadow-sm;
+
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+
+  backdrop-filter: blur(0.4rem);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.category {
+  display: inline-flex;
+
+  margin-bottom: $spacing-md;
+  padding: $spacing-xs $spacing-md;
+
+  color: $color-primary;
+  background: rgba($color-primary, 0.1);
+  border-radius: $radius-pill;
+
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  text-decoration: none;
+
+  transition:
+    color $transition-fast,
+    background-color $transition-fast;
+
+  &:hover {
+    color: $color-primary-dark;
+    background: rgba($color-primary, 0.16);
+  }
+}
+
+.title {
+  margin-bottom: $spacing-lg;
+
+  color: $color-text;
+}
+
+.description {
+  max-width: 46rem;
+  margin-bottom: $spacing-lg;
+
+  color: $color-text-light;
+  font-size: $font-size-lg;
+  line-height: 1.7;
+}
+
+.rating {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-xs;
+
+  margin-bottom: $spacing-xl;
+
+  color: $color-text;
+}
+
+.ratingIcon {
+  color: $color-secondary;
+  fill: currentColor;
+}
+
+.ratingMaximum,
+.ratingCount {
+  color: $color-text-light;
+  font-size: $font-size-sm;
+}
+
+.ratingCount {
+  margin-left: $spacing-xs;
+}
+
+.metadata {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: $spacing-md;
+
+  width: 100%;
+  margin: 0 0 $spacing-xl;
+  padding: 0;
+
+  list-style: none;
+}
+
+.metaItem {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+
+  min-width: 0;
+  padding: $spacing-md;
+
+  background: $color-background;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+}
+
+.metaIcon {
+  @include flex-center;
+
+  flex-shrink: 0;
+
+  width: 2.5rem;
+  height: 2.5rem;
+
+  color: $color-primary;
+  background: rgba($color-primary, 0.1);
+  border-radius: $radius-circle;
+
+  font-size: $font-size-lg;
+}
+
+.metaLabel,
+.metaValue {
+  display: block;
+}
+
+.metaLabel {
+  margin-bottom: $spacing-xs;
+
+  color: $color-text-muted;
+  font-size: $font-size-xs;
+}
+
+.metaValue {
+  color: $color-text;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+
+  width: 100%;
+  margin-top: auto;
+}
+
+.actionButton {
+  width: 100%;
+}
+
+.favoriteActive {
+  svg {
+    fill: currentColor;
+  }
+}
+
+@include tablet {
+  .hero {
+    padding: $spacing-xl;
+  }
+
+  .actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .actionButton {
+    width: auto;
+  }
+}
+
+@include desktop {
+  .hero {
+    grid-template-columns:
+      minmax(20rem, 0.95fr)
+      minmax(0, 1.05fr);
+
+    align-items: stretch;
+    gap: $spacing-2xl;
+  }
+
+  .imageWrapper {
+    height: 100%;
+    min-height: 32rem;
+    aspect-ratio: auto;
+  }
+
+  .metadata {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .category {
+    transition: none;
+  }
+}

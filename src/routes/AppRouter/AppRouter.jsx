@@ -70,7 +70,7 @@ export default function AppRouter() {
             />
 
             <Route
-              path={ROUTES.RECIPE}
+              path={ROUTES.RECIPE_DETAILS}
               element={<RecipeDetails />}
             />
 
