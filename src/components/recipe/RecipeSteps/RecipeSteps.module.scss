@@ -1,0 +1,243 @@
+@use "@/styles/abstracts" as *;
+
+/* ==========================================================================
+   Recipe Steps
+   ========================================================================== */
+
+.section {
+  padding: $spacing-lg;
+
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-xl;
+  box-shadow: $shadow-sm;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+
+  margin-bottom: $spacing-xl;
+  padding-bottom: $spacing-lg;
+
+  border-bottom: 1px solid $color-border;
+}
+
+.headingIcon {
+  @include flex-center;
+
+  flex-shrink: 0;
+
+  width: 3rem;
+  height: 3rem;
+
+  color: $color-primary;
+  background: rgba($color-primary, 0.1);
+  border-radius: $radius-circle;
+
+  font-size: $font-size-xl;
+}
+
+.eyebrow {
+  margin: 0 0 $spacing-xs;
+
+  color: $color-primary;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.title {
+  margin: 0;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+  counter-reset: recipe-step;
+}
+
+.step {
+  position: relative;
+
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr);
+  gap: $spacing-md;
+
+  counter-increment: recipe-step;
+}
+
+.step:not(:last-child)::after {
+  content: "";
+
+  position: absolute;
+  top: 3rem;
+  bottom: -$spacing-lg;
+  left: 1.5rem;
+
+  width: 2px;
+
+  background: rgba($color-primary, 0.2);
+
+  transform: translateX(-50%);
+}
+
+.stepBadge {
+  position: relative;
+  z-index: 1;
+
+  @include flex-center;
+
+  width: 3rem;
+  height: 3rem;
+
+  color: $color-surface;
+  background: $color-primary;
+  border: 0.25rem solid $color-surface;
+  border-radius: $radius-circle;
+  box-shadow:
+    0 0 0 1px rgba($color-primary, 0.25),
+    $shadow-sm;
+
+  font-size: $font-size-lg;
+  font-weight: $font-weight-bold;
+}
+
+.stepContent {
+  min-width: 0;
+  padding: $spacing-lg;
+
+  background: $color-background;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+
+  transition:
+    border-color $transition-fast,
+    box-shadow $transition-fast,
+    transform $transition-fast;
+
+  &:hover {
+    border-color: rgba($color-primary, 0.3);
+    box-shadow: $shadow-sm;
+    transform: translateY(-1px);
+  }
+}
+
+.stepLabel {
+  margin: 0 0 $spacing-sm;
+
+  color: $color-primary;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-bold;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.stepDescription {
+  margin: 0;
+
+  color: $color-text;
+  font-size: $font-size-md;
+  line-height: 1.7;
+}
+
+.metadata {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: $spacing-sm;
+
+  margin-top: $spacing-lg;
+  padding-top: $spacing-md;
+
+  border-top: 1px solid $color-border;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+
+  min-width: 0;
+  padding: $spacing-sm;
+
+  background: $color-surface;
+  border-radius: $radius-md;
+}
+
+.metaIcon {
+  @include flex-center;
+
+  flex-shrink: 0;
+
+  width: 2.25rem;
+  height: 2.25rem;
+
+  color: $color-primary;
+  background: rgba($color-primary, 0.1);
+  border-radius: $radius-circle;
+}
+
+.metaContent {
+  min-width: 0;
+}
+
+.metaLabel,
+.metaValue {
+  display: block;
+}
+
+.metaLabel {
+  margin-bottom: $spacing-xs;
+
+  color: $color-text-muted;
+  font-size: $font-size-xs;
+}
+
+.metaValue {
+  color: $color-text;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+}
+
+@include tablet {
+  .section {
+    padding: $spacing-xl;
+  }
+
+  .step {
+    grid-template-columns: 3.5rem minmax(0, 1fr);
+    gap: $spacing-lg;
+  }
+
+  .stepBadge {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+
+  .step:not(:last-child)::after {
+    top: 3.5rem;
+    left: 1.75rem;
+  }
+
+  .metadata {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stepContent {
+    transition: none;
+
+    &:hover {
+      transform: none;
+    }
+  }
+}

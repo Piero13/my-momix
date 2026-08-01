@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import {
   RecipeHero,
   RecipeIngredients,
+  RecipeSteps,
 } from "@/components/recipe";
 import {
   AppButton,
@@ -85,6 +86,8 @@ function RecipeDetailsContent({ recipe }) {
               selectedServings={selectedServings}
               onServingsChange={handleServingsChange}
             />
+
+            <RecipeSteps steps={recipe.steps} />
           </div>
         </PageContainer>
       </Section>
