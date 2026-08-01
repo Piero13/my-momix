@@ -1,0 +1,68 @@
+@use "@/styles/abstracts" as *;
+
+/* ==========================================================================
+   Counter
+   ========================================================================== */
+
+.counter {
+  display: inline-grid;
+  grid-template-columns: 2.75rem minmax(3rem, auto) 2.75rem;
+  align-items: center;
+
+  overflow: hidden;
+
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-pill;
+}
+
+.button {
+  @include flex-center;
+
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+
+  color: $color-primary;
+  background: transparent;
+  border: 0;
+
+  transition:
+    color $transition-fast,
+    background-color $transition-fast;
+
+  &:hover:not(:disabled) {
+    color: $color-primary-dark;
+    background: rgba($color-primary, 0.1);
+  }
+
+  &:focus-visible {
+    position: relative;
+    z-index: 1;
+
+    outline: 2px solid $color-primary;
+    outline-offset: -2px;
+  }
+
+  &:disabled {
+    color: $color-text-muted;
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}
+
+.value {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 3rem;
+  min-height: 2.75rem;
+  padding-inline: $spacing-sm;
+
+  color: $color-text;
+  border-inline: 1px solid $color-border;
+
+  font-weight: $font-weight-semibold;
+  text-align: center;
+}

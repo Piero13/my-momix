@@ -40,6 +40,7 @@ function RecipeMetaItem({ icon: Icon, label, value }) {
 
 export default function RecipeHero({
   recipe,
+  servings = recipe.servings,
   isFavorite = false,
   onFavoriteToggle,
   onShare,
@@ -53,7 +54,6 @@ export default function RecipeHero({
     preparationTime,
     cookingTime,
     totalTime,
-    servings,
     averageRating,
     ratingsCount,
   } = recipe;
@@ -63,7 +63,9 @@ export default function RecipeHero({
 
   const servingsLabel =
     typeof servings === "number"
-      ? `${servings} ${servings > 1 ? "personnes" : "personne"}`
+      ? `${servings} ${
+          servings > 1 ? "personnes" : "personne"
+        }`
       : null;
 
   const handleFavoriteClick = () => {

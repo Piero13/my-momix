@@ -47,3 +47,16 @@
     }
   }
 }
+
+.recipeContent {
+  display: grid;
+  gap: $spacing-xl;
+
+  margin-top: $spacing-xl;
+}
+
+@include desktop {
+  .recipeContent {
+    margin-top: $spacing-2xl;
+  }
+}

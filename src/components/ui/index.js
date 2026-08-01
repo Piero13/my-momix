@@ -6,3 +6,4 @@ export { default as Section } from "./Section";
 export { default as SectionHeader } from "./SectionHeader";
 export { default as EmptyState } from "./EmptyState";
 export { default as AppPagination } from "./AppPagination";
+export { default as Counter } from "./Counter";
