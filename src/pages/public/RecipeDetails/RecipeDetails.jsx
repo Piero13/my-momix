@@ -14,12 +14,15 @@ import {
   RecipeTips,
   RecipeNutrition,
 } from "@/components/recipe";
+
 import {
   AppButton,
   EmptyState,
   PageContainer,
   Section,
 } from "@/components/ui";
+
+import { shareContent } from "@/services";
 import { ROUTES } from "@/constants";
 import { useRecipeDetails } from "@/hooks";
 
@@ -44,8 +47,33 @@ function RecipeDetailsContent({ recipe }) {
     );
   };
 
-  const handleShare = () => {
-    toast("Le partage sera disponible prochainement.");
+  const handleShare = async () => {
+    const result = await shareContent({
+      title: recipe.title,
+      text: recipe.description,
+      url: window.location.href,
+    });
+
+    switch (result.status) {
+      case "shared":
+        toast.success("Recette partagée.");
+        break;
+
+      case "copied":
+        toast.success(
+          "Lien copié dans le presse-papiers."
+        );
+        break;
+
+      case "error":
+        toast.error(
+          "Impossible de partager cette recette."
+        );
+        break;
+
+      default:
+        break;
+    }
   };
 
   const handleServingsChange = (nextServings) => {

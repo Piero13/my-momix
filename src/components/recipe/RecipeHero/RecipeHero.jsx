@@ -203,7 +203,7 @@ export default function RecipeHero({
             className={styles.actionButton}
             onClick={handleShareClick}
           >
-            Partager
+            Partager la recette
           </AppButton>
         </div>
       </div>
