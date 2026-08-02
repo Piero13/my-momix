@@ -150,8 +150,8 @@
 }
 
 .metadata {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
+  display: flex;
+  flex-wrap: wrap;
   gap: $spacing-sm;
 
   margin-top: $spacing-lg;
@@ -165,7 +165,9 @@
   align-items: center;
   gap: $spacing-sm;
 
+  flex: 1 1 8rem;
   min-width: 0;
+  max-width: 33%;
   padding: $spacing-sm;
 
   background: $color-surface;
@@ -225,10 +227,6 @@
   .step:not(:last-child)::after {
     top: 3.5rem;
     left: 1.75rem;
-  }
-
-  .metadata {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 

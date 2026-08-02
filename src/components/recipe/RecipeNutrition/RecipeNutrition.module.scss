@@ -1,0 +1,235 @@
+@use "@/styles/abstracts" as *;
+
+/* ==========================================================================
+   Recipe Nutrition
+   ========================================================================== */
+
+.section {
+  padding: $spacing-lg;
+
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-xl;
+  box-shadow: $shadow-sm;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+
+  margin-bottom: $spacing-xl;
+  padding-bottom: $spacing-lg;
+
+  border-bottom: 1px solid $color-border;
+}
+
+.heading {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+}
+
+.headingIcon {
+  @include flex-center;
+
+  flex-shrink: 0;
+
+  width: 3rem;
+  height: 3rem;
+
+  color: $color-primary;
+  background: rgba($color-primary, 0.1);
+  border-radius: $radius-circle;
+
+  font-size: $font-size-xl;
+}
+
+.eyebrow {
+  margin: 0 0 $spacing-xs;
+
+  color: $color-primary;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.title {
+  margin: 0;
+}
+
+.servingReference {
+  margin: 0;
+
+  color: $color-text-light;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: $spacing-md;
+
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+
+  min-width: 0;
+  min-height: 6rem;
+  padding: $spacing-lg;
+
+  background: $color-background;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+
+  transition:
+    border-color $transition-fast,
+    box-shadow $transition-fast,
+    transform $transition-fast;
+
+  &:hover {
+    border-color: rgba($color-primary, 0.3);
+    box-shadow: $shadow-sm;
+    transform: translateY(-1px);
+  }
+}
+
+.featured {
+  background:
+    linear-gradient(
+      135deg,
+      rgba($color-primary, 0.12),
+      rgba($color-secondary, 0.1)
+    ),
+    $color-surface;
+
+  border-color: rgba($color-primary, 0.25);
+}
+
+.itemIcon {
+  @include flex-center;
+
+  flex-shrink: 0;
+
+  width: 2.75rem;
+  height: 2.75rem;
+
+  color: $color-primary;
+  background: rgba($color-primary, 0.1);
+  border-radius: $radius-circle;
+
+  font-size: $font-size-lg;
+}
+
+.featured .itemIcon {
+  color: $color-surface;
+  background: $color-primary;
+}
+
+.itemContent {
+  min-width: 0;
+}
+
+.itemLabel,
+.itemValue {
+  display: block;
+}
+
+.itemLabel {
+  margin-bottom: $spacing-xs;
+
+  color: $color-text-light;
+  font-size: $font-size-sm;
+}
+
+.itemValue {
+  display: flex;
+  align-items: baseline;
+  gap: $spacing-xs;
+
+  color: $color-text;
+
+  strong {
+    font-family: $font-heading;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    line-height: 1;
+  }
+}
+
+.itemUnit {
+  color: $color-text-muted;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+}
+
+.disclaimer {
+  margin: $spacing-lg 0 0;
+  padding-top: $spacing-md;
+
+  color: $color-text-muted;
+  border-top: 1px solid $color-border;
+
+  font-size: $font-size-xs;
+  line-height: 1.6;
+}
+
+@include tablet {
+  .section {
+    padding: $spacing-xl;
+  }
+
+  .header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .servingReference {
+    text-align: right;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .featured {
+    grid-column: 1 / -1;
+  }
+}
+
+@include desktop {
+  .grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .featured {
+    grid-column: auto;
+  }
+
+  .item {
+    flex-direction: column;
+    align-items: flex-start;
+
+    min-height: 9rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .item {
+    transition: none;
+
+    &:hover {
+      transform: none;
+    }
+  }
+}

@@ -12,6 +12,7 @@ import {
   RecipeIngredients,
   RecipeSteps,
   RecipeTips,
+  RecipeNutrition,
 } from "@/components/recipe";
 import {
   AppButton,
@@ -91,6 +92,8 @@ function RecipeDetailsContent({ recipe }) {
             <RecipeSteps steps={recipe.steps} />
 
             <RecipeTips tips={recipe.tips} />
+
+            <RecipeNutrition nutrition={recipe.nutrition} />
           </div>
         </PageContainer>
       </Section>
