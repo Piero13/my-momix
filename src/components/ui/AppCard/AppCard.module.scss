@@ -6,11 +6,15 @@
 
 .card {
   height: 100%;
+  min-width: 0;
+
+  overflow: hidden;
 
   background: $card-bg;
   border: 1px solid $card-border;
   border-radius: $card-radius;
   box-shadow: $card-shadow;
+
 }
 
 .none {

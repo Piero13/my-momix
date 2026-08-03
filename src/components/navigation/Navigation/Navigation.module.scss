@@ -3,7 +3,7 @@
 .navigation {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: $spacing-sm;
 }
 
 .link {
@@ -12,7 +12,7 @@
   display: inline-flex;
   align-items: center;
 
-  padding: 0.5rem 0.75rem;
+  padding: $spacing-sm 0.75rem;
 
   text-decoration: none;
 
@@ -54,5 +54,15 @@
 
   &::after {
     transform: scaleX(1);
+  }
+}
+
+@include mobile {
+  .navigation {
+    padding-block: $spacing-md;
+  }
+
+  .link {
+      margin: $spacing-xs 0;
   }
 }

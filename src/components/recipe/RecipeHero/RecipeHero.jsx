@@ -83,145 +83,148 @@ export default function RecipeHero({
   };
 
   return (
-    <div className={styles.hero}>
-      <div className={styles.imageColumn}>
-        <div className={styles.imageWrapper}>
-          <img
-            src={imageUrl}
-            alt={title}
-            className={styles.image}
-          />
-
-          {difficulty ? (
-            <span className={styles.difficultyBadge}>
-              <FiBarChart2 aria-hidden="true" />
-              <span>{difficulty}</span>
-            </span>
-          ) : null}
-        </div>
-      </div>
-
-      <div className={styles.content}>
-        {category ? (
-          <Link
-            to={getRecipesByCategoryPath(category.slug)}
-            className={styles.category}
-          >
-            {category.name}
-          </Link>
-        ) : null}
-
-        <h1 id="recipe-title" className={styles.title}>
-          {title}
-        </h1>
-
-        {description ? (
-          <p className={styles.description}>
-            {description}
-          </p>
-        ) : null}
-
-        {hasRating ? (
-          <div
-            className={styles.rating}
-            aria-label={`Note moyenne : ${averageRating} sur 5`}
-          >
-            <FiStar
-              className={styles.ratingIcon}
-              aria-hidden="true"
+    <div className={styles.heroContainer}>
+      <div className={styles.hero}>
+        <div className={styles.imageColumn}>
+          <div className={styles.imageWrapper}>
+            <img
+              src={imageUrl}
+              alt={title}
+              className={styles.image}
             />
 
-            <strong>{averageRating.toFixed(1)}</strong>
-
-            <span className={styles.ratingMaximum}>
-              / 5
-            </span>
-
-            {typeof ratingsCount === "number" ? (
-              <span className={styles.ratingCount}>
-                ({ratingsCount}{" "}
-                {ratingsCount > 1 ? "avis" : "avis"})
+            {difficulty ? (
+              <span className={styles.difficultyBadge}>
+                <FiBarChart2 aria-hidden="true" />
+                <span>{difficulty}</span>
               </span>
             ) : null}
           </div>
-        ) : null}
+        </div>
 
-        <ul
-          className={styles.metadata}
-          aria-label="Informations principales de la recette"
-        >
-          <RecipeMetaItem
-            icon={FiClock}
-            label="Préparation"
-            value={
-              preparationTime
-                ? `${preparationTime} min`
-                : null
-            }
-          />
+        <div className={styles.content}>
+          {category ? (
+            <Link
+              to={getRecipesByCategoryPath(category.slug)}
+              className={styles.category}
+            >
+              {category.name}
+            </Link>
+          ) : null}
 
-          <RecipeMetaItem
-            icon={FiThermometer}
-            label="Cuisson"
-            value={
-              cookingTime
-                ? `${cookingTime} min`
-                : null
-            }
-          />
+          <h1 id="recipe-title" className={styles.title}>
+            {title}
+          </h1>
 
-          <RecipeMetaItem
-            icon={FiClock}
-            label="Temps total"
-            value={
-              totalTime
-                ? `${totalTime} min`
-                : null
-            }
-          />
+          {description ? (
+            <p className={styles.description}>
+              {description}
+            </p>
+          ) : null}
 
-          <RecipeMetaItem
-            icon={FiUsers}
-            label="Portions"
-            value={servingsLabel}
-          />
-        </ul>
+          {hasRating ? (
+            <div
+              className={styles.rating}
+              aria-label={`Note moyenne : ${averageRating} sur 5`}
+            >
+              <FiStar
+                className={styles.ratingIcon}
+                aria-hidden="true"
+              />
 
-        <div className={styles.actions}>
-          <AppButton
-            variant={isFavorite ? "primary" : "outline-primary"}
-            icon={<FiHeart />}
-            aria-pressed={isFavorite}
-            className={classNames(
-              styles.actionButton,
-              isFavorite && styles.favoriteActive
-            )}
-            onClick={handleFavoriteClick}
+              <strong>{averageRating.toFixed(1)}</strong>
+
+              <span className={styles.ratingMaximum}>
+                / 5
+              </span>
+
+              {typeof ratingsCount === "number" ? (
+                <span className={styles.ratingCount}>
+                  ({ratingsCount}{" "}
+                  {ratingsCount > 1 ? "avis" : "avis"})
+                </span>
+              ) : null}
+            </div>
+          ) : null}
+
+          <ul
+            className={styles.metadata}
+            aria-label="Informations principales de la recette"
           >
-            {isFavorite
-              ? "Retirer des favoris"
-              : "Ajouter aux favoris"}
-          </AppButton>
+            <RecipeMetaItem
+              icon={FiClock}
+              label="Préparation"
+              value={
+                preparationTime
+                  ? `${preparationTime} min`
+                  : null
+              }
+            />
 
-          <AppButton
-            variant="outline-secondary"
-            icon={<FiShare2 />}
-            className={styles.actionButton}
-            onClick={handleShareClick}
-          >
-            Partager la recette
-          </AppButton>
+            <RecipeMetaItem
+              icon={FiThermometer}
+              label="Cuisson"
+              value={
+                cookingTime
+                  ? `${cookingTime} min`
+                  : null
+              }
+            />
 
-          <AppButton
-            variant="outline-secondary"
-            icon={<FiDownload />}
-            className={styles.actionButton}
-            onClick={handleDownloadPdf}
-          >
-            Télécharger le PDF
-          </AppButton>
+            <RecipeMetaItem
+              icon={FiClock}
+              label="Temps total"
+              value={
+                totalTime
+                  ? `${totalTime} min`
+                  : null
+              }
+            />
+
+            <RecipeMetaItem
+              icon={FiUsers}
+              label="Portions"
+              value={servingsLabel}
+            />
+          </ul>
         </div>
       </div>
+
+      <div className={styles.actions}>
+        <AppButton
+          variant={isFavorite ? "primary" : "outline-primary"}
+          icon={<FiHeart />}
+          aria-pressed={isFavorite}
+          className={classNames(
+            styles.actionButton,
+            isFavorite && styles.favoriteActive
+          )}
+          onClick={handleFavoriteClick}
+        >
+          {isFavorite
+            ? "Retirer des favoris"
+            : "Ajouter aux favoris"}
+        </AppButton>
+
+        <AppButton
+          variant="outline-secondary"
+          icon={<FiShare2 />}
+          className={styles.actionButton}
+          onClick={handleShareClick}
+        >
+          Partager la recette
+        </AppButton>
+
+        <AppButton
+          variant="outline-secondary"
+          icon={<FiDownload />}
+          className={styles.actionButton}
+          onClick={handleDownloadPdf}
+        >
+          Exporter en PDF
+        </AppButton>
+      </div>      
     </div>
+
   );
 }

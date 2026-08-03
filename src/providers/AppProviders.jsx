@@ -10,7 +10,7 @@ export default function AppProviders({ children }) {
       {children}
 
       <Toaster
-        position="bottom-right"
+        position="center-top"
         reverseOrder={false}
         gutter={12}
         toastOptions={{

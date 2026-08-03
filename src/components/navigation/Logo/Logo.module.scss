@@ -6,16 +6,19 @@
 
   text-decoration: none;
 
-  transition: transform .2s ease;
+  transition: 
+    opacity $transition-fast,
+    transform $transition-fast;
 
   &:hover {
-    transform: scale(1.02);
+    opacity: 0.9;
+    transform: scale(1.01);
   }
 }
 
 .text {
   font-size: 1.7rem;
-  font-weight: 700;
+  font-weight: $font-weight-bold;
   color: $color-text;
 }
 

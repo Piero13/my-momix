@@ -162,12 +162,14 @@
 
 .meta {
   display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
   gap: $spacing-sm;
 
   flex: 1 1 8rem;
   min-width: 0;
-  max-width: 33%;
+  max-width: 30%;
   padding: $spacing-sm;
 
   background: $color-surface;
@@ -194,6 +196,7 @@
 .metaLabel,
 .metaValue {
   display: block;
+  text-align: center;
 }
 
 .metaLabel {
@@ -227,6 +230,15 @@
   .step:not(:last-child)::after {
     top: 3.5rem;
     left: 1.75rem;
+  }
+
+  .meta {
+    flex-direction: row;
+  }
+
+  .metaLabel,
+  .metaValue {
+    text-align: start;
   }
 }
 

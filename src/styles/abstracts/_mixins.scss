@@ -19,6 +19,12 @@
   }
 }
 
+@mixin desktop-xl {
+  @media (min-width: #{$breakpoint-xl + 200px}) {
+    @content;
+  }
+}
+
 @mixin flex-center {
   display: flex;
   justify-content: center;

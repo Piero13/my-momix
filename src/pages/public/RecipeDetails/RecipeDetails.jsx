@@ -38,6 +38,7 @@ import { ROUTES } from "@/constants";
 import { useRecipeDetails } from "@/hooks";
 
 import { RECIPE_DETAILS_DATA } from "./recipeDetails.data";
+
 import styles from "./RecipeDetails.module.scss";
 
 function RecipeDetailsContent({ recipe }) {
