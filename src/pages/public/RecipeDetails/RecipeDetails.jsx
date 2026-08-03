@@ -22,7 +22,10 @@ import {
   Section,
 } from "@/components/ui";
 
-import { shareContent } from "@/services";
+import { 
+  shareContent,
+  generateRecipePdf,
+} from "@/services";
 import { ROUTES } from "@/constants";
 import { useRecipeDetails } from "@/hooks";
 
@@ -76,6 +79,26 @@ function RecipeDetailsContent({ recipe }) {
     }
   };
 
+  const handleDownloadPdf = () => {
+    try {
+      generateRecipePdf({
+        recipe,
+        selectedServings,
+      });
+
+      toast.success("Le PDF a été généré.");
+    } catch (error) {
+      console.error(
+        "Recipe PDF generation failed:",
+        error
+      );
+
+      toast.error(
+        "Impossible de générer le PDF."
+      );
+    }
+  };
+
   const handleServingsChange = (nextServings) => {
     setSelectedServings(nextServings);
   };
@@ -107,6 +130,7 @@ function RecipeDetailsContent({ recipe }) {
             isFavorite={isFavorite}
             onFavoriteToggle={handleFavoriteToggle}
             onShare={handleShare}
+            onDownloadPdf={handleDownloadPdf}
           />
 
           <div className={styles.recipeContent}>

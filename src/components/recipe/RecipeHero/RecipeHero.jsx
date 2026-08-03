@@ -5,6 +5,7 @@
 import {
   FiBarChart2,
   FiClock,
+  FiDownload,
   FiHeart,
   FiShare2,
   FiStar,
@@ -44,6 +45,7 @@ export default function RecipeHero({
   isFavorite = false,
   onFavoriteToggle,
   onShare,
+  onDownloadPdf,
 }) {
   const {
     title,
@@ -74,6 +76,10 @@ export default function RecipeHero({
 
   const handleShareClick = () => {
     onShare?.(recipe);
+  };
+
+  const handleDownloadPdf = () => {
+    onDownloadPdf?.(recipe);
   };
 
   return (
@@ -204,6 +210,15 @@ export default function RecipeHero({
             onClick={handleShareClick}
           >
             Partager la recette
+          </AppButton>
+
+          <AppButton
+            variant="outline-secondary"
+            icon={<FiDownload />}
+            className={styles.actionButton}
+            onClick={handleDownloadPdf}
+          >
+            Télécharger le PDF
           </AppButton>
         </div>
       </div>
