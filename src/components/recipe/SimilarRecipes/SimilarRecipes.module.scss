@@ -1,0 +1,20 @@
+@use "@/styles/abstracts" as *;
+
+/* ==========================================================================
+   Similar Recipes
+   ========================================================================== */
+
+.section {
+  padding: $spacing-lg;
+
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-xl;
+  box-shadow: $shadow-sm;
+}
+
+@include tablet {
+  .section {
+    padding: $spacing-xl;
+  }
+}

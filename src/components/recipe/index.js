@@ -7,3 +7,4 @@ export { default as RecipeIngredients } from "./RecipeIngredients";
 export { default as RecipeSteps } from "./RecipeSteps";
 export { default as RecipeTips } from "./RecipeTips";
 export { default as RecipeNutrition } from "./RecipeNutrition";
+export { default as SimilarRecipes } from "./SimilarRecipes";

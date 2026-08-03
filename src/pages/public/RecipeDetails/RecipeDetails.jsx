@@ -13,6 +13,7 @@ import {
   RecipeSteps,
   RecipeTips,
   RecipeNutrition,
+  SimilarRecipes,
 } from "@/components/recipe";
 
 import {
@@ -26,7 +27,14 @@ import {
   shareContent,
   generateRecipePdf,
 } from "@/services";
+
+import {
+  getSimilarRecipes,
+  mapRecipeDetailsToCard,
+} from "@/utils";
+
 import { ROUTES } from "@/constants";
+
 import { useRecipeDetails } from "@/hooks";
 
 import { RECIPE_DETAILS_DATA } from "./recipeDetails.data";
@@ -103,6 +111,12 @@ function RecipeDetailsContent({ recipe }) {
     setSelectedServings(nextServings);
   };
 
+  const similarRecipes = getSimilarRecipes(
+    recipe,
+    RECIPE_DETAILS_DATA,
+    3
+  ).map(mapRecipeDetailsToCard);
+
   return (
     <article className={styles.page}>
       <Section
@@ -146,6 +160,8 @@ function RecipeDetailsContent({ recipe }) {
             <RecipeTips tips={recipe.tips} />
 
             <RecipeNutrition nutrition={recipe.nutrition} />
+
+            <SimilarRecipes recipes={similarRecipes} />
           </div>
         </PageContainer>
       </Section>
