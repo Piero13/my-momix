@@ -1,0 +1,151 @@
+@use "@/styles/abstracts" as *;
+
+.section {
+  min-height: 75vh;
+  background: $color-background;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.card {
+  width: 100%;
+  max-width: 32rem;
+  padding: $spacing-lg;
+
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-xl;
+  box-shadow: $shadow-md;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+
+  margin-bottom: $spacing-md;
+}
+
+.headerIcon {
+  @include flex-center;
+
+  flex-shrink: 0;
+
+  width: 3rem;
+  height: 3rem;
+
+  color: $color-primary-dark;
+  background: rgba($color-primary, 0.1);
+  border-radius: $radius-circle;
+
+  font-size: $font-size-xl;
+}
+
+.eyebrow {
+  margin: 0 0 $spacing-xs;
+
+  color: $color-primary-dark;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.title {
+  margin: 0;
+}
+
+.description {
+  margin-bottom: $spacing-xl;
+
+  color: $color-text-light;
+  line-height: 1.6;
+}
+
+.group {
+  margin-bottom: $spacing-lg;
+
+  label {
+    color: $color-text;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+  }
+}
+
+.field {
+  position: relative;
+}
+
+.fieldIcon {
+  position: absolute;
+  top: 50%;
+  left: $spacing-md;
+  z-index: 2;
+
+  color: $color-text-muted;
+
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.field :global(.form-control) {
+  min-height: 3rem;
+  padding-left: 2.75rem;
+
+  border-radius: $radius-md;
+}
+
+.passwordInput {
+  padding-right: 3rem !important;
+}
+
+.passwordToggle {
+  position: absolute;
+  top: 50%;
+  right: $spacing-sm;
+  z-index: 2;
+
+  @include flex-center;
+
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+
+  color: $color-text-light;
+  background: transparent;
+  border: 0;
+  border-radius: $radius-circle;
+
+  transform: translateY(-50%);
+
+  &:hover:not(:disabled) {
+    color: $color-primary-dark;
+    background: rgba($color-primary, 0.1);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}
+
+.submitButton {
+  width: 100%;
+  margin-top: $spacing-sm;
+}
+
+@include tablet {
+  .card {
+    padding: $spacing-xl;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fieldIcon,
+  .passwordToggle {
+    transition: none;
+  }
+}

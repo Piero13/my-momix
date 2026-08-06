@@ -66,3 +66,43 @@
       margin: $spacing-xs 0;
   }
 }
+
+.linkButton {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-xs;
+
+  min-height: 44px;
+  padding: $spacing-sm $spacing-md;
+
+  color: $color-text;
+  background: transparent;
+  border: 0;
+  border-radius: $radius-md;
+
+  font: inherit;
+  text-decoration: none;
+
+  cursor: pointer;
+
+  transition:
+    color $transition-fast,
+    background-color $transition-fast;
+
+  &:hover:not(:disabled) {
+    color: $color-primary-dark;
+  }
+
+  &:disabled {
+    cursor: wait;
+    opacity: 0.65;
+  }
+}
+
+.logoutButton {
+  text-align: left;
+}
+
+.loginIcon, .logoutIcon, .linkIcon {
+  margin-right: $spacing-xs;
+}

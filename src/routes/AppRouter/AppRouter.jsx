@@ -20,6 +20,7 @@ import {
 } from "@/layouts";
 
 import ProtectedAdminRoute from "../ProtectedAdminRoute";
+import ProtectedGuestRoute from "../ProtectedGuestRoute";
 
 import ScrollToTop from "../ScrollToTop";
 
@@ -36,7 +37,7 @@ const Terms = lazy(() => import("@/pages/public/Terms"));
 
 const NotFound = lazy(() => import("@/pages/public/NotFound"));
 
-const Login = lazy(() => import("@/pages/admin/Login"));
+const Login = lazy(() => import("@/pages/auth/Login"));
 
 const Dashboard = lazy(() => import("@/pages/admin/Dashboard"));
 const RecipesManager = lazy(() => import("@/pages/admin/RecipesManager"));
@@ -58,7 +59,6 @@ export default function AppRouter() {
           {/* PUBLIC */}
 
           <Route element={<PublicLayout />}>
-
             <Route
               path={ROUTES.HOME}
               element={<Home />}
@@ -93,25 +93,35 @@ export default function AppRouter() {
               path={ROUTES.TERMS}
               element={<Terms />}
             />
-
           </Route>
 
           {/* LOGIN */}
 
-          <Route element={<AuthLayout />}>
-
-            <Route
-              path={ROUTES.LOGIN}
-              element={<Login />}
-            />
-
+          <Route element={<ProtectedGuestRoute />}>
+            <Route element={<AuthLayout />}>
+              <Route
+                path={ROUTES.LOGIN}
+                element={<Login />}
+              />
+            </Route>
           </Route>
 
           {/* ADMIN */}
 
           <Route element={<ProtectedAdminRoute />}>
-
-            <Route element={<AdminLayout />}>
+            <Route
+              path={ROUTES.ADMIN}
+              element={<AdminLayout />}
+            >
+              <Route
+                index
+                element={
+                  <Navigate
+                    to={ROUTES.DASHBOARD}
+                    replace
+                  />
+                }
+              />
 
               <Route
                 path={ROUTES.DASHBOARD}
@@ -142,9 +152,7 @@ export default function AppRouter() {
                 path={ROUTES.SETTINGS}
                 element={<Settings />}
               />
-
             </Route>
-
           </Route>
 
           {/* 404 */}

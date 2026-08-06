@@ -15,10 +15,11 @@ export const ROUTES = {
 
   // Authentication
   LOGIN: "/connexion",
+  UNAUTHORIZED: "/access-refuse",
 
   // Admin routes
   ADMIN: "/admin",
-  DASHBOARD: "/admin",
+  DASHBOARD: "/admin/dashboard",
   RECIPES: "/admin/recettes",
   CATEGORIES: "/admin/categories",
   INGREDIENTS: "/admin/ingredients",

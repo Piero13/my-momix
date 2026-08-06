@@ -4,9 +4,11 @@
 
 import { Toaster } from "react-hot-toast";
 
+import { AuthProvider } from "@/contexts";
+
 export default function AppProviders({ children }) {
   return (
-    <>
+    <AuthProvider>
       {children}
 
       <Toaster
@@ -17,6 +19,6 @@ export default function AppProviders({ children }) {
           duration: 3000,
         }}
       />
-    </>
+    </AuthProvider>
   );
 }
