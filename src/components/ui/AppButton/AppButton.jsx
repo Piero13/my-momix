@@ -45,15 +45,15 @@ export default function AppButton({
       ) : (
         <>
           {icon && iconPosition === "start" ? (
-            <span className={styles.icon} aria-hidden="true">
+            <span className={styles.iconStart} aria-hidden="true">
               {icon}
             </span>
           ) : null}
 
-          <span>{children}</span>
+          <span className={styles.label}>{children}</span>
 
           {icon && iconPosition === "end" ? (
-            <span className={styles.icon} aria-hidden="true">
+            <span className={styles.iconEnd} aria-hidden="true">
               {icon}
             </span>
           ) : null}

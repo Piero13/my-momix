@@ -1,8 +1,80 @@
+@use "@/styles/abstracts" as *;
+
+/* ==========================================================================
+   Admin Layout
+   ========================================================================== */
+
 .layout {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+
   min-height: 100vh;
+
+  background: $color-background;
+}
+
+.desktopSidebar {
+  display: none;
 }
 
 .main {
+  display: flex;
+  flex-direction: column;
+
+  min-width: 0;
+  min-height: 100vh;
+}
+
+.content {
   flex: 1;
+
+  min-width: 0;
+  width: 100%;
+  padding: $spacing-lg;
+}
+
+.mobileSidebar {
+  width: min(20rem, 88vw);
+}
+
+.mobileSidebar :global(.offcanvas-header) {
+  border-bottom: 1px solid $color-border;
+}
+
+.mobileSidebar :global(.offcanvas-body) {
+  padding: 0;
+  overflow: hidden;
+}
+
+@include tablet {
+  .content {
+    padding: $spacing-xl;
+  }
+}
+
+@include desktop {
+  .layout {
+    grid-template-columns:
+      17rem
+      minmax(0, 1fr);
+  }
+
+  .desktopSidebar {
+    position: sticky;
+    top: 0;
+
+    display: block;
+
+    height: 100vh;
+
+    border-right: 1px solid $color-border;
+  }
+
+  .content {
+    padding: $spacing-2xl;
+  }
+
+  .mobileSidebar {
+    display: none;
+  }
 }

@@ -4,16 +4,20 @@
    App Button
    ========================================================================== */
 
-.button {
+.button:global(.btn) {
   display: inline-flex;
+  flex-flow: row nowrap;
   align-items: center;
   justify-content: center;
   gap: $spacing-sm;
 
+  min-width: 0;
   min-height: 44px;
   padding-inline: $spacing-lg;
 
   font-weight: $font-weight-medium;
+  line-height: 1.25;
+  white-space: nowrap;
 
   transition:
     transform $transition-fast,
@@ -31,7 +35,39 @@
   }
 }
 
-.icon,
+.iconStart,
+.iconEnd {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 auto;
+  width: auto;
+
+  line-height: 1;
+
+  svg {
+    display: block;
+    width: 1em;
+    height: 1em;
+  }
+}
+
+.label {
+  display: block;
+
+  flex: 0 1 auto;
+  width: content;
+  min-width: 0;
+
+  line-height: 1.25;
+  white-space: nowrap;
+}
+
 .spinner {
-  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 auto;
 }

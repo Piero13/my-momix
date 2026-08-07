@@ -13,6 +13,8 @@ import { NavLink, useNavigate } from "react-router-dom";
 
 import { NAVIGATION_ITEMS, ROUTES } from "@/constants";
 
+import { AppButton } from "@/components/ui";
+
 import { useAuth } from "@/hooks";
 
 import { classNames } from "@/utils";
@@ -23,7 +25,6 @@ export default function Navigation({ onNavigate }) {
   const {
     isAuthenticated,
     isAdmin,
-    isLoading,
     signOut,
   } = useAuth();
 
@@ -84,27 +85,22 @@ export default function Navigation({ onNavigate }) {
       ) : null}
 
       {!isAuthenticated ? (
-        <NavLink
+        <AppButton
+          as={NavLink}
           to={ROUTES.LOGIN}
-          className={getLinkClassName}
-          onClick={handleLinkClick}
+          variant="outline-primary"
+          icon={<FiLogIn />}
         >
-          <FiLogIn className={styles.loginIcon} aria-hidden="true" />
-          <span>Se connecter</span>
-        </NavLink>
+          Se connecter
+        </AppButton>
       ) : (
-        <button
-          type="button"
-          className={classNames(
-            styles.linkButton,
-            styles.logoutButton
-          )}
-          disabled={isLoading}
+        <AppButton
+          variant="outline-danger"
+          icon={<FiLogOut />}
           onClick={handleSignOut}
         >
-          <FiLogOut className={styles.logoutIcon} aria-hidden="true" />
-          <span>Déconnexion</span>
-        </button>
+          Déconnexion
+        </AppButton>
       )}
     </Nav>
   );
