@@ -1,3 +1,12 @@
-.page {
-  padding: 2rem 0;
+@use "@/styles/abstracts" as *;
+
+.dashboard {
+  display: grid;
+  gap: $spacing-xl;
+}
+
+@include desktop {
+  .dashboard {
+    gap: $spacing-2xl;
+  }
 }

@@ -1,0 +1,49 @@
+@use "@/styles/abstracts" as *;
+
+/* ==========================================================================
+   Dashboard KPIs
+   ========================================================================== */
+
+.section {
+  display: grid;
+  gap: $spacing-lg;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-md;
+}
+
+.eyebrow {
+  margin: 0 0 $spacing-xs;
+
+  color: $color-primary-dark;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.title {
+  margin: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: $spacing-md;
+}
+
+@include tablet {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@include desktop {
+  .grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}

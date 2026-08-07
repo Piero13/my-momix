@@ -1,48 +1,77 @@
-import { useEffect } from "react";
+/**
+ * Administration dashboard page.
+ */
 
 import {
-  getDashboardMetrics,
-  getPendingCommentsCount,
-  getRecentActivity,
-} from "@/services";
+  useEffect,
+  useState,
+} from "react";
+import toast from "react-hot-toast";
+
+import { DashboardKpis } from "@/components/admin";
+import { getDashboardMetrics } from "@/services";
+
+import styles from "./Dashboard.module.scss";
+
+const INITIAL_METRICS = {
+  recipes: 0,
+  publishedRecipes: 0,
+  draftRecipes: 0,
+  archivedRecipes: 0,
+  categories: 0,
+  pendingComments: 0,
+  approvedComments: 0,
+};
 
 export default function Dashboard() {
-  useEffect(() => {
-    async function testDashboardServices() {
-      try {
-        const [
-          metrics,
-          pendingComments,
-          activity,
-        ] = await Promise.all([
-          getDashboardMetrics(),
-          getPendingCommentsCount(),
-          getRecentActivity(),
-        ]);
+  const [metrics, setMetrics] = useState(
+    INITIAL_METRICS
+  );
 
-        console.log("Dashboard metrics:", metrics);
-        console.log(
-          "Pending comments:",
-          pendingComments
-        );
-        console.log(
-          "Recent activity:",
-          activity
-        );
-      } catch (error) {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    let isCancelled = false;
+
+    getDashboardMetrics()
+      .then((data) => {
+        if (isCancelled) {
+          return;
+        }
+
+        setMetrics(data);
+      })
+      .catch((error) => {
+        if (isCancelled) {
+          return;
+        }
+
         console.error(
-          "Dashboard service test failed:",
+          "Unable to load dashboard metrics:",
           error
         );
-      }
-    }
 
-    void testDashboardServices();
+        toast.error(
+          "Impossible de charger les indicateurs du Dashboard."
+        );
+      })
+      .finally(() => {
+        if (!isCancelled) {
+          setIsLoading(false);
+        }
+      });
+
+    return () => {
+      isCancelled = true;
+    };
   }, []);
 
   return (
-    <section>
-      <h2>Dashboard</h2>
-    </section>
+    <div className={styles.dashboard}>
+      <DashboardKpis
+        metrics={metrics}
+        loading={isLoading}
+      />
+    </div>
   );
 }

@@ -1,0 +1,153 @@
+@use "@/styles/abstracts" as *;
+
+/* ==========================================================================
+   Admin KPI Card
+   ========================================================================== */
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+
+  min-width: 0;
+  height: 100%;
+  padding: $spacing-lg;
+
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-sm;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+
+  min-width: 0;
+}
+
+.icon {
+  @include flex-center;
+
+  flex-shrink: 0;
+
+  width: 2.75rem;
+  height: 2.75rem;
+
+  color: $color-text-light;
+  background: $color-background;
+  border-radius: $radius-circle;
+
+  font-size: $font-size-lg;
+}
+
+.title {
+  min-width: 0;
+
+  color: $color-text-light;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+}
+
+.value {
+  color: $color-text;
+
+  font-family: $font-heading;
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-bold;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.helper {
+  margin: 0;
+
+  color: $color-text-muted;
+  font-size: $font-size-xs;
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+   Variants
+   ========================================================================== */
+
+.primary {
+  .icon {
+    color: $color-primary-dark;
+    background: rgba($color-primary, 0.1);
+  }
+}
+
+.success {
+  .icon {
+    color: $color-success;
+    background: rgba($color-success, 0.1);
+  }
+}
+
+.warning {
+  border-color: rgba($color-warning, 0.35);
+
+  .icon {
+    color: $color-warning;
+    background: rgba($color-warning, 0.12);
+  }
+}
+
+.danger {
+  border-color: rgba($color-danger, 0.35);
+
+  .icon {
+    color: $color-danger;
+    background: rgba($color-danger, 0.1);
+  }
+}
+
+/* ==========================================================================
+   Loading
+   ========================================================================== */
+
+.skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+}
+
+.skeletonValue,
+.skeletonHelper {
+  display: block;
+
+  background: $color-border;
+  border-radius: $radius-sm;
+
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+.skeletonValue {
+  width: 4rem;
+  height: 2rem;
+}
+
+.skeletonHelper {
+  width: 70%;
+  height: 0.75rem;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+
+  50% {
+    opacity: 0.9;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeletonValue,
+  .skeletonHelper {
+    animation: none;
+  }
+}
