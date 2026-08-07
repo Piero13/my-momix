@@ -1,24 +1,48 @@
-/**
- * Dashboard page.
- */
+import { useEffect } from "react";
 
-import styles from "./Dashboard.module.scss";
-
-// Constants
-
-// Hooks
-
-// Local state
-
-// Memoized values
-
-// Handlers
-
+import {
+  getDashboardMetrics,
+  getPendingCommentsCount,
+  getRecentActivity,
+} from "@/services";
 
 export default function Dashboard() {
+  useEffect(() => {
+    async function testDashboardServices() {
+      try {
+        const [
+          metrics,
+          pendingComments,
+          activity,
+        ] = await Promise.all([
+          getDashboardMetrics(),
+          getPendingCommentsCount(),
+          getRecentActivity(),
+        ]);
+
+        console.log("Dashboard metrics:", metrics);
+        console.log(
+          "Pending comments:",
+          pendingComments
+        );
+        console.log(
+          "Recent activity:",
+          activity
+        );
+      } catch (error) {
+        console.error(
+          "Dashboard service test failed:",
+          error
+        );
+      }
+    }
+
+    void testDashboardServices();
+  }, []);
+
   return (
-    <main className={styles.page}>
-      <h1>Dashboard</h1>
-    </main>
+    <section>
+      <h2>Dashboard</h2>
+    </section>
   );
 }
