@@ -6,3 +6,4 @@ export * from "./scaleQuantity";
 export * from "./getTipLabels";
 export * from "./getSimilarRecipes";
 export * from "./mapRecipeDetailsToCard";
+export * from "./date";

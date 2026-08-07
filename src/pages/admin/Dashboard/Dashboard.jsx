@@ -8,8 +8,15 @@ import {
 } from "react";
 import toast from "react-hot-toast";
 
-import { DashboardKpis } from "@/components/admin";
-import { getDashboardMetrics } from "@/services";
+import {
+  DashboardActivity,
+  DashboardKpis,
+} from "@/components/admin";
+
+import {
+  getDashboardMetrics,
+  getRecentActivity,
+} from "@/services";
 
 import styles from "./Dashboard.module.scss";
 
@@ -28,18 +35,23 @@ export default function Dashboard() {
     INITIAL_METRICS
   );
 
+  const [activities, setActivities] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     let isCancelled = false;
 
-    getDashboardMetrics()
-      .then((data) => {
+    Promise.all([
+      getDashboardMetrics(),
+      getRecentActivity(5),
+    ])
+      .then(([metricsData, activityData]) => {
         if (isCancelled) {
           return;
         }
 
-        setMetrics(data);
+        setMetrics(metricsData);
+        setActivities(activityData);
       })
       .catch((error) => {
         if (isCancelled) {
@@ -47,12 +59,12 @@ export default function Dashboard() {
         }
 
         console.error(
-          "Unable to load dashboard metrics:",
+          "Unable to load dashboard data:",
           error
         );
 
         toast.error(
-          "Impossible de charger les indicateurs du Dashboard."
+          "Impossible de charger les données du Dashboard."
         );
       })
       .finally(() => {
@@ -70,6 +82,11 @@ export default function Dashboard() {
     <div className={styles.dashboard}>
       <DashboardKpis
         metrics={metrics}
+        loading={isLoading}
+      />
+
+      <DashboardActivity
+        activities={activities}
         loading={isLoading}
       />
     </div>
