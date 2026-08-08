@@ -1,0 +1,114 @@
+@use "@/styles/abstracts" as *;
+
+/* ==========================================================================
+   Admin Data Table
+   ========================================================================== */
+
+.wrapper {
+  min-width: 0;
+
+  overflow: hidden;
+
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-xl;
+  box-shadow: $shadow-sm;
+}
+
+.scrollContainer {
+  width: 100%;
+  overflow-x: auto;
+
+  -webkit-overflow-scrolling: touch;
+}
+
+.table {
+  width: 100%;
+  min-width: 48rem;
+
+  border-collapse: collapse;
+
+  color: $color-text;
+}
+
+.headerCell {
+  padding: $spacing-md $spacing-lg;
+
+  color: $color-text-light;
+  background: $color-background;
+  border-bottom: 1px solid $color-border;
+
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.row {
+  transition:
+    background-color $transition-fast;
+
+  &:not(:last-child) {
+    border-bottom: 1px solid $color-border;
+  }
+
+  &:hover {
+    background: rgba($color-primary, 0.035);
+  }
+}
+
+.cell {
+  min-width: 0;
+  padding: $spacing-md $spacing-lg;
+
+  color: $color-text;
+  font-size: $font-size-sm;
+  vertical-align: middle;
+}
+
+.alignCenter {
+  text-align: center;
+}
+
+.alignRight {
+  text-align: right;
+}
+
+/* ==========================================================================
+   Skeleton
+   ========================================================================== */
+
+.skeleton {
+  display: block;
+
+  width: 75%;
+  height: 0.9rem;
+
+  background: $color-border;
+  border-radius: $radius-sm;
+
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+
+  50% {
+    opacity: 0.9;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .row {
+    transition: none;
+  }
+
+  .skeleton {
+    animation: none;
+  }
+}

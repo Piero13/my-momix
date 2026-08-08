@@ -1,0 +1,24 @@
+@use "@/styles/abstracts" as *;
+
+.wrapper {
+  display: grid;
+  gap: $spacing-sm;
+
+  min-width: 0;
+}
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-xs;
+
+  width: fit-content;
+
+  color: $color-text;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+
+  svg {
+    flex-shrink: 0;
+  }
+}

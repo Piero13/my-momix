@@ -1,0 +1,52 @@
+@use "@/styles/abstracts" as *;
+
+/* ==========================================================================
+   Admin Filter Select
+   ========================================================================== */
+
+.wrapper {
+  display: grid;
+  gap: $spacing-sm;
+
+  min-width: 0;
+}
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-xs;
+
+  width: fit-content;
+
+  color: $color-text;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+
+  svg {
+    flex-shrink: 0;
+  }
+}
+
+.select {
+  min-height: 44px;
+
+  color: $color-text;
+  background-color: $color-surface;
+  border-color: $color-border;
+  border-radius: $radius-md;
+
+  font-size: $font-size-sm;
+
+  &:focus {
+    border-color: $color-primary-dark;
+    box-shadow:
+      0 0 0 0.2rem rgba($color-primary, 0.15);
+  }
+
+  &:disabled {
+    color: $color-text-muted;
+    background-color: $color-background;
+
+    cursor: not-allowed;
+  }
+}

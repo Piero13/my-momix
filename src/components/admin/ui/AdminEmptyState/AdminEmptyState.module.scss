@@ -1,0 +1,66 @@
+@use "@/styles/abstracts" as *;
+
+/* ==========================================================================
+   Admin Empty State
+   ========================================================================== */
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-md;
+
+  min-width: 0;
+  padding: $spacing-2xl $spacing-lg;
+
+  text-align: center;
+}
+
+.icon {
+  @include flex-center;
+
+  width: 3.5rem;
+  height: 3.5rem;
+
+  color: $color-primary-dark;
+  background: rgba($color-primary, 0.1);
+  border-radius: $radius-circle;
+
+  font-size: $font-size-xl;
+}
+
+.content {
+  max-width: 32rem;
+}
+
+.title {
+  margin: 0 0 $spacing-xs;
+
+  color: $color-text;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+}
+
+.description {
+  margin: 0;
+
+  color: $color-text-muted;
+  font-size: $font-size-sm;
+  line-height: 1.6;
+}
+
+.action {
+  margin-top: $spacing-xs;
+}
+
+.compact {
+  padding-block: $spacing-xl;
+
+  .icon {
+    width: 3rem;
+    height: 3rem;
+
+    font-size: $font-size-lg;
+  }
+}
