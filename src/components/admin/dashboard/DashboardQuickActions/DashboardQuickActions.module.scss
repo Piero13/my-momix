@@ -1,0 +1,161 @@
+@use "@/styles/abstracts" as *;
+
+/* ==========================================================================
+   Dashboard Quick Actions
+   ========================================================================== */
+
+.section {
+  padding: $spacing-lg;
+
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-xl;
+  box-shadow: $shadow-sm;
+}
+
+.header {
+  margin-bottom: $spacing-lg;
+}
+
+.eyebrow {
+  margin: 0 0 $spacing-xs;
+
+  color: $color-primary-dark;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.title {
+  margin: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: $spacing-md;
+}
+
+.card {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+
+  min-width: 0;
+  min-height: 7rem;
+  padding: $spacing-lg;
+
+  color: $color-text;
+  background: $color-background;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+
+  text-decoration: none;
+
+  transition:
+    transform $transition-fast,
+    box-shadow $transition-fast,
+    border-color $transition-fast,
+    background-color $transition-fast;
+
+  &:hover {
+    color: $color-text;
+    border-color: rgba($color-primary, 0.3);
+    box-shadow: $shadow-sm;
+    transform: translateY(-2px);
+  }
+}
+
+.icon {
+  @include flex-center;
+
+  flex-shrink: 0;
+
+  width: 3rem;
+  height: 3rem;
+
+  color: $color-primary-dark;
+  background: rgba($color-primary, 0.1);
+  border-radius: $radius-circle;
+
+  font-size: $font-size-xl;
+}
+
+.content {
+  min-width: 0;
+}
+
+.cardTitle {
+  margin: 0 0 $spacing-xs;
+
+  color: $color-text;
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+}
+
+.description {
+  margin: 0;
+
+  color: $color-text-light;
+  font-size: $font-size-sm;
+  line-height: 1.5;
+}
+
+.badge {
+  position: absolute;
+  top: $spacing-sm;
+  right: $spacing-sm;
+
+  @include flex-center;
+
+  min-width: 1.5rem;
+  height: 1.5rem;
+  padding-inline: $spacing-xs;
+
+  color: $color-surface;
+  background: $color-warning;
+  border-radius: $radius-pill;
+
+  font-size: $font-size-xs;
+  font-weight: $font-weight-bold;
+  line-height: 1;
+}
+
+.primary {
+  .icon {
+    color: $color-primary-dark;
+    background: rgba($color-primary, 0.12);
+  }
+}
+
+.warning {
+  border-color: rgba($color-warning, 0.35);
+
+  .icon {
+    color: $color-warning;
+    background: rgba($color-warning, 0.12);
+  }
+}
+
+@include tablet {
+  .section {
+    padding: $spacing-xl;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: none;
+
+    &:hover {
+      transform: none;
+    }
+  }
+}

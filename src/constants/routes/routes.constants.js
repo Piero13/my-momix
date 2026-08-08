@@ -21,6 +21,8 @@ export const ROUTES = {
   ADMIN: "/admin",
   DASHBOARD: "/admin/dashboard",
   RECIPES: "/admin/recettes",
+  NEW_RECIPE: "/admin/recettes/nouvelle",
+  EDIT_RECIPE: "/admin/recettes/:recipeId/modifier",
   CATEGORIES: "/admin/categories",
   INGREDIENTS: "/admin/ingredients",
   COMMENTS: "/admin/commentaires",

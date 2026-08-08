@@ -11,6 +11,7 @@ import toast from "react-hot-toast";
 import {
   DashboardActivity,
   DashboardKpis,
+  DashboardQuickActions,
 } from "@/components/admin";
 
 import {
@@ -85,10 +86,17 @@ export default function Dashboard() {
         loading={isLoading}
       />
 
-      <DashboardActivity
-        activities={activities}
-        loading={isLoading}
-      />
+
+        <DashboardQuickActions
+          pendingCommentsCount={
+            metrics.pendingComments
+          }
+        />
+
+        <DashboardActivity
+          activities={activities}
+          loading={isLoading}
+        />
     </div>
   );
 }

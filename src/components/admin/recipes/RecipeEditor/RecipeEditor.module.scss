@@ -1,0 +1,36 @@
+@use "@/styles/abstracts" as *;
+
+.editor {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: $spacing-xl;
+
+  align-items: start;
+}
+
+.mainColumn,
+.sideColumn {
+  min-width: 0;
+}
+
+.sideColumn {
+  display: grid;
+  gap: $spacing-lg;
+}
+
+@include desktop {
+  .editor {
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(17rem, 22rem);
+
+    gap: $spacing-2xl;
+  }
+
+  .sideColumn {
+    position: sticky;
+    top: calc(
+      $header-height + $spacing-lg
+    );
+  }
+}

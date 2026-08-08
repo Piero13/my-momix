@@ -45,6 +45,8 @@ const CategoriesManager = lazy(() => import("@/pages/admin/CategoriesManager"));
 const IngredientsManager = lazy(() => import("@/pages/admin/IngredientsManager"));
 const CommentsManager = lazy(() => import("@/pages/admin/CommentsManager"));
 const Settings = lazy(() => import("@/pages/admin/Settings"));
+const RecipeCreate = lazy(() => import("@/pages/admin/RecipeCreate"));
+const RecipeEdit = lazy(() => import("@/pages/admin/RecipeEdit"))
 
 export default function AppRouter() {
   return (
@@ -131,6 +133,16 @@ export default function AppRouter() {
               <Route
                 path={ROUTES.RECIPES}
                 element={<RecipesManager />}
+              />
+
+              <Route
+                path={ROUTES.NEW_RECIPE}
+                element={<RecipeCreate />}
+              />
+
+              <Route
+                path={ROUTES.EDIT_RECIPE}
+                element={<RecipeEdit />}
               />
 
               <Route
