@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FiActivity, FiFolder, FiPlus } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import {
   AdminFilterSelect,
@@ -50,6 +50,7 @@ export default function RecipesManager() {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("");
   const [status, setStatus] = useState("");
+  const navigate = useNavigate();
 
   const [page, setPage] = useState(1);
 
@@ -166,6 +167,12 @@ export default function RecipesManager() {
         data={TEST_RECIPES}
         emptyTitle="Aucune recette"
         emptyDescription="Créez votre première recette pour commencer."
+        rowProps={(recipe) => ({
+          onDoubleClick: () =>
+            navigate(
+              `/admin/recettes/${recipe.id}/modifier`
+            ),
+        })}
       />
 
       <AdminPagination

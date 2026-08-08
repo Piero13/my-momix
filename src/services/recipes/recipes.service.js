@@ -84,3 +84,96 @@ export async function deleteRecipe(recipeId) {
     throw error;
   }
 }
+
+/**
+ * Returns a paginated list of recipes for administration.
+ *
+ * @param {object} params
+ * @param {number} params.page
+ * @param {number} params.pageSize
+ * @param {string} params.search
+ * @param {string} params.categoryId
+ * @param {string} params.status
+ * @param {string} params.sortBy
+ * @param {"asc"|"desc"} params.sortDirection
+ * @returns {Promise<{ data: Array, count: number }>}
+ */
+export async function getAdminRecipes({
+  page = 1,
+  pageSize = 10,
+  search = "",
+  categoryId = "",
+  status = "",
+  sortBy = "updated_at",
+  sortDirection = "desc",
+} = {}) {
+  const from = (page - 1) * pageSize;
+  const to = from + pageSize - 1;
+
+  let query = supabase
+    .from("recipes")
+    .select(
+      `
+        id,
+        title,
+        slug,
+        image_path,
+        status,
+        difficulty,
+        updated_at,
+        category_id,
+        categories (
+          id,
+          name,
+          slug
+        )
+      `,
+      {
+        count: "exact",
+      }
+    );
+
+  const normalizedSearch = search.trim();
+
+  if (normalizedSearch) {
+    query = query.ilike(
+      "title",
+      `%${normalizedSearch}%`
+    );
+  }
+
+  if (categoryId) {
+    query = query.eq(
+      "category_id",
+      categoryId
+    );
+  }
+
+  if (status) {
+    query = query.eq(
+      "status",
+      status
+    );
+  }
+
+  query = query
+    .order(sortBy, {
+      ascending: sortDirection === "asc",
+    })
+    .range(from, to);
+
+  const {
+    data,
+    count,
+    error,
+  } = await query;
+
+  if (error) {
+    throw error;
+  }
+
+  return {
+    data: data ?? [],
+    count: count ?? 0,
+  };
+}

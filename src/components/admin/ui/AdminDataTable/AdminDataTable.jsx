@@ -14,6 +14,7 @@ export default function AdminDataTable({
     columns = [],
     data = [],
     rowKey = "id",
+    rowProps,
     loading = false,
     skeletonRows = DEFAULT_SKELETON_ROWS,
     emptyIcon,
@@ -47,87 +48,100 @@ export default function AdminDataTable({
         >
             <div className={styles.scrollContainer}>
                 <table className={styles.table}>
-                <thead>
-                    <tr>
-                    {columns.map((column) => (
-                        <th
-                        key={column.key}
-                        scope="col"
-                        className={classNames(
-                            styles.headerCell,
-                            column.align === "center" &&
-                            styles.alignCenter,
-                            column.align === "right" &&
-                            styles.alignRight
-                        )}
-                        style={
-                            column.width
-                            ? {
-                                width: column.width,
-                                }
-                            : undefined
-                        }
-                        >
-                        {column.label}
-                        </th>
-                    ))}
-                    </tr>
-                </thead>
-
-                <tbody>
-                    {loading
-                    ? Array.from({
-                        length: skeletonRows,
-                        }).map((_, rowIndex) => (
-                        <tr
-                            key={`skeleton-${rowIndex}`}
-                            className={styles.row}
-                            aria-hidden="true"
-                        >
-                            {columns.map((column) => (
-                            <td
-                                key={column.key}
-                                className={styles.cell}
-                            >
-                                <span
-                                className={
-                                    styles.skeleton
-                                }
-                                />
-                            </td>
-                            ))}
-                        </tr>
-                        ))
-                    : data.map((row, rowIndex) => (
-                        <tr
-                            key={getRowKey(
-                            row,
-                            rowIndex
+                    <thead>
+                        <tr>
+                        {columns.map((column) => (
+                            <th
+                            key={column.key}
+                            scope="col"
+                            className={classNames(
+                                styles.headerCell,
+                                column.align === "center" &&
+                                styles.alignCenter,
+                                column.align === "right" &&
+                                styles.alignRight
                             )}
-                            className={styles.row}
-                        >
-                            {columns.map((column) => (
-                            <td
-                                key={column.key}
-                                className={classNames(
-                                styles.cell,
-                                column.align ===
-                                    "center" &&
-                                    styles.alignCenter,
-                                column.align ===
-                                    "right" &&
-                                    styles.alignRight
-                                )}
+                            style={
+                                column.width
+                                ? {
+                                    width: column.width,
+                                    }
+                                : undefined
+                            }
                             >
-                                {getCellContent(
-                                column,
-                                row
-                                )}
-                            </td>
-                            ))}
-                        </tr>
+                            {column.label}
+                            </th>
                         ))}
-                </tbody>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {loading
+                        ? Array.from({
+                            length: skeletonRows,
+                            }).map((_, rowIndex) => (
+                            <tr
+                                key={`skeleton-${rowIndex}`}
+                                className={styles.row}
+                                aria-hidden="true"
+                            >
+                                {columns.map((column) => (
+                                <td
+                                    key={column.key}
+                                    className={styles.cell}
+                                >
+                                    <span
+                                    className={
+                                        styles.skeleton
+                                    }
+                                    />
+                                </td>
+                                ))}
+                            </tr>
+                            ))
+                        : data.map((row, rowIndex) => {
+                            const customRowProps =
+                                typeof rowProps === "function"
+                                ? rowProps(row, rowIndex)
+                                : {};
+
+                            const {
+                                className: rowClassName,
+                                ...restRowProps
+                            } = customRowProps;
+
+                            return (
+                                <tr
+                                    key={getRowKey(row, rowIndex)}
+                                    className={classNames(
+                                        styles.row,
+                                        rowClassName
+                                    )}
+                                    {...restRowProps}
+                                >
+                                    {columns.map((column) => (
+                                    <td
+                                        key={column.key}
+                                        className={classNames(
+                                        styles.cell,
+                                        column.align ===
+                                            "center" &&
+                                            styles.alignCenter,
+                                        column.align ===
+                                            "right" &&
+                                            styles.alignRight
+                                        )}
+                                    >
+                                        {getCellContent(
+                                        column,
+                                        row
+                                        )}
+                                    </td>
+                                    ))}
+                                </tr>
+                            )
+                        })}
+                    </tbody>
                 </table>
             </div>
 
