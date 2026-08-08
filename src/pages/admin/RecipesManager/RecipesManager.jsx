@@ -8,9 +8,13 @@ import {
   AdminToolbar,
   AdminDataTable,
   AdminPageLayout,
+  AdminPagination,
 } from "@/components/admin";
 import { AppButton } from "@/components/ui";
-import { ROUTES } from "@/constants";
+import { 
+  ROUTES,
+  PAGINATION,
+} from "@/constants";
 
 const STATUS_OPTIONS = [
   {
@@ -46,6 +50,12 @@ export default function RecipesManager() {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("");
   const [status, setStatus] = useState("");
+
+  const [page, setPage] = useState(1);
+
+  const [pageSize, setPageSize] = useState(
+    PAGINATION.DEFAULT_PAGE_SIZE
+  );
 
   const TEST_RECIPES = [
     {
@@ -101,62 +111,74 @@ export default function RecipesManager() {
 
   return (
     <AdminPageLayout>
-        <AdminToolbar
-      title="Recettes"
-      description="Gérez l’ensemble des recettes de MyMomix."
-      action={
-        <AppButton
-          as={Link}
-          to={ROUTES.NEW_RECIPE}
-          variant="primary"
-          icon={<FiPlus />}
-        >
-          Nouvelle recette
-        </AppButton>
-      }
-    >
-      <AdminSearchInput
-        id="recipes-search"
-        label="Rechercher une recette"
-        placeholder="Titre, catégorie..."
-        value={search}
-        onChange={(event) =>
-          setSearch(event.target.value)
+      <AdminToolbar
+        title="Recettes"
+        description="Gérez l’ensemble des recettes de MyMomix."
+        action={
+          <AppButton
+            as={Link}
+            to={ROUTES.NEW_RECIPE}
+            variant="primary"
+            icon={<FiPlus />}
+          >
+            Nouvelle recette
+          </AppButton>
         }
-        onClear={() => setSearch("")}
+      >
+        <AdminSearchInput
+          id="recipes-search"
+          label="Rechercher une recette"
+          placeholder="Titre, catégorie..."
+          value={search}
+          onChange={(event) =>
+            setSearch(event.target.value)
+          }
+          onClear={() => setSearch("")}
+        />
+
+        <AdminFilterSelect
+          id="recipes-category-filter"
+          label="Catégorie"
+          icon={FiFolder}
+          value={category}
+          options={CATEGORY_OPTIONS}
+          placeholder="Toutes les catégories"
+          onChange={(event) =>
+            setCategory(event.target.value)
+          }
+        />
+
+        <AdminFilterSelect
+          id="recipes-status-filter"
+          label="Statut"
+          icon={FiActivity}
+          value={status}
+          options={STATUS_OPTIONS}
+          placeholder="Tous les statuts"
+          onChange={(event) =>
+            setStatus(event.target.value)
+          }
+        />
+      </AdminToolbar>
+
+      <AdminDataTable
+        columns={columns}
+        data={TEST_RECIPES}
+        emptyTitle="Aucune recette"
+        emptyDescription="Créez votre première recette pour commencer."
       />
 
-      <AdminFilterSelect
-        id="recipes-category-filter"
-        label="Catégorie"
-        icon={FiFolder}
-        value={category}
-        options={CATEGORY_OPTIONS}
-        placeholder="Toutes les catégories"
-        onChange={(event) =>
-          setCategory(event.target.value)
-        }
+      <AdminPagination
+        page={page}
+        pageSize={pageSize}
+        totalItems={36}
+        pageSizeOptions={PAGINATION.PAGE_SIZE_OPTIONS}
+        onPageChange={setPage}
+        onPageSizeChange={(nextPageSize) => {
+          setPageSize(nextPageSize);
+          setPage(1);
+        }}
       />
-
-      <AdminFilterSelect
-        id="recipes-status-filter"
-        label="Statut"
-        icon={FiActivity}
-        value={status}
-        options={STATUS_OPTIONS}
-        placeholder="Tous les statuts"
-        onChange={(event) =>
-          setStatus(event.target.value)
-        }
-      />
-    </AdminToolbar>
-
-    <AdminDataTable
-  columns={columns}
-  data={TEST_RECIPES}
-  emptyTitle="Aucune recette"
-  emptyDescription="Créez votre première recette pour commencer."
-/>
     </AdminPageLayout>
 
   );
