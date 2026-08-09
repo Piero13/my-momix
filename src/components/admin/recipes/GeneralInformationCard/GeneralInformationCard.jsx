@@ -181,36 +181,6 @@ export default function GeneralInformationCard({
             {errors.difficulty?.message}
           </Form.Control.Feedback>
         </Form.Group>
-
-        <Form.Group controlId="recipe-servings">
-          <Form.Label>
-            Portions
-          </Form.Label>
-
-          <Form.Control
-            type="number"
-            min="1"
-            step="1"
-            inputMode="numeric"
-            isInvalid={Boolean(
-              errors.servings
-            )}
-            {...register("servings", {
-              required:
-                "Le nombre de portions est obligatoire.",
-              valueAsNumber: true,
-              min: {
-                value: 1,
-                message:
-                  "Le nombre de portions doit être supérieur à zéro.",
-              },
-            })}
-          />
-
-          <Form.Control.Feedback type="invalid">
-            {errors.servings?.message}
-          </Form.Control.Feedback>
-        </Form.Group>
       </div>
     </section>
   );

@@ -13,6 +13,11 @@
   min-width: 0;
 }
 
+.mainColumn {
+  display: grid;
+  gap: $spacing-xl;
+}
+
 .sideColumn {
   display: grid;
   gap: $spacing-lg;
@@ -24,6 +29,10 @@
       minmax(0, 1fr)
       minmax(17rem, 22rem);
 
+    gap: $spacing-2xl;
+  }
+
+  .mainColumn {
     gap: $spacing-2xl;
   }
 

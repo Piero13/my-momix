@@ -5,7 +5,10 @@ import {
   useNavigate,
 } from "react-router-dom";
 
-import GeneralInformationCard from "../GeneralInformationCard";
+import {
+  GeneralInformationCard,
+  TimesCard,
+} from "@/components/admin";
 
 import { AppButton } from "@/components/ui";
 import { ROUTES } from "@/constants";
@@ -107,11 +110,11 @@ export default function RecipeEditor({
         onSubmit={handleSubmit(handleSave)}
       >
         <div className={styles.mainColumn}>
-          <section>
-            <GeneralInformationCard
-              categories={categories}
-            />
-          </section>
+          <GeneralInformationCard
+            categories={categories}
+          />
+
+          <TimesCard />
         </div>
 
         <aside className={styles.sideColumn}>

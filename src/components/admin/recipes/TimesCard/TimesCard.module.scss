@@ -1,0 +1,122 @@
+@use "@/styles/abstracts" as *;
+
+/* ==========================================================================
+   Times Card
+   ========================================================================== */
+
+.card {
+  padding: $spacing-lg;
+
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-xl;
+  box-shadow: $shadow-sm;
+}
+
+.header {
+  margin-bottom: $spacing-xl;
+  padding-bottom: $spacing-lg;
+
+  border-bottom: 1px solid $color-border;
+}
+
+.eyebrow {
+  margin: 0 0 $spacing-xs;
+
+  color: $color-primary-dark;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.title {
+  margin: 0;
+}
+
+.fields {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: $spacing-lg;
+
+  :global(.form-label) {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-xs;
+
+    color: $color-text;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+
+    svg {
+      flex-shrink: 0;
+
+      color: $color-primary-dark;
+    }
+  }
+}
+
+.total {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+
+  min-height: 4.5rem;
+  padding: $spacing-md;
+
+  background: rgba($color-primary, 0.06);
+  border: 1px solid rgba($color-primary, 0.2);
+  border-radius: $radius-lg;
+}
+
+.totalIcon {
+  @include flex-center;
+
+  flex-shrink: 0;
+
+  width: 2.75rem;
+  height: 2.75rem;
+
+  color: $color-primary-dark;
+  background: rgba($color-primary, 0.12);
+  border-radius: $radius-circle;
+
+  font-size: $font-size-lg;
+}
+
+.totalLabel,
+.totalValue {
+  display: block;
+}
+
+.totalLabel {
+  margin-bottom: $spacing-xs;
+
+  color: $color-text-muted;
+  font-size: $font-size-xs;
+}
+
+.totalValue {
+  color: $color-text;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  line-height: 1;
+}
+
+@include tablet {
+  .card {
+    padding: $spacing-xl;
+  }
+
+  .fields {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+}
+
+@include desktop-xl {
+  .fields {
+    grid-template-columns:
+      repeat(4, minmax(0, 1fr));
+  }
+}

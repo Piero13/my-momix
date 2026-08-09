@@ -16,7 +16,7 @@ import { Link } from "react-router-dom";
 
 import { AppButton } from "@/components/ui";
 import { getRecipesByCategoryPath } from "@/constants";
-import { classNames } from "@/utils";
+import { classNames, formatDuration } from "@/utils";
 
 import styles from "./RecipeHero.module.scss";
 
@@ -156,7 +156,7 @@ export default function RecipeHero({
               label="Préparation"
               value={
                 preparationTime
-                  ? `${preparationTime} min`
+                  ? formatDuration(preparationTime)
                   : null
               }
             />
@@ -166,7 +166,7 @@ export default function RecipeHero({
               label="Cuisson"
               value={
                 cookingTime
-                  ? `${cookingTime} min`
+                  ? formatDuration(cookingTime)
                   : null
               }
             />
@@ -176,7 +176,7 @@ export default function RecipeHero({
               label="Temps total"
               value={
                 totalTime
-                  ? `${totalTime} min`
+                  ? formatDuration(totalTime)
                   : null
               }
             />

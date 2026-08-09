@@ -4,6 +4,32 @@ export function mapRecipeFormToPayload(
 ) {
   const status = values.status ?? "draft";
 
+  function toNullableNumber(value) {
+    if (
+      value === "" ||
+      value === null ||
+      value === undefined
+    ) {
+      return null;
+    }
+
+    const number = Number(value);
+
+    return Number.isFinite(number)
+      ? number
+      : null;
+  }
+
+  const preparationTime =
+    toNullableNumber(
+      values.preparationTime
+    );
+
+  const cookingTime =
+    toNullableNumber(
+      values.cookingTime
+    );
+
   return {
     title: values.title.trim(),
     slug: values.slug.trim(),
@@ -15,20 +41,15 @@ export function mapRecipeFormToPayload(
 
     difficulty: values.difficulty,
 
-    preparation_time:
-      values.preparationTime === ""
-        ? null
-        : Number(values.preparationTime),
-
-    cooking_time:
-      values.cookingTime === ""
-        ? null
-        : Number(values.cookingTime),
+    preparation_time: preparationTime,
+    cooking_time: cookingTime,
 
     total_time:
-      values.totalTime === ""
-        ? null
-        : Number(values.totalTime),
+      preparationTime !== null ||
+      cookingTime !== null
+        ? (preparationTime ?? 0) +
+          (cookingTime ?? 0)
+        : null,
 
     servings: Number(values.servings),
 
