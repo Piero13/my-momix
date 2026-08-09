@@ -44,10 +44,16 @@
 }
 
 .danger {
+    border: $color-danger 1px solid;
+
     &:hover:not(:disabled) {
         color: $color-danger;
         background: rgba($color-danger, 0.08);
         border-color: rgba($color-danger, 0.3);
+    }
+
+    svg {
+        color: $color-danger;
     }
 }
 

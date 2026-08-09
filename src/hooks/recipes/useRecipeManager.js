@@ -8,6 +8,7 @@ import {
   PAGINATION,
 } from "@/constants";
 import {
+  deleteRecipe,
   getAdminRecipes,
   getCategoryOptions,
 } from "@/services";
@@ -27,8 +28,59 @@ export function useRecipesManager() {
   const [totalItems, setTotalItems] = useState(0);
 
   const [isLoading, setIsLoading] = useState(true);
-  const [isLoadingCategories, setIsLoadingCategories] =
-    useState(true);
+  const [isLoadingCategories, setIsLoadingCategories] = useState(true);
+
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const refreshRecipes = async () => {
+    const {
+      data,
+      count,
+    } = await getAdminRecipes({
+      page,
+      pageSize,
+      search,
+      categoryId: category,
+      status,
+    });
+
+    setRecipes(data);
+    setTotalItems(count);
+
+    return {
+      data,
+      count,
+    };
+  };
+
+  const removeRecipe = async (recipeId) => {
+    try {
+      setIsDeleting(true);
+
+      await deleteRecipe(recipeId);
+
+      const remainingItems =
+        totalItems - 1;
+
+      const totalPagesAfterDelete =
+        Math.max(
+          1,
+          Math.ceil(
+            remainingItems / pageSize
+          )
+        );
+
+      if (page > totalPagesAfterDelete) {
+        setPage(totalPagesAfterDelete);
+
+        return;
+      }
+
+      await refreshRecipes();
+    } finally {
+      setIsDeleting(false);
+    }
+  };
 
   useEffect(() => {
     let isCancelled = false;
@@ -154,6 +206,7 @@ export function useRecipesManager() {
 
     isLoading,
     isLoadingCategories,
+    isDeleting,
 
     setPage,
 
@@ -162,5 +215,7 @@ export function useRecipesManager() {
     handleCategoryChange,
     handleStatusChange,
     handlePageSizeChange,
+
+    removeRecipe,
   };
 }

@@ -1,3 +1,6 @@
+import { useState } from "react";
+import toast from "react-hot-toast";
+
 import {
   FiActivity,
   FiEdit3,
@@ -6,6 +9,7 @@ import {
   FiImage,
   FiStar,
   FiEye,
+  FiTrash2
 } from "react-icons/fi";
 import {
   Link,
@@ -13,6 +17,7 @@ import {
 } from "react-router-dom";
 
 import {
+  AdminConfirmModal,
   AdminDataTable,
   AdminFilterSelect,
   AdminPageLayout,
@@ -45,6 +50,8 @@ import {
 import styles from "./RecipesManager.module.scss";
 
 export default function RecipesManager() {
+  const [recipeToDelete, setRecipeToDelete] = useState(null);
+  
   const navigate = useNavigate();
 
   const {
@@ -61,6 +68,7 @@ export default function RecipesManager() {
 
     isLoading,
     isLoadingCategories,
+    isDeleting,
 
     setPage,
 
@@ -69,6 +77,8 @@ export default function RecipesManager() {
     handleCategoryChange,
     handleStatusChange,
     handlePageSizeChange,
+
+    removeRecipe,
   } = useRecipesManager();
 
   console.log(recipes)
@@ -191,10 +201,46 @@ export default function RecipesManager() {
             to={getEditRecipePath(recipe.id)}
             variant="primary"
           />
+
+          <AdminIconAction
+            icon={FiTrash2}
+            label="Supprimer la recette"
+            variant="danger"
+            onClick={() =>
+              setRecipeToDelete(recipe)
+            }
+          />
         </div>
       ),
     }
   ];
+
+  const handleConfirmDelete = async () => {
+    if (!recipeToDelete) {
+      return;
+    }
+
+    try {
+      await removeRecipe(
+        recipeToDelete.id
+      );
+
+      toast.success(
+        "Recette supprimée."
+      );
+
+      setRecipeToDelete(null);
+    } catch (error) {
+      console.error(
+        "Unable to delete recipe:",
+        error
+      );
+
+      toast.error(
+        "Impossible de supprimer la recette."
+      );
+    }
+  };
 
   return (
     <AdminPageLayout>
@@ -285,6 +331,20 @@ export default function RecipesManager() {
         onPageSizeChange={
           handlePageSizeChange
         }
+      />
+
+      <AdminConfirmModal
+        show={Boolean(recipeToDelete)}
+        title="Supprimer la recette ?"
+        message={recipeToDelete?.title}
+        description="Cette action est définitive. La recette et les données qui lui sont associées seront supprimées."
+        confirmLabel="Supprimer"
+        variant="danger"
+        isLoading={isDeleting}
+        onCancel={() =>
+          setRecipeToDelete(null)
+        }
+        onConfirm={handleConfirmDelete}
       />
     </AdminPageLayout>
   );
