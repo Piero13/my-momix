@@ -1,12 +1,17 @@
+import { useEffect, useState } from "react";
 import { FormProvider } from "react-hook-form";
 import toast from "react-hot-toast";
 import {
   useNavigate,
 } from "react-router-dom";
 
+import GeneralInformationCard from "../GeneralInformationCard";
+
 import { AppButton } from "@/components/ui";
 import { ROUTES } from "@/constants";
 import { useRecipeForm } from "@/hooks";
+
+import { getCategoryOptions } from "@/services";
 
 import styles from "./RecipeEditor.module.scss";
 
@@ -15,6 +20,8 @@ export default function RecipeEditor({
   recipeId = null,
 }) {
   const navigate = useNavigate();
+
+  const [categories, setCategories] = useState([]);
 
   const {
     form,
@@ -58,6 +65,29 @@ export default function RecipeEditor({
     }
   };
 
+  useEffect(() => {
+    let isCancelled = false;
+
+    getCategoryOptions()
+      .then((data) => {
+        if (!isCancelled) {
+          setCategories(data);
+        }
+      })
+      .catch((error) => {
+        if (!isCancelled) {
+          console.error(
+            "Unable to load recipe categories:",
+            error
+          );
+        }
+      });
+
+    return () => {
+      isCancelled = true;
+    };
+  }, []);
+
   if (isLoadingRecipe) {
     return (
       <div
@@ -78,13 +108,9 @@ export default function RecipeEditor({
       >
         <div className={styles.mainColumn}>
           <section>
-            <h2>
-              Informations générales
-            </h2>
-
-            <p>
-              Le formulaire sera construit dans les prochaines étapes.
-            </p>
+            <GeneralInformationCard
+              categories={categories}
+            />
           </section>
         </div>
 
