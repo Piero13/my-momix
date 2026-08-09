@@ -8,3 +8,4 @@ export { default as AdminSearchInput } from "./AdminSearchInput";
 export { default as AdminToolbar } from "./AdminToolbar";
 export { default as AdminStatusBadge } from "./AdminStatusBadge";
 export { default as AdminIconAction } from "./AdminIconAction";
+export { default as AdminConfirmModal } from "./AdminConfirmModal";

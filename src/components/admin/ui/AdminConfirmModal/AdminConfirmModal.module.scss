@@ -1,0 +1,99 @@
+@use "@/styles/abstracts" as *;
+
+.header {
+  border-bottom: 1px solid $color-border;
+}
+
+.title {
+  color: $color-text;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+}
+
+.body {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: $spacing-md;
+
+  align-items: start;
+
+  padding: $spacing-xl;
+}
+
+.icon {
+  @include flex-center;
+
+  width: 3rem;
+  height: 3rem;
+
+  border-radius: $radius-circle;
+
+  font-size: $font-size-xl;
+}
+
+.default {
+  color: $color-primary-dark;
+  background: rgba($color-primary, 0.1);
+}
+
+.warning {
+  color: $color-warning;
+  background: rgba($color-warning, 0.12);
+}
+
+.danger {
+  color: $color-danger;
+  background: rgba($color-danger, 0.1);
+}
+
+.success {
+  color: $color-success;
+  background: rgba($color-success, 0.1);
+}
+
+.content {
+  min-width: 0;
+}
+
+.message {
+  margin: 0;
+
+  color: $color-text;
+  font-weight: $font-weight-semibold;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.description {
+  margin: $spacing-xs 0 0;
+
+  color: $color-text-light;
+  font-size: $font-size-sm;
+  line-height: 1.6;
+}
+
+.footer {
+  gap: $spacing-sm;
+
+  border-top: 1px solid $color-border;
+}
+
+@include mobile {
+  .body {
+    grid-template-columns: minmax(0, 1fr);
+
+    text-align: center;
+  }
+
+  .icon {
+    margin-inline: auto;
+  }
+
+  .footer {
+    display: grid;
+
+    > * {
+      width: 100%;
+    }
+  }
+}
