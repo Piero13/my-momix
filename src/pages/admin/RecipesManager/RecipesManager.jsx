@@ -1,113 +1,199 @@
-import { useState } from "react";
-import { FiActivity, FiFolder, FiPlus } from "react-icons/fi";
-import { Link, useNavigate } from "react-router-dom";
+import {
+  FiActivity,
+  FiEdit3,
+  FiFolder,
+  FiPlus,
+  FiImage,
+  FiStar,
+  FiEye,
+} from "react-icons/fi";
+import {
+  Link,
+  useNavigate,
+} from "react-router-dom";
 
 import {
-  AdminFilterSelect,
-  AdminSearchInput,
-  AdminToolbar,
   AdminDataTable,
+  AdminFilterSelect,
   AdminPageLayout,
   AdminPagination,
+  AdminSearchInput,
+  AdminToolbar,
+  AdminStatusBadge,
+  AdminIconAction,
 } from "@/components/admin";
 import { AppButton } from "@/components/ui";
-import { 
-  ROUTES,
+
+import {
   PAGINATION,
+  RECIPE_STATUS_LABELS,
+  RECIPE_STATUS_OPTIONS,
+  RECIPE_STATUS_VARIANTS,
+  ROUTES,
+  getEditRecipePath,
+  getRecipeDetailsPath,
 } from "@/constants";
 
-const STATUS_OPTIONS = [
-  {
-    value: "draft",
-    label: "Brouillons",
-  },
-  {
-    value: "published",
-    label: "Publiées",
-  },
-  {
-    value: "archived",
-    label: "Archivées",
-  },
-];
+import {
+  useRecipesManager,
+} from "@/hooks";
 
-const CATEGORY_OPTIONS = [
-  {
-    value: "soupes",
-    label: "Soupes",
-  },
-  {
-    value: "plats",
-    label: "Plats",
-  },
-  {
-    value: "desserts",
-    label: "Desserts",
-  },
-];
+import {
+  formatRelativeDate,
+} from "@/utils";
+
+import styles from "./RecipesManager.module.scss";
 
 export default function RecipesManager() {
-  const [search, setSearch] = useState("");
-  const [category, setCategory] = useState("");
-  const [status, setStatus] = useState("");
   const navigate = useNavigate();
 
-  const [page, setPage] = useState(1);
+  const {
+    recipes,
+    categories,
 
-  const [pageSize, setPageSize] = useState(
-    PAGINATION.DEFAULT_PAGE_SIZE
-  );
+    search,
+    category,
+    status,
 
-  const TEST_RECIPES = [
-    {
-      id: "1",
-      title: "Velouté de courgettes",
-      category: "Soupes",
-      status: "Publiée",
-      updatedAt: "08/08/2026",
-    },
-    {
-      id: "2",
-      title: "Risotto aux champignons",
-      category: "Plats",
-      status: "Brouillon",
-      updatedAt: "07/08/2026",
-    },
-  ];
+    page,
+    pageSize,
+    totalItems,
+
+    isLoading,
+    isLoadingCategories,
+
+    setPage,
+
+    handleSearchChange,
+    handleSearchClear,
+    handleCategoryChange,
+    handleStatusChange,
+    handlePageSizeChange,
+  } = useRecipesManager();
+
+  console.log(recipes)
 
   const columns = [
     {
+      key: "image",
+      label: "",
+      width: "72px",
+      render: (recipe) => (
+        <div className={styles.thumbnail}>
+          {recipe.image_path ? (
+            <img
+              src={recipe.image_path}
+              alt=""
+              className={styles.thumbnailImage}
+            />
+          ) : (
+            <span className={styles.thumbnailPlaceholder}>
+              <FiImage aria-hidden="true" />
+            </span>
+          )}
+        </div>
+      ),
+    },
+    {
       key: "title",
       label: "Titre",
+      render: (recipe) => (
+        <strong>
+          {recipe.title}
+        </strong>
+      ),
+    },
+    {
+      key: "rating",
+      label: "Note",
+      render: (recipe) => {
+        const hasRating =
+          recipe.ratings_count > 0 &&
+          recipe.average_rating > 0;
+
+        if (!hasRating) {
+          return "—";
+        }
+
+        return (
+          <span className={styles.rating}>
+            <FiStar aria-hidden="true" />
+
+            <span>
+              {Number(
+                recipe.average_rating
+              ).toFixed(1)}
+            </span>
+
+            <span className={styles.ratingCount}>
+              ({recipe.ratings_count})
+            </span>
+          </span>
+        );
+      },
     },
     {
       key: "category",
       label: "Catégorie",
+      render: (recipe) =>
+        recipe.categories?.name ?? "—",
     },
     {
       key: "status",
       label: "Statut",
+      render: (recipe) => (
+        <AdminStatusBadge
+          label={
+            RECIPE_STATUS_LABELS[recipe.status] ??
+            recipe.status
+          }
+          variant={
+            RECIPE_STATUS_VARIANTS[recipe.status] ??
+            "default"
+          }
+        />
+      )
     },
     {
       key: "updatedAt",
       label: "Modification",
+      render: (recipe) =>
+        formatRelativeDate(
+          recipe.updated_at
+        ),
     },
     {
       key: "actions",
       label: "",
+      width: "160px",
       align: "right",
       render: (recipe) => (
-        <AppButton
-          variant="outline-primary"
-          size="sm"
-          onClick={() =>
-            console.log(recipe.id)
-          }
+        <div
+          className={styles.actions}
+          onDoubleClick={(event) => {
+            event.stopPropagation();
+          }}
         >
-          Modifier
-        </AppButton>
+          {recipe.status === "published" ? (
+            <AdminIconAction
+              icon={FiEye}
+              label="Voir la recette"
+              to={getRecipeDetailsPath(recipe.slug)}
+              target="_blank"
+              rel="noreferrer"
+              variant="secondary"
+            />
+          ) : null}
+
+          <AdminIconAction
+            icon={FiEdit3}
+            label="Modifier la recette"
+            to={getEditRecipePath(recipe.id)}
+            variant="primary"
+          />
+        </div>
       ),
-    },
+    }
   ];
 
   return (
@@ -129,12 +215,10 @@ export default function RecipesManager() {
         <AdminSearchInput
           id="recipes-search"
           label="Rechercher une recette"
-          placeholder="Titre, catégorie..."
+          placeholder="Titre..."
           value={search}
-          onChange={(event) =>
-            setSearch(event.target.value)
-          }
-          onClear={() => setSearch("")}
+          onChange={handleSearchChange}
+          onClear={handleSearchClear}
         />
 
         <AdminFilterSelect
@@ -142,11 +226,10 @@ export default function RecipesManager() {
           label="Catégorie"
           icon={FiFolder}
           value={category}
-          options={CATEGORY_OPTIONS}
+          options={categories}
           placeholder="Toutes les catégories"
-          onChange={(event) =>
-            setCategory(event.target.value)
-          }
+          disabled={isLoadingCategories}
+          onChange={handleCategoryChange}
         />
 
         <AdminFilterSelect
@@ -154,39 +237,55 @@ export default function RecipesManager() {
           label="Statut"
           icon={FiActivity}
           value={status}
-          options={STATUS_OPTIONS}
+          options={RECIPE_STATUS_OPTIONS}
           placeholder="Tous les statuts"
-          onChange={(event) =>
-            setStatus(event.target.value)
-          }
+          onChange={handleStatusChange}
         />
       </AdminToolbar>
 
       <AdminDataTable
         columns={columns}
-        data={TEST_RECIPES}
+        data={recipes}
+        loading={isLoading}
         emptyTitle="Aucune recette"
-        emptyDescription="Créez votre première recette pour commencer."
+        emptyDescription={
+          search || category || status
+            ? "Aucune recette ne correspond à vos critères."
+            : "Créez votre première recette pour commencer."
+        }
+        emptyAction={
+          !search &&
+          !category &&
+          !status ? (
+            <AppButton
+              as={Link}
+              to={ROUTES.NEW_RECIPE}
+              variant="primary"
+              icon={<FiPlus />}
+            >
+              Nouvelle recette
+            </AppButton>
+          ) : undefined
+        }
         rowProps={(recipe) => ({
           onDoubleClick: () =>
             navigate(
-              `/admin/recettes/${recipe.id}/modifier`
+              getEditRecipePath(recipe.id)
             ),
         })}
       />
 
       <AdminPagination
+        id="recipes-pagination"
         page={page}
         pageSize={pageSize}
-        totalItems={36}
+        totalItems={totalItems}
         pageSizeOptions={PAGINATION.PAGE_SIZE_OPTIONS}
         onPageChange={setPage}
-        onPageSizeChange={(nextPageSize) => {
-          setPageSize(nextPageSize);
-          setPage(1);
-        }}
+        onPageSizeChange={
+          handlePageSizeChange
+        }
       />
     </AdminPageLayout>
-
   );
 }

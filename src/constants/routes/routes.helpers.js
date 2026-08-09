@@ -23,3 +23,12 @@ export function getRecipesByCategoryPath(categorySlug) {
 
   return `${ROUTES.BROWSE}?${searchParams.toString()}`;
 }
+
+export function getEditRecipePath(
+  recipeId
+) {
+  return ROUTES.EDIT_RECIPE.replace(
+    ":recipeId",
+    recipeId
+  );
+}

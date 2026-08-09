@@ -6,3 +6,5 @@ export { default as AdminFilterSelect } from "./AdminFilterSelect";
 export { default as AdminPagination } from "./AdminPagination";
 export { default as AdminSearchInput } from "./AdminSearchInput";
 export { default as AdminToolbar } from "./AdminToolbar";
+export { default as AdminStatusBadge } from "./AdminStatusBadge";
+export { default as AdminIconAction } from "./AdminIconAction";

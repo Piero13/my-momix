@@ -122,6 +122,8 @@ export async function getAdminRecipes({
         difficulty,
         updated_at,
         category_id,
+        average_rating,
+        ratings_count,
         categories (
           id,
           name,

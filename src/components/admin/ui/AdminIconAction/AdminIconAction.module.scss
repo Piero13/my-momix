@@ -1,0 +1,82 @@
+@use "@/styles/abstracts" as *;
+
+.action {
+  @include flex-center;
+
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+
+  color: $color-text-light;
+  background: transparent;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+
+  font-size: $font-size-md;
+  text-decoration: none;
+
+  transition:
+    color $transition-fast,
+    background-color $transition-fast,
+    border-color $transition-fast;
+
+  &:hover:not(:disabled) {
+    color: $color-primary-dark;
+    background: rgba($color-primary, 0.08);
+    border-color: rgba($color-primary, 0.3);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+  }
+}
+
+.primary {
+    border: $color-primary-dark 1px solid;
+    &:hover:not(:disabled) {
+        color: $color-primary-dark;
+    }
+
+    svg {
+        color: $color-primary-dark;
+    }
+}
+
+.danger {
+    &:hover:not(:disabled) {
+        color: $color-danger;
+        background: rgba($color-danger, 0.08);
+        border-color: rgba($color-danger, 0.3);
+    }
+}
+
+.secondary {
+    border: $color-secondary-dark 1px solid;
+
+    &:hover:not(:disabled) {
+        color: $color-secondary-dark;
+        background: rgba($color-secondary, 0.08);
+        border-color: rgba($color-secondary, 0.3);
+    }
+
+    svg {
+        color: $color-secondary-dark;
+    }
+}
+
+.srOnly {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+
+  overflow: hidden;
+
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+
+  border: 0;
+}

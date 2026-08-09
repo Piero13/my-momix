@@ -1,3 +1,61 @@
-.page {
-  padding: 2rem 0;
+@use "@/styles/abstracts" as *;
+
+.thumbnail {
+  width: 3.5rem;
+  height: 3.5rem;
+
+  overflow: hidden;
+
+  background: $color-background;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+}
+
+.thumbnailImage {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+.thumbnailPlaceholder {
+  @include flex-center;
+
+  width: 100%;
+  height: 100%;
+
+  color: $color-text-muted;
+
+  font-size: $font-size-lg;
+}
+
+.rating {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-xs;
+
+  min-width: max-content;
+  white-space: nowrap;
+
+  svg {
+    color: $color-secondary-dark;
+    fill: currentColor;
+  }
+}
+
+.ratingCount {
+  color: $color-text-muted;
+  font-size: $font-size-xs;
+}
+
+.actions {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: $spacing-md;
+
+  min-width: max-content;
+  white-space: nowrap;
 }
