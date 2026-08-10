@@ -1,0 +1,53 @@
+@use "@/styles/abstracts" as *;
+
+.row {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1fr)
+    auto;
+  gap: $spacing-md;
+
+  align-items: start;
+
+  padding: $spacing-lg;
+
+  background: $color-background;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+}
+
+.main {
+  display: grid;
+  gap: $spacing-md;
+
+  min-width: 0;
+}
+
+.nameField {
+  min-width: 0;
+}
+
+.details {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: $spacing-md;
+}
+
+.remove {
+  padding-top: 1.85rem;
+}
+
+.error {
+  margin-top: $spacing-xs;
+
+  color: $color-danger;
+  font-size: $font-size-xs;
+}
+
+@include tablet {
+  .details {
+    grid-template-columns:
+      minmax(8rem, 0.65fr)
+      minmax(10rem, 1fr);
+  }
+}

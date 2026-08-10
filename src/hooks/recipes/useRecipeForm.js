@@ -9,8 +9,10 @@ import { useAuth } from "@/hooks";
 import {
   createRecipe,
   getRecipeById,
+  getRecipeIngredients,
+  replaceRecipeIngredients,
   updateRecipe,
-} from "@/services/recipes";
+} from "@/services";
 import {
   mapRecipeFormToPayload,
   mapRecipeToFormValues,
@@ -48,20 +50,41 @@ export function useRecipeForm({
 
     let isCancelled = false;
 
-    getRecipeById(recipeId)
-      .then((recipe) => {
+    Promise.all([
+      getRecipeById(recipeId),
+      getRecipeIngredients(recipeId),
+    ])
+      .then(
+        ([
+          recipe,
+          recipeIngredients,
+        ]) => {
+          if (isCancelled) {
+            return;
+          }
+
+          if (!recipe) {
+            throw new Error(
+              "Recipe not found."
+            );
+          }
+
+          reset(
+            mapRecipeToFormValues(
+              recipe,
+              recipeIngredients
+            )
+          );
+        }
+      )
+      .catch((error) => {
         if (isCancelled) {
           return;
         }
 
-        if (!recipe) {
-          throw new Error(
-            "Recipe not found."
-          );
-        }
-
-        reset(
-          mapRecipeToFormValues(recipe)
+        console.error(
+          "Unable to load recipe:",
+          error
         );
       })
       .finally(() => {
@@ -86,22 +109,33 @@ export function useRecipeForm({
       );
     }
 
-    const payload = mapRecipeFormToPayload(
-      values,
-      user.id
-    );
+    const payload =
+      mapRecipeFormToPayload(
+        values,
+        user.id
+      );
+
+    let savedRecipe;
 
     if (
       mode === "edit" &&
       recipeId
     ) {
-      return updateRecipe(
+      savedRecipe = await updateRecipe(
         recipeId,
         payload
       );
+    } else {
+      savedRecipe =
+        await createRecipe(payload);
     }
 
-    return createRecipe(payload);
+    await replaceRecipeIngredients(
+      savedRecipe.id,
+      values.ingredients ?? []
+    );
+
+    return savedRecipe;
   };
 
   return {

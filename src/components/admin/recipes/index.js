@@ -1,6 +1,10 @@
 // components/admin/recipes/index.js
 
 export { default as GeneralInformationCard } from "./GeneralInformationCard";
+export { default as ImageCard } from "./ImageCard";
+export { default as IngredientList } from "./IngredientList";
+export { default as IngredientRow } from "./IngredientRow";
+export { default as IngredientsCard } from "./IngredientsCard";
 export { default as RecipeEditor } from "./RecipeEditor";
 export { default as TimesCard } from "./TimesCard";
-export { default as ImageCard } from "./ImageCard";
+export { default as IngredientAutocomplete } from "./IngredientAutocomplete";
