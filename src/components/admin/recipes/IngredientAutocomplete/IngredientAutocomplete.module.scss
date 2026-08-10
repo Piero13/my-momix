@@ -102,3 +102,27 @@
   font-size: $font-size-sm;
   text-align: center;
 }
+
+.empty {
+  display: grid;
+  gap: $spacing-xs;
+}
+
+.createOption {
+  width: 100%;
+  padding: $spacing-sm $spacing-md;
+
+  color: $color-primary-dark;
+  background: rgba($color-primary, 0.08);
+  border: 0;
+  border-radius: $radius-sm;
+
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  text-align: left;
+
+  &:hover,
+  &:focus-visible {
+    background: rgba($color-primary, 0.14);
+  }
+}

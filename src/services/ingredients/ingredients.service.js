@@ -1,6 +1,35 @@
 import { supabase } from "@/lib";
+import { normalizeIngredientName } from "@/utils";
 
 const DEFAULT_SEARCH_LIMIT = 8;
+
+export async function createIngredient(name) {
+  const normalizedName =
+    normalizeIngredientName(name);
+
+  if (!normalizedName) {
+    throw new Error(
+      "Ingredient name is required."
+    );
+  }
+
+  const { data, error } = await supabase
+    .from("ingredients")
+    .insert({
+      name: normalizedName,
+    })
+    .select(`
+      id,
+      name
+    `)
+    .single();
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+}
 
 export async function searchIngredients(
   search,
@@ -44,6 +73,32 @@ export async function getIngredientById(
       name
     `)
     .eq("id", ingredientId)
+    .maybeSingle();
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+}
+
+export async function findIngredientByName(
+  name
+) {
+  const normalizedName =
+    normalizeIngredientName(name);
+
+  if (!normalizedName) {
+    return null;
+  }
+
+  const { data, error } = await supabase
+    .from("ingredients")
+    .select(`
+      id,
+      name
+    `)
+    .ilike("name", normalizedName)
     .maybeSingle();
 
   if (error) {

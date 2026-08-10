@@ -24,6 +24,7 @@ export default function IngredientAutocomplete({
   inputRef,
   onChange,
   onSelect,
+  onCreateRequested,
   onBlur,
 }) {
     const containerRef = useRef(null);
@@ -193,10 +194,27 @@ export default function IngredientAutocomplete({
                     ) : null}
                 </button>
                 ))
-            ) : value.trim().length >= 2 ? (
+            ) : results.length === 0 &&
+            value.trim().length >= 2 ? (
+            <div className={styles.empty}>
                 <p className={styles.state}>
-                    Aucun ingrédient trouvé.
+                Aucun ingrédient trouvé.
                 </p>
+
+                {onCreateRequested ? (
+                <button
+                    type="button"
+                    className={styles.createOption}
+                    onClick={() =>
+                    onCreateRequested(
+                        value.trim()
+                    )
+                    }
+                >
+                    Créer « {value.trim()} »
+                </button>
+                ) : null}
+            </div>
             ) : null}
             </div>
         ) : null}

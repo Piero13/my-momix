@@ -2,19 +2,31 @@
  * Single ingredient editor row.
  */
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Form } from "react-bootstrap";
+import toast from "react-hot-toast";
 import {
   useFormContext,
   useWatch,
 } from "react-hook-form";
 import { FiTrash2 } from "react-icons/fi";
 
-import { 
+import {
+  AdminConfirmModal,
   AdminIconAction, 
   IngredientAutocomplete,
 } from "@/components/admin";
+
 import { INGREDIENT_UNITS } from "@/constants";
+
+import {
+  createIngredient,
+  findIngredientByName,
+} from "@/services";
+
+import {
+  normalizeIngredientName,
+} from "@/utils";
 
 import styles from "./IngredientRow.module.scss";
 
@@ -24,6 +36,16 @@ export default function IngredientRow({
   autoFocus = false,
 }) {
   const nameInputRef = useRef(null);
+
+  const [
+    pendingIngredientName,
+    setPendingIngredientName,
+  ] = useState("");
+
+  const [
+    isCreatingIngredient,
+    setIsCreatingIngredient,
+  ] = useState(false);
 
   const {
     control,
@@ -70,6 +92,79 @@ export default function IngredientRow({
   const hasSelectedIngredient =
     typeof ingredientId === "string" &&
     ingredientId.length > 0;
+  
+  const selectIngredient = (ingredient) => {
+    setValue(
+      `ingredients.${index}.ingredientId`,
+      ingredient.id,
+      {
+        shouldDirty: true,
+        shouldValidate: true,
+      }
+    );
+
+    setValue(
+      `ingredients.${index}.name`,
+      ingredient.name,
+      {
+        shouldDirty: true,
+        shouldValidate: true,
+      }
+    );
+  };
+
+  const handleCreateIngredient = async () => {
+    if (!pendingIngredientName) {
+      return;
+    }
+
+    try {
+      setIsCreatingIngredient(true);
+
+      const existingIngredient =
+        await findIngredientByName(
+          pendingIngredientName
+        );
+
+      if (existingIngredient) {
+        selectIngredient(
+          existingIngredient
+        );
+
+        toast.success(
+          "Cet ingrédient existe déjà et a été sélectionné."
+        );
+
+        setPendingIngredientName("");
+
+        return;
+      }
+
+      const ingredient =
+        await createIngredient(
+          pendingIngredientName
+        );
+
+      selectIngredient(ingredient);
+
+      toast.success(
+        "Ingrédient ajouté au catalogue."
+      );
+
+      setPendingIngredientName("");
+    } catch (error) {
+      console.error(
+        "Unable to create ingredient:",
+        error
+      );
+
+      toast.error(
+        "Impossible de créer l’ingrédient."
+      );
+    } finally {
+      setIsCreatingIngredient(false);
+    }
+  };
 
   return (
     <article className={styles.row}>
@@ -111,23 +206,10 @@ export default function IngredientRow({
                 }
               );
             }}
-            onSelect={(ingredient) => {
-              setValue(
-                `ingredients.${index}.ingredientId`,
-                ingredient.id,
-                {
-                  shouldDirty: true,
-                  shouldValidate: true,
-                }
-              );
-
-              setValue(
-                `ingredients.${index}.name`,
-                ingredient.name,
-                {
-                  shouldDirty: true,
-                  shouldValidate: true,
-                }
+            onSelect={selectIngredient}
+            onCreateRequested={(name) => {
+              setPendingIngredientName(
+                normalizeIngredientName(name)
               );
             }}
           />
@@ -223,6 +305,24 @@ export default function IngredientRow({
           onClick={() => onRemove(index)}
         />
       </div>
+
+      <AdminConfirmModal
+        show={Boolean(
+          pendingIngredientName
+        )}
+        title="Créer cet ingrédient ?"
+        message={pendingIngredientName}
+        description="L’ingrédient sera ajouté au catalogue et immédiatement sélectionné."
+        confirmLabel="Créer"
+        variant="default"
+        isLoading={isCreatingIngredient}
+        onCancel={() =>
+          setPendingIngredientName("")
+        }
+        onConfirm={
+          handleCreateIngredient
+        }
+      />
     </article>
   );
 }
