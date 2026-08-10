@@ -1,0 +1,41 @@
+@use "@/styles/abstracts" as *;
+
+.step {
+  display: grid;
+  gap: $spacing-lg;
+
+  padding: $spacing-lg;
+
+  background: $color-background;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-md;
+}
+
+.stepNumber {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-xs;
+
+  color: $color-text-light;
+  font-size: $font-size-sm;
+
+  strong {
+    @include flex-center;
+
+    min-width: 2rem;
+    height: 2rem;
+
+    color: $color-primary-dark;
+    background: rgba($color-primary, 0.1);
+    border-radius: $radius-circle;
+
+    font-size: $font-size-sm;
+  }
+}

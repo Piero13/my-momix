@@ -1,0 +1,93 @@
+@use "@/styles/abstracts" as *;
+
+.card {
+  padding: $spacing-lg;
+
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-xl;
+  box-shadow: $shadow-sm;
+}
+
+.header {
+  margin-bottom: $spacing-xl;
+  padding-bottom: $spacing-lg;
+
+  border-bottom: 1px solid $color-border;
+}
+
+.eyebrow {
+  margin: 0 0 $spacing-xs;
+
+  color: $color-primary-dark;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.title {
+  margin: 0 0 $spacing-xs;
+}
+
+.description {
+  margin: 0;
+
+  color: $color-text-light;
+  font-size: $font-size-sm;
+  line-height: 1.6;
+}
+
+.addAction {
+  display: flex;
+
+  margin-top: $spacing-lg;
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-md;
+
+  padding: $spacing-2xl $spacing-lg;
+
+  text-align: center;
+
+  background: $color-background;
+  border: 1px dashed $color-border;
+  border-radius: $radius-lg;
+}
+
+.emptyIcon {
+  @include flex-center;
+
+  width: 3.5rem;
+  height: 3.5rem;
+
+  color: $color-primary-dark;
+  background: rgba($color-primary, 0.1);
+  border-radius: $radius-circle;
+
+  font-size: $font-size-xl;
+}
+
+.emptyTitle {
+  margin: 0 0 $spacing-xs;
+
+  color: $color-text;
+  font-weight: $font-weight-semibold;
+}
+
+.emptyDescription {
+  margin: 0;
+
+  color: $color-text-muted;
+  font-size: $font-size-sm;
+}
+
+@include tablet {
+  .card {
+    padding: $spacing-xl;
+  }
+}
