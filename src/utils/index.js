@@ -10,3 +10,4 @@ export * from "./mapRecipeDetailsToCard";
 export * from "./date";
 export * from "./mapRecipeFormToPayload";
 export * from "./mapRecipeToFormValues";
+export * from "./images";

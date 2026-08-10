@@ -47,6 +47,8 @@ import {
   formatRelativeDate,
 } from "@/utils";
 
+import { getRecipeImageUrl } from "@/services";
+
 import styles from "./RecipesManager.module.scss";
 
 export default function RecipesManager() {
@@ -81,28 +83,34 @@ export default function RecipesManager() {
     removeRecipe,
   } = useRecipesManager();
 
-  console.log(recipes)
-
   const columns = [
     {
       key: "image",
       label: "",
       width: "72px",
-      render: (recipe) => (
-        <div className={styles.thumbnail}>
-          {recipe.image_path ? (
-            <img
-              src={recipe.image_path}
-              alt=""
-              className={styles.thumbnailImage}
-            />
-          ) : (
-            <span className={styles.thumbnailPlaceholder}>
-              <FiImage aria-hidden="true" />
-            </span>
-          )}
-        </div>
-      ),
+      render: (recipe) => {
+        const imageUrl = recipe.image_path
+          ? getRecipeImageUrl(recipe.image_path)
+          : null;
+
+        return (
+          <div className={styles.thumbnail}>
+            {imageUrl ? (
+              <img
+                src={imageUrl}
+                alt=""
+                className={styles.thumbnailImage}
+              />
+            ) : (
+              <span
+                className={styles.thumbnailPlaceholder}
+              >
+                <FiImage aria-hidden="true" />
+              </span>
+            )}
+          </div>
+        );
+      },
     },
     {
       key: "title",

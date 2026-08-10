@@ -1,0 +1,104 @@
+@use "@/styles/abstracts" as *;
+
+.card {
+  padding: $spacing-lg;
+
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-xl;
+  box-shadow: $shadow-sm;
+}
+
+.header {
+  margin-bottom: $spacing-lg;
+  padding-bottom: $spacing-lg;
+
+  border-bottom: 1px solid $color-border;
+}
+
+.eyebrow {
+  margin: 0 0 $spacing-xs;
+
+  color: $color-primary-dark;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.title {
+  margin: 0;
+}
+
+.content {
+  display: grid;
+  gap: $spacing-md;
+}
+
+.preview {
+  aspect-ratio: 4 / 3;
+
+  overflow: hidden;
+
+  background: $color-background;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+}
+
+.image {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+.placeholder {
+  @include flex-center;
+
+  flex-direction: column;
+  gap: $spacing-sm;
+
+  width: 100%;
+  height: 100%;
+
+  color: $color-text-muted;
+
+  svg {
+    font-size: 2rem;
+  }
+}
+
+.actions {
+  display: grid;
+  gap: $spacing-sm;
+}
+
+.fileInput {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+
+  overflow: hidden;
+
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+
+  white-space: nowrap;
+}
+
+.helper {
+  margin: 0;
+
+  color: $color-text-muted;
+  font-size: $font-size-xs;
+  line-height: 1.5;
+}
+
+@include tablet {
+  .card {
+    padding: $spacing-xl;
+  }
+}

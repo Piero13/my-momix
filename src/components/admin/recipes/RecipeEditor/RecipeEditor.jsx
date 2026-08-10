@@ -8,6 +8,7 @@ import {
 import {
   GeneralInformationCard,
   TimesCard,
+  ImageCard,
 } from "@/components/admin";
 
 import { AppButton } from "@/components/ui";
@@ -118,6 +119,8 @@ export default function RecipeEditor({
         </div>
 
         <aside className={styles.sideColumn}>
+          <ImageCard />
+          
           <AppButton
             type="submit"
             disabled={isSubmitting}
