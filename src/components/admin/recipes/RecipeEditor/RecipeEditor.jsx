@@ -12,6 +12,7 @@ import {
   IngredientsCard,
   PreparationStepsCard,
   TipsCard,
+  PublicationCard,
 } from "@/components/admin";
 
 import { AppButton } from "@/components/ui";
@@ -129,6 +130,8 @@ export default function RecipeEditor({
 
         <aside className={styles.sideColumn}>
           <ImageCard />
+
+          <PublicationCard />
 
           <AppButton
             type="submit"

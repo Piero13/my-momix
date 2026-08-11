@@ -17,10 +17,15 @@ import {
   getRecipeTips,
   replaceRecipeTips,
 } from "@/services";
+
 import {
   mapRecipeFormToPayload,
   mapRecipeToFormValues,
 } from "@/utils";
+
+import { 
+  validateRecipePublication,
+} from "@/validators/recipe/validateRecipePublication";
 
 export function useRecipeForm({
   mode = "create",
@@ -178,6 +183,15 @@ export function useRecipeForm({
       savedRecipe.id,
       validTips
     );
+
+    const publicationErrors =
+      validateRecipePublication(values);
+
+    if (publicationErrors.length > 0) {
+      throw new Error(
+        publicationErrors.join(" ")
+      );
+    }
 
     return savedRecipe;
   };
