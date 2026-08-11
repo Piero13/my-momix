@@ -1,8 +1,11 @@
 import { RECIPE_FORM_DEFAULT_VALUES } from "@/constants";
 
+import { splitDurationSeconds } from "./time";
+
 export function mapRecipeToFormValues(
   recipe,
-  recipeIngredients = []
+  recipeIngredients = [],
+  recipeSteps = []
 ) {
   if (!recipe) {
     return RECIPE_FORM_DEFAULT_VALUES;
@@ -49,5 +52,43 @@ export function mapRecipeToFormValues(
         unit:
           item.unit ?? "",
       })),
+
+    steps: recipeSteps.map((step) => {
+      const duration =
+        splitDurationSeconds(
+          step.duration_seconds
+        );
+
+      const hasThermomixSettings =
+        step.duration_seconds !== null ||
+        Boolean(step.temperature) ||
+        Boolean(step.speed) ||
+        Boolean(step.reverse);
+
+      return {
+        instruction:
+          step.instruction ?? "",
+
+        hasThermomixSettings,
+
+        durationHours:
+          duration.hours,
+
+        durationMinutes:
+          duration.minutes,
+
+        durationSeconds:
+          duration.seconds,
+
+        temperature:
+          step.temperature ?? "",
+
+        speed:
+          step.speed ?? "",
+
+        reverse:
+          Boolean(step.reverse),
+      };
+    }),    
   };
 }

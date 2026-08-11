@@ -10,7 +10,9 @@ import {
   createRecipe,
   getRecipeById,
   getRecipeIngredients,
+  getRecipeSteps,
   replaceRecipeIngredients,
+  replaceRecipeSteps,
   updateRecipe,
 } from "@/services";
 import {
@@ -53,11 +55,13 @@ export function useRecipeForm({
     Promise.all([
       getRecipeById(recipeId),
       getRecipeIngredients(recipeId),
+      getRecipeSteps(recipeId),
     ])
       .then(
         ([
           recipe,
           recipeIngredients,
+          recipeSteps,
         ]) => {
           if (isCancelled) {
             return;
@@ -72,7 +76,8 @@ export function useRecipeForm({
           reset(
             mapRecipeToFormValues(
               recipe,
-              recipeIngredients
+              recipeIngredients,
+              recipeSteps
             )
           );
         }
@@ -133,6 +138,28 @@ export function useRecipeForm({
     await replaceRecipeIngredients(
       savedRecipe.id,
       values.ingredients ?? []
+    );
+
+    const validIngredients =
+      (values.ingredients ?? []).filter(
+        (ingredient) =>
+          ingredient.ingredientId
+      );
+
+    const validSteps =
+      (values.steps ?? []).filter(
+        (step) =>
+          step.instruction?.trim()
+      );
+
+    await replaceRecipeIngredients(
+      savedRecipe.id,
+      validIngredients
+    );
+
+    await replaceRecipeSteps(
+      savedRecipe.id,
+      validSteps
     );
 
     return savedRecipe;

@@ -22,14 +22,18 @@ export function usePreparationStepsFieldArray() {
   const handleAdd = () => {
     const nextIndex = fields.length;
 
-    append({
-      instruction: "",
-      hasThermomixSettings: false,
-      duration: "",
-      temperature: "",
-      speed: "",
-      reverse: false,
-    });
+  append({
+    instruction: "",
+    hasThermomixSettings: false,
+
+    durationHours: 0,
+    durationMinutes: 0,
+    durationSeconds: 0,
+
+    temperature: "",
+    speed: "",
+    reverse: false,
+  });
 
     setLastAddedIndex(nextIndex);
   };
