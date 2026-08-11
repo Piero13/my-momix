@@ -1,0 +1,18 @@
+@use "@/styles/abstracts" as *;
+
+.fields {
+  display: grid;
+  gap: $spacing-lg;
+}
+
+.footer {
+  gap: $spacing-sm;
+
+  @include mobile {
+    display: grid;
+
+    > * {
+      width: 100%;
+    }
+  }
+}

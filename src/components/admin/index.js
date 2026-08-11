@@ -6,3 +6,4 @@ export * from "./navigation";
 export * from "./recipes";
 export * from "./ui";
 export * from "./ingredients";
+export * from "./categories";
