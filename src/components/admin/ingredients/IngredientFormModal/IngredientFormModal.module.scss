@@ -1,0 +1,13 @@
+@use "@/styles/abstracts" as *;
+
+.footer {
+  gap: $spacing-sm;
+
+  @include mobile {
+    display: grid;
+
+    > * {
+      width: 100%;
+    }
+  }
+}

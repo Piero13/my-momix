@@ -2,9 +2,15 @@
  * IngredientsManager page.
  */
 
+import { useState } from "react";
+import toast from "react-hot-toast";
+
+import styles from "./IngredientsManager.module.scss"
+
 import {
   FiEdit3,
   FiPlus,
+  FiTrash2,
 } from "react-icons/fi";
 
 import {
@@ -16,7 +22,11 @@ import {
   AdminToolbar,
 } from "@/components/admin";
 
-import { AppButton } from "@/components/ui";
+import { 
+  AppButton,
+  IngredientFormModal,
+  AdminConfirmModal,
+ } from "@/components";
 
 import {
   PAGINATION,
@@ -30,7 +40,39 @@ import {
   formatRelativeDate,
 } from "@/utils";
 
+import {
+  createIngredient,
+  findIngredientByName,
+  updateIngredient,
+  deleteIngredient,
+} from "@/services";
+
 export default function IngredientsManager() {
+  const [
+    showIngredientModal,
+    setShowIngredientModal,
+  ] = useState(false);
+
+  const [
+    isSavingIngredient,
+    setIsSavingIngredient,
+  ] = useState(false);
+
+  const [
+    ingredientToEdit,
+    setIngredientToEdit,
+  ] = useState(null);
+
+  const [
+    ingredientToDelete,
+    setIngredientToDelete,
+  ] = useState(null);
+
+  const [
+    isDeletingIngredient,
+    setIsDeletingIngredient,
+  ] = useState(false);
+
   const {
     ingredients,
 
@@ -47,6 +89,8 @@ export default function IngredientsManager() {
     handleSearchChange,
     handleSearchClear,
     handlePageSizeChange,
+
+    refreshIngredients,
   } = useIngredientsManager();
 
   const columns = [
@@ -73,22 +117,168 @@ export default function IngredientsManager() {
       width: "96px",
       align: "right",
       render: (ingredient) => (
-        <div>
+        <div className={styles.actions}>
           <AdminIconAction
             icon={FiEdit3}
             label="Modifier l’ingrédient"
-            onClick={() => {
-              console.log(
-                "Edit ingredient:",
-                ingredient
-              );
-            }}
             variant="primary"
+            onClick={() =>
+              setIngredientToEdit(ingredient)
+            }
+          />
+
+          <AdminIconAction
+            icon={FiTrash2}
+            label="Supprimer l’ingrédient"
+            variant="danger"
+            onClick={() =>
+              setIngredientToDelete(
+                ingredient
+              )
+            }
           />
         </div>
       ),
     },
   ];
+
+  const handleCreateIngredient =
+    async ({ name }) => {
+      try {
+        setIsSavingIngredient(true);
+
+        const existingIngredient =
+          await findIngredientByName(
+            name
+          );
+
+        if (existingIngredient) {
+          toast.error(
+            "Cet ingrédient existe déjà."
+          );
+
+          return;
+        }
+
+        await createIngredient(name);
+
+        await refreshIngredients();
+
+        toast.success(
+          "Ingrédient créé."
+        );
+
+        setShowIngredientModal(false);
+      } catch (error) {
+        console.error(
+          "Unable to create ingredient:",
+          error
+        );
+
+        toast.error(
+          "Impossible de créer l’ingrédient."
+        );
+      } finally {
+        setIsSavingIngredient(false);
+      }
+    };
+  
+  const handleUpdateIngredient =
+    async ({ name }) => {
+      if (!ingredientToEdit) {
+        return;
+      }
+
+      try {
+        setIsSavingIngredient(true);
+
+        const existingIngredient =
+          await findIngredientByName(
+            name
+          );
+
+        if (
+          existingIngredient &&
+          existingIngredient.id !==
+            ingredientToEdit.id
+        ) {
+          toast.error(
+            "Un autre ingrédient utilise déjà ce nom."
+          );
+
+          return;
+        }
+
+        await updateIngredient(
+          ingredientToEdit.id,
+          {
+            name,
+          }
+        );
+
+        await refreshIngredients();
+
+        toast.success(
+          "Ingrédient modifié."
+        );
+
+        setIngredientToEdit(null);
+      } catch (error) {
+        console.error(
+          "Unable to update ingredient:",
+          error
+        );
+
+        toast.error(
+          "Impossible de modifier l’ingrédient."
+        );
+      } finally {
+        setIsSavingIngredient(false);
+      }
+    };
+
+  const handleDeleteIngredient =
+    async () => {
+      if (!ingredientToDelete) {
+        return;
+      }
+
+      try {
+        setIsDeletingIngredient(true);
+
+        await deleteIngredient(
+          ingredientToDelete.id
+        );
+
+        await refreshIngredients();
+
+        toast.success(
+          "Ingrédient supprimé."
+        );
+
+        setIngredientToDelete(null);
+      } catch (error) {
+
+        if (error?.code === "23503") {
+          toast.error(
+            "Cet ingrédient est utilisé dans une ou plusieurs recettes et ne peut pas être supprimé."
+          );
+
+          return;
+        }
+
+        console.error(
+          "Unable to delete ingredient:",
+          error
+        );
+
+        toast.error(
+          "Impossible de supprimer cet ingrédient."
+        );
+      } finally {
+        setIsDeletingIngredient(false);
+      }
+    };
 
   return (
     <AdminPageLayout>
@@ -101,9 +291,7 @@ export default function IngredientsManager() {
             variant="primary"
             icon={<FiPlus />}
             onClick={() => {
-              console.log(
-                "Create ingredient"
-              );
+              setShowIngredientModal(true)
             }}
           >
             Nouvel ingrédient
@@ -147,6 +335,54 @@ export default function IngredientsManager() {
         onPageChange={setPage}
         onPageSizeChange={
           handlePageSizeChange
+        }
+      />
+
+      <IngredientFormModal
+        show={
+          showIngredientModal ||
+          Boolean(ingredientToEdit)
+        }
+        mode={
+          ingredientToEdit
+            ? "edit"
+            : "create"
+        }
+        ingredient={ingredientToEdit}
+        isSubmitting={
+          isSavingIngredient
+        }
+        onSubmit={
+          ingredientToEdit
+            ? handleUpdateIngredient
+            : handleCreateIngredient
+        }
+        onClose={() => {
+          setShowIngredientModal(false);
+          setIngredientToEdit(null);
+        }}
+      />
+
+      <AdminConfirmModal
+        show={Boolean(
+          ingredientToDelete
+        )}
+        title="Supprimer l’ingrédient ?"
+        message={
+          ingredientToDelete?.name
+        }
+        description="Cet ingrédient sera supprimé du catalogue."
+        confirmLabel="Supprimer"
+        cancelLabel="Annuler"
+        variant="danger"
+        isLoading={
+          isDeletingIngredient
+        }
+        onCancel={() =>
+          setIngredientToDelete(null)
+        }
+        onConfirm={
+          handleDeleteIngredient
         }
       />
     </AdminPageLayout>

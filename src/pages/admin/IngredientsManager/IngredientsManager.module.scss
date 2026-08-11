@@ -1,3 +1,11 @@
-.page {
-  padding: 2rem 0;
+@use "@/styles/abstracts" as *;
+
+.actions {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: $spacing-md;
+
+  min-width: max-content;
+  white-space: nowrap;
 }

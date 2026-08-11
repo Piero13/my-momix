@@ -1,4 +1,5 @@
 import {
+  useCallback,
   useEffect,
   useState,
 } from "react";
@@ -32,6 +33,30 @@ export function useIngredientsManager() {
 
   const [isLoading, setIsLoading] =
     useState(true);
+
+  const refreshIngredients =
+    useCallback(async () => {
+      const {
+        data,
+        count,
+      } = await getAdminIngredients({
+        page,
+        pageSize,
+        search,
+      });
+
+      setIngredients(data);
+      setTotalItems(count);
+
+      return {
+        data,
+        count,
+      };
+    }, [
+      page,
+      pageSize,
+      search,
+    ]);
 
   useEffect(() => {
     let isCancelled = false;
@@ -111,5 +136,7 @@ export function useIngredientsManager() {
     handleSearchChange,
     handleSearchClear,
     handlePageSizeChange,
+
+    refreshIngredients,
   };
 }

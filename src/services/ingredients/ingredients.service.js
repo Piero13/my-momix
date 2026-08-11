@@ -165,3 +165,52 @@ export async function getAdminIngredients({
     count: count ?? 0,
   };
 }
+
+export async function updateIngredient(
+  ingredientId,
+  values
+) {
+  const normalizedName =
+    normalizeIngredientName(
+      values.name
+    );
+
+  if (!normalizedName) {
+    throw new Error(
+      "Ingredient name is required."
+    );
+  }
+
+  const { data, error } = await supabase
+    .from("ingredients")
+    .update({
+      name: normalizedName,
+    })
+    .eq("id", ingredientId)
+    .select(`
+      id,
+      name,
+      created_at,
+      updated_at
+    `)
+    .single();
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+}
+
+export async function deleteIngredient(
+  ingredientId
+) {
+  const { error } = await supabase
+    .from("ingredients")
+    .delete()
+    .eq("id", ingredientId);
+
+  if (error) {
+    throw error;
+  }
+}
