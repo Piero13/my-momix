@@ -15,3 +15,4 @@ export { default as TipList } from "./TipList";
 export { default as TipRow }  from "./TipRow";
 export { default as TipsCard } from "./TipsCard";
 export { default as PublicationCard } from "./PublicationCard";
+export { default as SeoCard } from "./SeoCard";

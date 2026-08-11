@@ -215,6 +215,8 @@ export function useRecipeForm({
       validTips
     );
 
+    reset(values);
+
     return savedRecipe;
   };
 

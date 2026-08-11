@@ -43,3 +43,23 @@
     );
   }
 }
+
+.actions {
+  display: grid;
+  gap: $spacing-sm;
+}
+
+@include tablet {
+  .actions {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+}
+
+.saveStatus {
+  margin: 0;
+
+  color: $color-text-muted;
+  font-size: $font-size-xs;
+  text-align: center;
+}

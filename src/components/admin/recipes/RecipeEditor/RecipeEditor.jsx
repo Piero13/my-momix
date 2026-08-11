@@ -6,12 +6,14 @@ import {
 } from "react-router-dom";
 
 import {
+  AdminConfirmModal,
   GeneralInformationCard,
   TimesCard,
   ImageCard,
   IngredientsCard,
   PreparationStepsCard,
   TipsCard,
+  SeoCard,
   PublicationCard,
 } from "@/components/admin";
 
@@ -29,6 +31,11 @@ export default function RecipeEditor({
 }) {
   const navigate = useNavigate();
 
+  const [
+    showLeaveConfirmation,
+    setShowLeaveConfirmation,
+  ] = useState(false);
+
   const [categories, setCategories] = useState([]);
 
   const {
@@ -36,10 +43,39 @@ export default function RecipeEditor({
     saveRecipe,
     isLoadingRecipe,
     isSubmitting,
+    isDirty,
   } = useRecipeForm({
     mode,
     recipeId,
   });
+
+  useEffect(() => {
+    if (!isDirty || isSubmitting) {
+      return;
+    }
+
+    const handleBeforeUnload = (event) => {
+      event.preventDefault();
+
+      // Required for older browser behavior.
+      event.returnValue = "";
+    };
+
+    window.addEventListener(
+      "beforeunload",
+      handleBeforeUnload
+    );
+
+    return () => {
+      window.removeEventListener(
+        "beforeunload",
+        handleBeforeUnload
+      );
+    };
+  }, [
+    isDirty,
+    isSubmitting,
+  ]);  
 
   const {
     handleSubmit,
@@ -71,6 +107,25 @@ export default function RecipeEditor({
         "Impossible d’enregistrer la recette."
       );
     }
+  };
+
+  const handleCancel = () => {
+    if (isSubmitting) {
+      return;
+    }
+
+    if (isDirty) {
+      setShowLeaveConfirmation(true);
+      return;
+    }
+
+    navigate(ROUTES.RECIPES);
+  };
+
+  const handleConfirmLeave = () => {
+    setShowLeaveConfirmation(false);
+
+    navigate(ROUTES.RECIPES);
   };
 
   useEffect(() => {
@@ -126,6 +181,8 @@ export default function RecipeEditor({
           <PreparationStepsCard />
 
           <TipsCard />
+
+          <SeoCard />
         </div>
 
         <aside className={styles.sideColumn}>
@@ -133,16 +190,52 @@ export default function RecipeEditor({
 
           <PublicationCard />
 
-          <AppButton
-            type="submit"
-            disabled={isSubmitting}
+          <div className={styles.actions}>
+            <AppButton
+              type="button"
+              variant="outline-secondary"
+              disabled={isSubmitting}
+              onClick={handleCancel}
+            >
+              Annuler
+            </AppButton>
+
+            <AppButton
+              type="submit"
+              variant="primary"
+              disabled={isSubmitting}
+            >
+              {isSubmitting
+                ? "Enregistrement…"
+                : "Enregistrer"}
+            </AppButton>
+          </div>
+
+          <p
+            className={styles.saveStatus}
+            aria-live="polite"
           >
-            {isSubmitting
-              ? "Enregistrement…"
-              : "Enregistrer"}
-          </AppButton>
+            {isDirty
+              ? "Modifications non enregistrées"
+              : "Toutes les modifications sont enregistrées"}
+          </p>
         </aside>
       </form>
+
+      <AdminConfirmModal
+        show={showLeaveConfirmation}
+        title="Quitter sans enregistrer ?"
+        message="Des modifications non enregistrées seront perdues."
+        description="Voulez-vous vraiment revenir à la liste des recettes ?"
+        confirmLabel="Quitter"
+        cancelLabel="Rester"
+        variant="warning"
+        isLoading={false}
+        onCancel={() =>
+          setShowLeaveConfirmation(false)
+        }
+        onConfirm={handleConfirmLeave}
+      />
     </FormProvider>
   );
 }
