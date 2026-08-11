@@ -11,3 +11,6 @@ export { default as IngredientAutocomplete } from "./IngredientAutocomplete";
 export { default as PreparationStepRow } from "./PreparationStepRow";
 export { default as PreparationStepList } from "./PreparationStepList";
 export { default as PreparationStepsCard } from "./PreparationStepsCard";
+export { default as TipList } from "./TipList";
+export { default as TipRow }  from "./TipRow";
+export { default as TipsCard } from "./TipsCard";

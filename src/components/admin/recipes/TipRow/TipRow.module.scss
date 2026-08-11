@@ -1,0 +1,24 @@
+@use "@/styles/abstracts" as *;
+
+.tip {
+  display: grid;
+  gap: $spacing-lg;
+
+  padding: $spacing-lg;
+
+  background: $color-background;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-md;
+}
+
+.fields {
+  display: grid;
+  gap: $spacing-md;
+}

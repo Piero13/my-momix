@@ -5,12 +5,20 @@ import {
   FiZap,
 } from "react-icons/fi";
 
-export const RECIPE_TIP_TYPES = {
-  TIP: "astuce",
-  VARIANT: "variante",
-  CONSERVATION: "conservation",
-  EXTRA: "petit-plus",
-};
+export const RECIPE_TIP_TYPES = [
+  {
+    value: "tip",
+    label: "Astuce",
+  },
+  {
+    value: "warning",
+    label: "Attention",
+  },
+  {
+    value: "cooking",
+    label: "Cuisson",
+  },
+];
 
 export const RECIPE_TIP_TYPE_CONFIG = {
   [RECIPE_TIP_TYPES.TIP]: {

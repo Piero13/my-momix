@@ -1,11 +1,14 @@
-import { RECIPE_FORM_DEFAULT_VALUES } from "@/constants";
+import { 
+  RECIPE_FORM_DEFAULT_VALUES,
+} from "@/constants";
 
 import { splitDurationSeconds } from "./time";
 
 export function mapRecipeToFormValues(
   recipe,
   recipeIngredients = [],
-  recipeSteps = []
+  recipeSteps = [],
+  recipeTips= []
 ) {
   if (!recipe) {
     return RECIPE_FORM_DEFAULT_VALUES;
@@ -89,6 +92,11 @@ export function mapRecipeToFormValues(
         reverse:
           Boolean(step.reverse),
       };
-    }),    
+    }),
+    
+    tips: recipeTips.map((tip) => ({
+      type: tip.type ?? "tip",
+      content: tip.content ?? "",
+    })),
   };
 }

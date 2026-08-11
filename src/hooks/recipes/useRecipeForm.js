@@ -14,6 +14,8 @@ import {
   replaceRecipeIngredients,
   replaceRecipeSteps,
   updateRecipe,
+  getRecipeTips,
+  replaceRecipeTips,
 } from "@/services";
 import {
   mapRecipeFormToPayload,
@@ -56,12 +58,14 @@ export function useRecipeForm({
       getRecipeById(recipeId),
       getRecipeIngredients(recipeId),
       getRecipeSteps(recipeId),
+      getRecipeTips(recipeId),
     ])
       .then(
         ([
           recipe,
           recipeIngredients,
           recipeSteps,
+          recipeTips,
         ]) => {
           if (isCancelled) {
             return;
@@ -77,7 +81,8 @@ export function useRecipeForm({
             mapRecipeToFormValues(
               recipe,
               recipeIngredients,
-              recipeSteps
+              recipeSteps,
+              recipeTips,
             )
           );
         }
@@ -160,6 +165,18 @@ export function useRecipeForm({
     await replaceRecipeSteps(
       savedRecipe.id,
       validSteps
+    );
+
+    const validTips =
+      (values.tips ?? []).filter(
+        (tip) =>
+          typeof tip.content === "string" &&
+          tip.content.trim()
+      );
+
+    await replaceRecipeTips(
+      savedRecipe.id,
+      validTips
     );
 
     return savedRecipe;
