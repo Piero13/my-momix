@@ -107,3 +107,61 @@ export async function findIngredientByName(
 
   return data;
 }
+
+/**
+ * Returns a paginated ingredient list for administration.
+ */
+export async function getAdminIngredients({
+  page = 1,
+  pageSize = 10,
+  search = "",
+  sortBy = "name",
+  sortDirection = "asc",
+} = {}) {
+  const from = (page - 1) * pageSize;
+  const to = from + pageSize - 1;
+
+  let query = supabase
+    .from("ingredients")
+    .select(
+      `
+        id,
+        name,
+        created_at,
+        updated_at
+      `,
+      {
+        count: "exact",
+      }
+    );
+
+  const normalizedSearch = search.trim();
+
+  if (normalizedSearch) {
+    query = query.ilike(
+      "name",
+      `%${normalizedSearch}%`
+    );
+  }
+
+  query = query
+    .order(sortBy, {
+      ascending: sortDirection === "asc",
+    })
+    .range(from, to);
+
+  const {
+    data,
+    count,
+    error,
+  } = await query;
+
+  if (error) {
+    throw error;
+  }
+
+  return {
+    data: data ?? [],
+    count: count ?? 0,
+  };
+}
