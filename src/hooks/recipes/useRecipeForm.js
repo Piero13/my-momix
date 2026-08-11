@@ -4,18 +4,21 @@ import {
 } from "react";
 import { useForm } from "react-hook-form";
 
-import { RECIPE_FORM_DEFAULT_VALUES } from "@/constants";
+import {
+  RECIPE_FORM_DEFAULT_VALUES,
+} from "@/constants";
 import { useAuth } from "@/hooks";
+
 import {
   createRecipe,
   getRecipeById,
   getRecipeIngredients,
   getRecipeSteps,
+  getRecipeTips,
   replaceRecipeIngredients,
   replaceRecipeSteps,
-  updateRecipe,
-  getRecipeTips,
   replaceRecipeTips,
+  updateRecipe,
 } from "@/services";
 
 import {
@@ -23,7 +26,7 @@ import {
   mapRecipeToFormValues,
 } from "@/utils";
 
-import { 
+import {
   validateRecipePublication,
 } from "@/validators/recipe/validateRecipePublication";
 
@@ -36,8 +39,12 @@ export function useRecipeForm({
   const [isLoadingRecipe, setIsLoadingRecipe] =
     useState(mode === "edit");
 
+  const [existingRecipe, setExistingRecipe] =
+    useState(null);
+
   const form = useForm({
-    defaultValues: RECIPE_FORM_DEFAULT_VALUES,
+    defaultValues:
+      RECIPE_FORM_DEFAULT_VALUES,
     mode: "onBlur",
   });
 
@@ -82,12 +89,14 @@ export function useRecipeForm({
             );
           }
 
+          setExistingRecipe(recipe);
+
           reset(
             mapRecipeToFormValues(
               recipe,
               recipeIngredients,
               recipeSteps,
-              recipeTips,
+              recipeTips
             )
           );
         }
@@ -124,32 +133,29 @@ export function useRecipeForm({
       );
     }
 
+    /*
+     * Validate publication before writing
+     * anything to Supabase.
+     */
+    const publicationErrors =
+      validateRecipePublication(values);
+
+    if (publicationErrors.length > 0) {
+      throw new Error(
+        publicationErrors.join(" ")
+      );
+    }
+
     const payload =
       mapRecipeFormToPayload(
         values,
-        user.id
+        user.id,
+        existingRecipe
       );
 
-    let savedRecipe;
-
-    if (
-      mode === "edit" &&
-      recipeId
-    ) {
-      savedRecipe = await updateRecipe(
-        recipeId,
-        payload
-      );
-    } else {
-      savedRecipe =
-        await createRecipe(payload);
-    }
-
-    await replaceRecipeIngredients(
-      savedRecipe.id,
-      values.ingredients ?? []
-    );
-
+    /*
+     * Defensive filtering of dynamic fields.
+     */
     const validIngredients =
       (values.ingredients ?? []).filter(
         (ingredient) =>
@@ -162,6 +168,38 @@ export function useRecipeForm({
           step.instruction?.trim()
       );
 
+    const validTips =
+      (values.tips ?? []).filter(
+        (tip) =>
+          typeof tip.content === "string" &&
+          tip.content.trim()
+      );
+
+    let savedRecipe;
+
+    if (
+      mode === "edit" &&
+      recipeId
+    ) {
+      savedRecipe =
+        await updateRecipe(
+          recipeId,
+          payload
+        );
+    } else {
+      savedRecipe =
+        await createRecipe(payload);
+    }
+
+    /*
+     * Keep the latest persisted recipe in memory.
+     *
+     * This is especially important for published_at:
+     * a second save must preserve the first
+     * publication date.
+     */
+    setExistingRecipe(savedRecipe);
+
     await replaceRecipeIngredients(
       savedRecipe.id,
       validIngredients
@@ -172,26 +210,10 @@ export function useRecipeForm({
       validSteps
     );
 
-    const validTips =
-      (values.tips ?? []).filter(
-        (tip) =>
-          typeof tip.content === "string" &&
-          tip.content.trim()
-      );
-
     await replaceRecipeTips(
       savedRecipe.id,
       validTips
     );
-
-    const publicationErrors =
-      validateRecipePublication(values);
-
-    if (publicationErrors.length > 0) {
-      throw new Error(
-        publicationErrors.join(" ")
-      );
-    }
 
     return savedRecipe;
   };
@@ -199,6 +221,7 @@ export function useRecipeForm({
   return {
     form,
     saveRecipe,
+
     isLoadingRecipe,
     isSubmitting,
     isDirty,

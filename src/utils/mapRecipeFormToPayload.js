@@ -1,8 +1,29 @@
 export function mapRecipeFormToPayload(
   values,
-  userId
+  userId,
+  existingRecipe = null
 ) {
-  const status = values.status ?? "draft";
+  const nextStatus = values.status;
+
+  const previousStatus =
+    existingRecipe?.status ?? null;
+
+  const previousPublishedAt =
+    existingRecipe?.published_at ?? null;
+
+  let publishedAt = null;
+
+  if (nextStatus === "published") {
+    if (
+      previousStatus === "published" &&
+      previousPublishedAt
+    ) {
+      publishedAt = previousPublishedAt;
+    } else {
+      publishedAt =
+        new Date().toISOString();
+    }
+  }
 
   function toNullableNumber(value) {
     if (
@@ -56,7 +77,7 @@ export function mapRecipeFormToPayload(
     image_path:
       values.imagePath || null,
 
-    status,
+    status: nextStatus,
 
     meta_title:
       values.metaTitle?.trim() || null,
@@ -64,10 +85,7 @@ export function mapRecipeFormToPayload(
     meta_description:
       values.metaDescription?.trim() || null,
 
-    published_at:
-      status === "published"
-        ? new Date().toISOString()
-        : null,
+    published_at: publishedAt,
 
     created_by: userId,
   };
