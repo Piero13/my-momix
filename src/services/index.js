@@ -7,3 +7,5 @@ export * from "./dashboard";
 export * from "./categories";
 export * from "./recipes";
 export * from "./ingredients";
+export * from "./comments";
+export * from "./settings";

@@ -1,0 +1,72 @@
+@use "@/styles/abstracts" as *;
+
+.meta {
+  display: grid;
+  gap: $spacing-lg;
+
+  padding-bottom: $spacing-lg;
+
+  border-bottom: 1px solid $color-border;
+}
+
+.label {
+  display: block;
+
+  margin-bottom: $spacing-xs;
+
+  color: $color-text-muted;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.secondary {
+  display: block;
+
+  margin-top: 0.15rem;
+
+  color: $color-text-muted;
+  font-size: $font-size-xs;
+}
+
+.rating {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-xs;
+
+  svg {
+    color: $color-primary-dark;
+  }
+}
+
+.contentBlock {
+  margin-top: $spacing-lg;
+}
+
+.content {
+  margin: 0;
+
+  white-space: pre-line;
+
+  color: $color-text;
+  line-height: 1.7;
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.moderationActions {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+}
+
+@include tablet {
+  .meta {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+}

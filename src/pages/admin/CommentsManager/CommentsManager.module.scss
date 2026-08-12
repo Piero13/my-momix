@@ -1,3 +1,41 @@
-.page {
-  padding: 2rem 0;
+@use "@/styles/abstracts" as *;
+
+.author {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.email {
+  color: $color-text-muted;
+  font-size: $font-size-xs;
+}
+
+.recipe {
+  font-weight: $font-weight-medium;
+}
+
+.content {
+  display: block;
+
+  max-width: 28rem;
+
+  overflow: hidden;
+
+  color: $color-text-light;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rating {
+  white-space: nowrap;
+
+  font-weight: $font-weight-semibold;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: $spacing-xs;
 }
