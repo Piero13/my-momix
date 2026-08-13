@@ -14,3 +14,4 @@ export * from "./images";
 export * from "./ingredients";
 export * from "./strings";
 export * from "./settings";
+export * from "./recipes";

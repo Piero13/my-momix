@@ -12,7 +12,6 @@ import {
   SearchInput,
 } from "@/components/ui";
 import {
-  RECIPE_CATEGORY_OPTIONS,
   RECIPE_DIFFICULTY_OPTIONS,
   RECIPE_MAX_TIME_OPTIONS,
 } from "@/constants";
@@ -89,7 +88,9 @@ function RecipeSearchForm({
   );
 }
 
-export default function RecipeFilters() {
+export default function RecipeFilters({
+  categories = [],
+}) {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const searchParam = searchParams.get("search") ?? "";
@@ -165,9 +166,16 @@ export default function RecipeFilters() {
           value={categoryParam}
           onChange={handleCategoryChange}
         >
-          {RECIPE_CATEGORY_OPTIONS.map(({ value, label }) => (
-            <option key={value || "all"} value={value}>
-              {label}
+          <option value="">
+            Toutes les catégories
+          </option>
+
+          {categories.map((category) => (
+            <option
+              key={category.id}
+              value={category.slug}
+            >
+              {category.name}
             </option>
           ))}
         </Form.Select>

@@ -3,8 +3,12 @@ import { supabase } from "@/lib";
 export async function getPublishedRecipes({
   page = 1,
   pageSize = 10,
+
   search = "",
   categoryId = "",
+  difficulty = "",
+  maxTime = null,
+  sort = "",
 } = {}) {
   const from = (page - 1) * pageSize;
   const to = from + pageSize - 1;
@@ -54,11 +58,74 @@ export async function getPublishedRecipes({
     );
   }
 
-  query = query
-    .order("published_at", {
-      ascending: false,
-    })
-    .range(from, to);
+  if (difficulty) {
+    query = query.eq(
+      "difficulty",
+      difficulty
+    );
+  }
+
+  if (
+    Number.isFinite(maxTime) &&
+    maxTime > 0
+  ) {
+    query = query.lte(
+      "total_time",
+      maxTime
+    );
+  }
+
+  switch (sort) {
+    case "oldest":
+      query = query.order(
+        "published_at",
+        {
+          ascending: true,
+        }
+      );
+      break;
+
+    case "title-asc":
+      query = query.order(
+        "title",
+        {
+          ascending: true,
+        }
+      );
+      break;
+
+    case "title-desc":
+      query = query.order(
+        "title",
+        {
+          ascending: false,
+        }
+      );
+      break;
+
+    case "rating":
+      query = query.order(
+        "average_rating",
+        {
+          ascending: false,
+        }
+      );
+      break;
+
+    case "newest":
+    default:
+      query = query.order(
+        "published_at",
+        {
+          ascending: false,
+        }
+      );
+  }
+
+  query = query.range(
+    from,
+    to
+  );
 
   const {
     data,
