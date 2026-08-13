@@ -2,20 +2,56 @@
  * Public home page.
  */
 
-import { 
-  Hero, 
-  QuickSearch,
+import {
+  Hero,
   LatestRecipes,
-  PopularCategories
+  PopularCategories,
+  QuickSearch,
 } from "@/components/home";
 
+import {
+  useHomeData,
+} from "@/hooks";
+
+import {
+  mapPublicRecipe,
+} from "@/utils";
+
 export default function Home() {
+  const {
+    latestRecipes,
+    popularCategories,
+    isLoading,
+  } = useHomeData();
+
+  const mappedLatestRecipes =
+    latestRecipes.map(
+      mapPublicRecipe
+    );
+
   return (
     <>
       <Hero />
+
       <QuickSearch />
-      <LatestRecipes />
-      <PopularCategories />
+
+      <LatestRecipes
+        recipes={
+          mappedLatestRecipes
+        }
+        loading={
+          isLoading
+        }
+      />
+
+      <PopularCategories
+        categories={
+          popularCategories
+        }
+        loading={
+          isLoading
+        }
+      />
     </>
   );
 }

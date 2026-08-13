@@ -2,23 +2,45 @@
  * Displays popular recipe categories on the public home page.
  */
 
-import { Col, Row } from "react-bootstrap";
-import { FiArrowRight } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import {
+  Col,
+  Row,
+} from "react-bootstrap";
+import {
+  FiArrowRight,
+} from "react-icons/fi";
+import {
+  Link,
+} from "react-router-dom";
 
-import { CategoryCard } from "@/components/category";
+import {
+  CategoryCard,
+} from "@/components/category";
+
 import {
   AppButton,
   PageContainer,
   Section,
   SectionHeader,
 } from "@/components/ui";
-import { ROUTES } from "@/constants";
 
-import { POPULAR_CATEGORIES } from "./popularCategories.data";
+import {
+  ROUTES,
+} from "@/constants";
+
 import styles from "./PopularCategories.module.scss";
 
-export default function PopularCategories() {
+export default function PopularCategories({
+  categories = [],
+  loading = false,
+}) {
+  if (
+    !loading &&
+    categories.length === 0
+  ) {
+    return null;
+  }
+
   return (
     <Section
       className={styles.section}
@@ -44,18 +66,24 @@ export default function PopularCategories() {
           }
         />
 
-        <Row className="g-4">
-          {POPULAR_CATEGORIES.map((category) => (
-            <Col
-              key={category.id}
-              xs={12}
-              sm={6}
-              lg={3}
-            >
-              <CategoryCard category={category} />
-            </Col>
-          ))}
-        </Row>
+        {!loading ? (
+          <Row className="g-4">
+            {categories.map(
+              (category) => (
+                <Col
+                  key={category.id}
+                  xs={12}
+                  sm={6}
+                  lg={3}
+                >
+                  <CategoryCard
+                    category={category}
+                  />
+                </Col>
+              )
+            )}
+          </Row>
+        ) : null}
       </PageContainer>
     </Section>
   );

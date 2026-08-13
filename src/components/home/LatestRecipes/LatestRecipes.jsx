@@ -2,23 +2,45 @@
  * Displays the latest recipes on the public home page.
  */
 
-import { Col, Row } from "react-bootstrap";
-import { FiArrowRight } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import {
+  Col,
+  Row,
+} from "react-bootstrap";
+import {
+  FiArrowRight,
+} from "react-icons/fi";
+import {
+  Link,
+} from "react-router-dom";
 
-import { RecipeCard } from "@/components/recipe";
+import {
+  RecipeCard,
+} from "@/components/recipe";
+
 import {
   AppButton,
   PageContainer,
   Section,
   SectionHeader,
 } from "@/components/ui";
-import { ROUTES } from "@/constants";
 
-import { LATEST_RECIPES } from "./latestRecipes.data";
+import {
+  ROUTES,
+} from "@/constants";
+
 import styles from "./LatestRecipes.module.scss";
 
-export default function LatestRecipes() {
+export default function LatestRecipes({
+  recipes = [],
+  loading = false,
+}) {
+  if (
+    !loading &&
+    recipes.length === 0
+  ) {
+    return null;
+  }
+
   return (
     <Section
       spacing="large"
@@ -44,18 +66,24 @@ export default function LatestRecipes() {
           }
         />
 
-        <Row className="g-4">
-          {LATEST_RECIPES.map((recipe) => (
-            <Col
-              key={recipe.id}
-              xs={12}
-              md={6}
-              lg={4}
-            >
-              <RecipeCard recipe={recipe} />
-            </Col>
-          ))}
-        </Row>
+        {!loading ? (
+          <Row className="g-4">
+            {recipes.map(
+              (recipe) => (
+                <Col
+                  key={recipe.id}
+                  xs={12}
+                  md={6}
+                  lg={4}
+                >
+                  <RecipeCard
+                    recipe={recipe}
+                  />
+                </Col>
+              )
+            )}
+          </Row>
+        ) : null}
       </PageContainer>
     </Section>
   );
