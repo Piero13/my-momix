@@ -256,3 +256,56 @@ export async function getPublishedRecipeTips(
 
   return data ?? [];
 }
+
+export async function getSimilarPublishedRecipes({
+  recipeId,
+  categoryId,
+  limit = 3,
+} = {}) {
+  if (!recipeId) {
+    return [];
+  }
+
+  let query = supabase
+    .from("recipes")
+    .select(`
+      id,
+      title,
+      slug,
+      description,
+      image_path,
+      difficulty,
+      servings,
+      preparation_time,
+      cooking_time,
+      total_time,
+      average_rating,
+      ratings_count,
+      categories (
+        id,
+        name,
+        slug
+      )
+    `)
+    .eq("status", "published")
+    .neq("id", recipeId);
+
+  if (categoryId) {
+    query = query.eq(
+      "category_id",
+      categoryId
+    );
+  }
+
+  const { data, error } = await query
+    .order("published_at", {
+      ascending: false,
+    })
+    .limit(limit);
+
+  if (error) {
+    throw error;
+  }
+
+  return data ?? [];
+}

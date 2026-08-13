@@ -2,55 +2,76 @@
  * Public recipe details page.
  */
 
-import { useState } from "react";
+import {
+  useMemo,
+  useState,
+} from "react";
 import toast from "react-hot-toast";
-import { FiArrowLeft, FiSearch } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import {
+  FiArrowLeft,
+  FiSearch,
+} from "react-icons/fi";
+import {
+  Link,
+  useParams,
+} from "react-router-dom";
 
 import {
   RecipeHero,
   RecipeIngredients,
   RecipeSteps,
   RecipeTips,
-  RecipeNutrition,
   SimilarRecipes,
-} from "@/components/recipe";
-
-import {
   AppButton,
   EmptyState,
+  LoadingScreen,
   PageContainer,
   Section,
-} from "@/components/ui";
+} from "@/components";
 
-import { 
-  shareContent,
+import {
   generateRecipePdf,
+  shareContent,
 } from "@/services";
 
 import {
-  getSimilarRecipes,
-  mapRecipeDetailsToCard,
+  mapPublicRecipe,
+  mapPublicRecipeDetails,
 } from "@/utils";
 
-import { ROUTES } from "@/constants";
+import {
+  ROUTES,
+} from "@/constants";
 
-import { useRecipeDetails } from "@/hooks";
-
-import { RECIPE_DETAILS_DATA } from "./recipeDetails.data";
+import {
+  usePublishedRecipeDetails,
+} from "@/hooks";
 
 import styles from "./RecipeDetails.module.scss";
 
-function RecipeDetailsContent({ recipe }) {
-  const [isFavorite, setIsFavorite] = useState(false);
-  const [selectedServings, setSelectedServings] = useState(
+function RecipeDetailsContent({
+  recipe,
+  similarRecipes,
+}) {
+  const [
+    isFavorite,
+    setIsFavorite,
+  ] = useState(false);
+
+  const [
+    selectedServings,
+    setSelectedServings,
+  ] = useState(
     recipe.servings
   );
 
   const handleFavoriteToggle = () => {
-    const nextIsFavorite = !isFavorite;
+    const nextIsFavorite =
+      !isFavorite;
 
-    setIsFavorite(nextIsFavorite);
+    setIsFavorite(
+      nextIsFavorite
+    );
 
     toast.success(
       nextIsFavorite
@@ -60,15 +81,23 @@ function RecipeDetailsContent({ recipe }) {
   };
 
   const handleShare = async () => {
-    const result = await shareContent({
-      title: recipe.title,
-      text: recipe.description,
-      url: window.location.href,
-    });
+    const result =
+      await shareContent({
+        title:
+          recipe.title,
+
+        text:
+          recipe.description,
+
+        url:
+          window.location.href,
+      });
 
     switch (result.status) {
       case "shared":
-        toast.success("Recette partagée.");
+        toast.success(
+          "Recette partagée."
+        );
         break;
 
       case "copied":
@@ -95,7 +124,9 @@ function RecipeDetailsContent({ recipe }) {
         selectedServings,
       });
 
-      toast.success("Le PDF a été généré.");
+      toast.success(
+        "Le PDF a été généré."
+      );
     } catch (error) {
       console.error(
         "Recipe PDF generation failed:",
@@ -108,15 +139,13 @@ function RecipeDetailsContent({ recipe }) {
     }
   };
 
-  const handleServingsChange = (nextServings) => {
-    setSelectedServings(nextServings);
+  const handleServingsChange = (
+    nextServings
+  ) => {
+    setSelectedServings(
+      nextServings
+    );
   };
-
-  const similarRecipes = getSimilarRecipes(
-    recipe,
-    RECIPE_DETAILS_DATA,
-    3
-  ).map(mapRecipeDetailsToCard);
 
   return (
     <article className={styles.page}>
@@ -127,42 +156,83 @@ function RecipeDetailsContent({ recipe }) {
       >
         <PageContainer>
           <nav
-            className={styles.backNavigation}
+            className={
+              styles.backNavigation
+            }
             aria-label="Navigation de retour"
           >
             <Link
               to={ROUTES.BROWSE}
-              className={styles.backLink}
+              className={
+                styles.backLink
+              }
             >
-              <FiArrowLeft aria-hidden="true" />
-              <span>Retour aux recettes</span>
+              <FiArrowLeft
+                aria-hidden="true"
+              />
+
+              <span>
+                Retour aux recettes
+              </span>
             </Link>
           </nav>
 
           <RecipeHero
             recipe={recipe}
-            servings={selectedServings}
-            isFavorite={isFavorite}
-            onFavoriteToggle={handleFavoriteToggle}
-            onShare={handleShare}
-            onDownloadPdf={handleDownloadPdf}
+            servings={
+              selectedServings
+            }
+            isFavorite={
+              isFavorite
+            }
+            onFavoriteToggle={
+              handleFavoriteToggle
+            }
+            onShare={
+              handleShare
+            }
+            onDownloadPdf={
+              handleDownloadPdf
+            }
           />
 
-          <div className={styles.recipeContent}>
+          <div
+            className={
+              styles.recipeContent
+            }
+          >
             <RecipeIngredients
-              ingredients={recipe.ingredients}
-              originalServings={recipe.servings}
-              selectedServings={selectedServings}
-              onServingsChange={handleServingsChange}
+              ingredients={
+                recipe.ingredients
+              }
+              originalServings={
+                recipe.servings
+              }
+              selectedServings={
+                selectedServings
+              }
+              onServingsChange={
+                handleServingsChange
+              }
             />
 
-            <RecipeSteps steps={recipe.steps} />
+            <RecipeSteps
+              steps={
+                recipe.steps
+              }
+            />
 
-            <RecipeTips tips={recipe.tips} />
+            <RecipeTips
+              tips={
+                recipe.tips
+              }
+            />
 
-            <RecipeNutrition nutrition={recipe.nutrition} />
-
-            <SimilarRecipes recipes={similarRecipes} />
+            <SimilarRecipes
+              recipes={
+                similarRecipes
+              }
+            />
           </div>
         </PageContainer>
       </Section>
@@ -172,14 +242,71 @@ function RecipeDetailsContent({ recipe }) {
 
 export default function RecipeDetails() {
   const {
-    recipe,
-    isNotFound,
-  } = useRecipeDetails(RECIPE_DETAILS_DATA);
+    slug,
+  } = useParams();
 
-  if (isNotFound) {
+  const {
+    recipe,
+    ingredients,
+    steps,
+    tips,
+    similarRecipes,
+
+    isLoading,
+    error,
+  } = usePublishedRecipeDetails(
+    slug
+  );
+
+  const mappedRecipe =
+    useMemo(() => {
+      if (!recipe) {
+        return null;
+      }
+
+      return mapPublicRecipeDetails({
+        recipe,
+        ingredients,
+        steps,
+        tips,
+      });
+    }, [
+      recipe,
+      ingredients,
+      steps,
+      tips,
+    ]);
+
+  const mappedSimilarRecipes =
+    useMemo(
+      () =>
+        (similarRecipes ?? []).map(
+          mapPublicRecipe
+        ),
+      [
+        similarRecipes,
+      ]
+    );
+
+  if (isLoading) {
+    return (
+      <LoadingScreen />
+    );
+  }
+
+  const isNotFound =
+    !mappedRecipe &&
+    !error;
+
+  if (
+    isNotFound ||
+    error
+  ) {
     return (
       <Section
-        className={styles.notFoundSection}
+        className={
+          styles.notFoundSection
+        }
         spacing="large"
         labelledBy="recipe-not-found-title"
       >
@@ -193,7 +320,9 @@ export default function RecipeDetails() {
                 as={Link}
                 to={ROUTES.BROWSE}
                 variant="primary"
-                icon={<FiArrowLeft />}
+                icon={
+                  <FiArrowLeft />
+                }
               >
                 Retour aux recettes
               </AppButton>
@@ -206,8 +335,15 @@ export default function RecipeDetails() {
 
   return (
     <RecipeDetailsContent
-      key={recipe.id}
-      recipe={recipe}
+      key={
+        mappedRecipe.id
+      }
+      recipe={
+        mappedRecipe
+      }
+      similarRecipes={
+        mappedSimilarRecipes
+      }
     />
   );
 }

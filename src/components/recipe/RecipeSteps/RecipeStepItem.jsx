@@ -51,11 +51,7 @@ export default function RecipeStepItem({ step }) {
             <StepMeta
               icon={FiClock}
               label="Durée"
-              value={
-                duration !== null
-                  ? `${duration} min`
-                  : null
-              }
+              value={duration ?? null}
             />
 
             <StepMeta

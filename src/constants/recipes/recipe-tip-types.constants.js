@@ -1,40 +1,43 @@
 import {
-  FiArchive,
-  FiRefreshCw,
-  FiStar,
+  FiAlertTriangle,
+  FiThermometer,
   FiZap,
 } from "react-icons/fi";
 
+export const RECIPE_TIP_TYPE = {
+  TIP: "tip",
+  WARNING: "warning",
+  COOKING: "cooking",
+};
+
 export const RECIPE_TIP_TYPES = [
   {
-    value: "tip",
+    value: RECIPE_TIP_TYPE.TIP,
     label: "Astuce",
   },
   {
-    value: "warning",
+    value: RECIPE_TIP_TYPE.WARNING,
     label: "Attention",
   },
   {
-    value: "cooking",
+    value: RECIPE_TIP_TYPE.COOKING,
     label: "Cuisson",
   },
 ];
 
 export const RECIPE_TIP_TYPE_CONFIG = {
-  [RECIPE_TIP_TYPES.TIP]: {
+  [RECIPE_TIP_TYPE.TIP]: {
     label: "Astuce",
     icon: FiZap,
   },
-  [RECIPE_TIP_TYPES.VARIANT]: {
-    label: "Variante",
-    icon: FiRefreshCw,
+
+  [RECIPE_TIP_TYPE.WARNING]: {
+    label: "Attention",
+    icon: FiAlertTriangle,
   },
-  [RECIPE_TIP_TYPES.CONSERVATION]: {
-    label: "Conservation",
-    icon: FiArchive,
-  },
-  [RECIPE_TIP_TYPES.EXTRA]: {
-    label: "Petit plus",
-    icon: FiStar,
+
+  [RECIPE_TIP_TYPE.COOKING]: {
+    label: "Cuisson",
+    icon: FiThermometer,
   },
 };
