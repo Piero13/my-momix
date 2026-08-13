@@ -64,10 +64,19 @@ export async function getCategoriesCount() {
 }
 
 export async function getApprovedCommentsCount() {
-  return getCount(
-    "comments",
-    (query) => query.eq("status", "approved")
-  );
+  const { count, error } = await supabase
+    .from("comments")
+    .select("*", {
+      count: "exact",
+      head: true,
+    })
+    .eq("approved", true);
+
+  if (error) {
+    throw error;
+  }
+
+  return count ?? 0;
 }
 
 /**

@@ -19,6 +19,7 @@ import {
   replaceRecipeSteps,
   replaceRecipeTips,
   updateRecipe,
+  getAppSettings,
 } from "@/services";
 
 import {
@@ -37,7 +38,7 @@ export function useRecipeForm({
   const { user } = useAuth();
 
   const [isLoadingRecipe, setIsLoadingRecipe] =
-    useState(mode === "edit");
+    useState(true);
 
   const [existingRecipe, setExistingRecipe] =
     useState(null);
@@ -57,14 +58,67 @@ export function useRecipeForm({
   } = form;
 
   useEffect(() => {
+    let isCancelled = false;
+
+    if (mode === "create") {
+      getAppSettings()
+        .then((settings) => {
+          if (isCancelled) {
+            return;
+          }
+
+          const createDefaults = {
+            ...RECIPE_FORM_DEFAULT_VALUES,
+
+            servings:
+              settings?.default_servings ??
+              RECIPE_FORM_DEFAULT_VALUES.servings,
+
+            difficulty:
+              settings?.default_difficulty ??
+              RECIPE_FORM_DEFAULT_VALUES.difficulty,
+
+            status:
+              settings?.default_recipe_status ??
+              RECIPE_FORM_DEFAULT_VALUES.status,
+          };
+
+          reset(createDefaults);
+        })
+        .catch((error) => {
+          if (isCancelled) {
+            return;
+          }
+
+          console.error(
+            "Unable to load recipe defaults:",
+            error
+          );
+
+          /*
+          * We keep the static fallback values.
+          */
+          reset(
+            RECIPE_FORM_DEFAULT_VALUES
+          );
+        })
+        .finally(() => {
+          if (!isCancelled) {
+            setIsLoadingRecipe(false);
+          }
+        });
+
+      return () => {
+        isCancelled = true;
+      };
+    }
+
     if (
       mode !== "edit" ||
       !recipeId
     ) {
       return;
     }
-
-    let isCancelled = false;
 
     Promise.all([
       getRecipeById(recipeId),

@@ -31,15 +31,15 @@ export const RECIPE_DIFFICULTY_OPTIONS = [
     label: "Toutes les difficultés",
   },
   {
-    value: "facile",
+    value: "easy",
     label: "Facile",
   },
   {
-    value: "intermediaire",
+    value: "medium",
     label: "Intermédiaire",
   },
   {
-    value: "difficile",
+    value: "hard",
     label: "Difficile",
   },
 ];

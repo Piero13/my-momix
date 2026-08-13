@@ -44,7 +44,7 @@ export async function getRecentComments(
       id,
       author_name,
       content,
-      status,
+      approved,
       created_at,
       recipes (
         id,
@@ -89,7 +89,7 @@ function mapCommentActivity(comment) {
     description: comment.recipes?.title
       ? `Nouveau commentaire sur « ${comment.recipes.title} »`
       : "Nouveau commentaire",
-    status: comment.status,
+    status: comment.approved,
     date: comment.created_at,
     recipe: comment.recipes ?? null,
   };

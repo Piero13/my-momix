@@ -8,3 +8,4 @@ export * from "./ui";
 export * from "./ingredients";
 export * from "./categories";
 export * from "./comments";
+export * from "./settings";

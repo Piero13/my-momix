@@ -16,7 +16,7 @@ export async function getPendingCommentsCount() {
       count: "exact",
       head: true,
     })
-    .eq("status", "pending");
+    .eq("approved", false);
 
   if (error) {
     throw error;
