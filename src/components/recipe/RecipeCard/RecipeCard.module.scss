@@ -73,47 +73,55 @@
 }
 
 .favoriteButton {
-  position: absolute;
-  top: $spacing-md;
-  right: $spacing-md;
-
   display: inline-flex;
   align-items: center;
   justify-content: center;
 
+  flex: 0 0 auto;
+
   width: 2.5rem;
   height: 2.5rem;
-  padding: 0;
 
-  color: $color-text;
-  background: rgba($color-surface, 0.9);
+  padding: 0;
   border: 0;
-  border-radius: $radius-circle;
-  box-shadow: $shadow-sm;
+  border-radius: 50%;
+
+  background: transparent;
+  color: inherit;
+
+  cursor: pointer;
 
   transition:
-    color $transition-fast,
-    background-color $transition-fast,
-    transform $transition-fast;
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
 
-  &:hover {
-    color: $color-primary;
-    background: $color-surface;
-    transform: scale(1.06);
-  }
+.favoriteButton:hover {
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.05
+  );
+}
 
-  &:focus-visible {
-    outline: 2px solid $color-primary;
-    outline-offset: 2px;
-  }
+.favoriteButton:active {
+  transform: scale(0.92);
+}
 
-  &:active {
-    transform: scale(0.98);
-  }
+.favoriteButton:focus-visible {
+  outline: 3px solid
+    var(--color-primary);
+  outline-offset: 2px;
+}
+
+.favoriteButton svg {
+  width: 1.25rem;
+  height: 1.25rem;
 }
 
 .favoriteIconActive {
-  color: $color-primary;
+  color: #dc3545;
   fill: currentColor;
 }
 
@@ -128,13 +136,17 @@
   padding: $spacing-lg;
 }
 
-.title {
-  margin: 0;
+.titleRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
 
-  color: $color-text;
-  font-size: $font-size-lg;
-  font-weight: $font-weight-bold;
-  line-height: 1.3;
+.title {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
 }
 
 .metadata {

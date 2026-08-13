@@ -6,9 +6,11 @@ import {
   Col,
   Row,
 } from "react-bootstrap";
+
 import {
   FiArrowRight,
 } from "react-icons/fi";
+
 import {
   Link,
 } from "react-router-dom";
@@ -28,18 +30,31 @@ import {
   ROUTES,
 } from "@/constants";
 
+import { useFavorites } from "@/hooks";
+
 import styles from "./LatestRecipes.module.scss";
 
 export default function LatestRecipes({
   recipes = [],
   loading = false,
 }) {
+  const {
+      isFavorite,
+      toggleFavorite,
+    } = useFavorites();
+
   if (
     !loading &&
     recipes.length === 0
   ) {
     return null;
   }
+
+  const handleFavoriteToggle = (
+    recipe
+  ) => {
+    toggleFavorite(recipe.id);
+  };
 
   return (
     <Section
@@ -78,6 +93,12 @@ export default function LatestRecipes({
                 >
                   <RecipeCard
                     recipe={recipe}
+                    isFavorite={
+                      isFavorite(recipe.id)
+                    }
+                    onFavoriteToggle={
+                      handleFavoriteToggle
+                    }
                   />
                 </Col>
               )

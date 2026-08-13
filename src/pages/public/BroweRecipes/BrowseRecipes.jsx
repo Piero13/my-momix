@@ -13,6 +13,7 @@ import {
 } from "@/components";
 
 import {
+  useFavorites,
   usePublishedRecipes,
 } from "@/hooks";
 
@@ -49,10 +50,21 @@ export default function BrowseRecipes() {
     handlePageSizeChange,
   } = usePublishedRecipes();
 
+  const {
+    isFavorite,
+    toggleFavorite,
+  } = useFavorites();
+
   const mappedRecipes =
     recipes.map(
       mapPublicRecipe
     );
+
+  const handleFavoriteToggle = (
+    recipe
+  ) => {
+    toggleFavorite(recipe.id);
+  };
 
   return (
     <Section
@@ -151,6 +163,8 @@ export default function BrowseRecipes() {
             <RecipeGrid
               recipes={mappedRecipes}
               loading={isLoading}
+              isFavorite={isFavorite}
+              onFavoriteToggle={handleFavoriteToggle}
             />
 
             {!isLoading &&

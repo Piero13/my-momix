@@ -11,7 +11,11 @@ import RecipeCard from "../RecipeCard";
 
 import styles from "./RecipeGrid.module.scss";
 
-export default function RecipeGrid({ recipes }) {
+export default function RecipeGrid({
+  recipes,
+  isFavorite,
+  onFavoriteToggle,
+}) {
   if (!recipes.length) {
     return (
       <EmptyState
@@ -31,7 +35,16 @@ export default function RecipeGrid({ recipes }) {
           md={6}
           xl={4}
         >
-          <RecipeCard recipe={recipe} />
+          <RecipeCard
+            recipe={recipe}
+            isFavorite={
+              isFavorite?.(recipe.id) ??
+              false
+            }
+            onFavoriteToggle={
+              onFavoriteToggle
+            }
+          />
         </Col>
       ))}
     </Row>

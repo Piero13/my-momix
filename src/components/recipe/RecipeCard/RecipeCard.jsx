@@ -2,11 +2,17 @@
  * Reusable public recipe preview card.
  */
 
-import { FiClock, FiHeart, FiUsers } from "react-icons/fi";
+import {
+  FiClock,
+  FiHeart,
+  FiUsers,
+} from "react-icons/fi";
 import { Link } from "react-router-dom";
 
 import { AppCard } from "@/components/ui";
-import { getRecipeDetailsPath } from "@/constants";
+import {
+  getRecipeDetailsPath,
+} from "@/constants";
 
 import styles from "./RecipeCard.module.scss";
 
@@ -25,7 +31,9 @@ export default function RecipeCard({
     difficulty,
   } = recipe;
 
-  const handleFavoriteClick = (event) => {
+  const handleFavoriteClick = (
+    event
+  ) => {
     event.preventDefault();
     event.stopPropagation();
 
@@ -44,7 +52,11 @@ export default function RecipeCard({
           className={styles.link}
           aria-label={`Voir la recette ${title}`}
         >
-          <div className={styles.imageWrapper}>
+          <div
+            className={
+              styles.imageWrapper
+            }
+          >
             <img
               src={imageUrl}
               alt=""
@@ -53,58 +65,109 @@ export default function RecipeCard({
             />
 
             {category ? (
-              <span className={styles.category}>
+              <span
+                className={
+                  styles.category
+                }
+              >
                 {category}
               </span>
             ) : null}
-
-            {onFavoriteToggle ? (
-              <button
-                type="button"
-                className={styles.favoriteButton}
-                aria-label={
-                  isFavorite
-                    ? `Retirer ${title} des favoris`
-                    : `Ajouter ${title} aux favoris`
-                }
-                aria-pressed={isFavorite}
-                onClick={handleFavoriteClick}
-              >
-                <FiHeart
-                  aria-hidden="true"
-                  className={
-                    isFavorite ? styles.favoriteIconActive : undefined
-                  }
-                />
-              </button>
-            ) : null}
           </div>
 
-          <div className={styles.content}>
-            <h3 className={styles.title}>
-              {title}
-            </h3>
+          <div
+            className={styles.content}
+          >
+            <div
+              className={
+                styles.titleRow
+              }
+            >
+              <h3
+                className={
+                  styles.title
+                }
+              >
+                {title}
+              </h3>
 
-            <div className={styles.metadata}>
+              {onFavoriteToggle ? (
+                <button
+                  type="button"
+                  className={
+                    styles.favoriteButton
+                  }
+                  aria-label={
+                    isFavorite
+                      ? `Retirer ${title} des favoris`
+                      : `Ajouter ${title} aux favoris`
+                  }
+                  aria-pressed={
+                    isFavorite
+                  }
+                  onClick={
+                    handleFavoriteClick
+                  }
+                >
+                  <FiHeart
+                    aria-hidden="true"
+                    className={
+                      isFavorite
+                        ? styles.favoriteIconActive
+                        : undefined
+                    }
+                  />
+                </button>
+              ) : null}
+            </div>
+
+            <div
+              className={
+                styles.metadata
+              }
+            >
               {totalTime ? (
-                <span className={styles.metadataItem}>
-                  <FiClock aria-hidden="true" />
-                  <span>{totalTime} min</span>
+                <span
+                  className={
+                    styles.metadataItem
+                  }
+                >
+                  <FiClock
+                    aria-hidden="true"
+                  />
+
+                  <span>
+                    {totalTime} min
+                  </span>
                 </span>
               ) : null}
 
               {servings ? (
-                <span className={styles.metadataItem}>
-                  <FiUsers aria-hidden="true" />
+                <span
+                  className={
+                    styles.metadataItem
+                  }
+                >
+                  <FiUsers
+                    aria-hidden="true"
+                  />
+
                   <span>
-                    {servings} {servings > 1 ? "personnes" : "personne"}
+                    {servings}{" "}
+                    {servings > 1
+                      ? "personnes"
+                      : "personne"}
                   </span>
                 </span>
               ) : null}
             </div>
 
             {difficulty ? (
-              <span className={styles.difficulty}>
+              <span
+                className={
+                  styles.difficulty
+                }
+              >
                 {difficulty}
               </span>
             ) : null}

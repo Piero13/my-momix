@@ -10,3 +10,4 @@ export * from "./ingredients";
 export * from "./comments";
 export * from "./settings";
 export * from "./public";
+export * from "./favorites";

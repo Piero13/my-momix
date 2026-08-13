@@ -5,3 +5,4 @@ export * from "./categories";
 export * from "./comments";
 export * from "./settings";
 export * from "./public";
+export * from "./favorites";
