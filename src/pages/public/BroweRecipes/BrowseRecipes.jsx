@@ -2,6 +2,8 @@
  * Public recipe browsing page.
  */
 
+import { FiHeart } from "react-icons/fi";
+
 import {
   RecipeFilters,
   RecipeGrid,
@@ -10,6 +12,7 @@ import {
   PageContainer,
   Section,
   SectionHeader,
+  EmptyState,
 } from "@/components";
 
 import {
@@ -37,6 +40,7 @@ export default function BrowseRecipes() {
     hasActiveDifficulty,
     hasActiveMaxTime,
     hasActiveFilters,
+    favoritesOnly,
 
     recipes,
     totalRecipes,
@@ -160,12 +164,23 @@ export default function BrowseRecipes() {
               <RecipeSort />
             </div>
 
-            <RecipeGrid
-              recipes={mappedRecipes}
-              loading={isLoading}
-              isFavorite={isFavorite}
-              onFavoriteToggle={handleFavoriteToggle}
-            />
+            {!isLoading &&
+            favoritesOnly &&
+            mappedRecipes.length === 0 ? (
+              <EmptyState
+                icon={FiHeart}
+                title="Aucune recette favorite"
+                description="Ajoutez des recettes à vos favoris pour les retrouver facilement ici."
+              />
+            ) : (
+              <RecipeGrid
+                recipes={mappedRecipes}
+                isFavorite={isFavorite}
+                onFavoriteToggle={
+                  handleFavoriteToggle
+                }
+              />
+            )}
 
             {!isLoading &&
             totalRecipes > 0 ? (

@@ -17,6 +17,8 @@ import {
   getPublicCategories,
 } from "@/services";
 
+import { useFavorites } from "../favorites";
+
 export function usePublishedRecipes({
   initialPage = 1,
   initialPageSize = 10,
@@ -35,6 +37,14 @@ export function usePublishedRecipes({
 
   const [isLoading, setIsLoading] =
     useState(true);
+  
+  const {
+    favoriteIds,
+  } = useFavorites();
+
+  const favoritesOnly = searchParams.get("favorites") === "1";
+
+  const hasActiveFavorites = favoritesOnly;
 
   const [
     isLoadingCategories,
@@ -115,7 +125,8 @@ export function usePublishedRecipes({
     hasActiveSearch ||
     hasActiveCategory ||
     hasActiveDifficulty ||
-    hasActiveMaxTime;
+    hasActiveMaxTime ||
+    hasActiveFavorites;
 
   useEffect(() => {
     let isCancelled = false;
@@ -182,6 +193,11 @@ export function usePublishedRecipes({
           : null,
 
       sort,
+
+      favoriteIds:
+        favoritesOnly
+          ? favoriteIds
+          : null,
     })
       .then(({ data, count }) => {
         if (
@@ -236,6 +252,8 @@ export function usePublishedRecipes({
     hasActiveMaxTime,
     sort,
     isLoadingCategories,
+    favoriteIds,
+    favoritesOnly,
   ]);
 
   const handlePageChange = (
@@ -303,6 +321,7 @@ export function usePublishedRecipes({
     hasActiveDifficulty,
     hasActiveMaxTime,
     hasActiveFilters,
+    hasActiveFavorites,
 
     totalRecipes,
 

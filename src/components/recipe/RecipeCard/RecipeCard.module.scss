@@ -74,8 +74,7 @@
 
 .favoriteButton {
   display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  justify-content: end;
 
   flex: 0 0 auto;
 
@@ -141,6 +140,7 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: 1rem;
+  width: 100%;
 }
 
 .title {

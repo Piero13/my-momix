@@ -45,6 +45,7 @@ import {
 
 import {
   usePublishedRecipeDetails,
+  useFavorites,
 } from "@/hooks";
 
 import styles from "./RecipeDetails.module.scss";
@@ -52,11 +53,9 @@ import styles from "./RecipeDetails.module.scss";
 function RecipeDetailsContent({
   recipe,
   similarRecipes,
+  isFavorite,
+  onFavoriteToggle,
 }) {
-  const [
-    isFavorite,
-    setIsFavorite,
-  ] = useState(false);
 
   const [
     selectedServings,
@@ -64,21 +63,6 @@ function RecipeDetailsContent({
   ] = useState(
     recipe.servings
   );
-
-  const handleFavoriteToggle = () => {
-    const nextIsFavorite =
-      !isFavorite;
-
-    setIsFavorite(
-      nextIsFavorite
-    );
-
-    toast.success(
-      nextIsFavorite
-        ? "Recette ajoutée aux favoris."
-        : "Recette retirée des favoris."
-    );
-  };
 
   const handleShare = async () => {
     const result =
@@ -179,21 +163,13 @@ function RecipeDetailsContent({
 
           <RecipeHero
             recipe={recipe}
-            servings={
-              selectedServings
-            }
-            isFavorite={
-              isFavorite
-            }
+            servings={selectedServings}
+            isFavorite={isFavorite}
             onFavoriteToggle={
-              handleFavoriteToggle
+              onFavoriteToggle
             }
-            onShare={
-              handleShare
-            }
-            onDownloadPdf={
-              handleDownloadPdf
-            }
+            onShare={handleShare}
+            onDownloadPdf={handleDownloadPdf}
           />
 
           <div
@@ -244,6 +220,11 @@ export default function RecipeDetails() {
   const {
     slug,
   } = useParams();
+
+  const {
+    isFavorite,
+    toggleFavorite,
+  } = useFavorites();
 
   const {
     recipe,
@@ -333,16 +314,37 @@ export default function RecipeDetails() {
     );
   }
 
+  const handleFavoriteToggle = () => {
+    if (!mappedRecipe) {
+      return;
+    }
+
+    const nextIsFavorite =
+      toggleFavorite(
+        mappedRecipe.id
+      );
+
+    toast.success(
+      nextIsFavorite
+        ? "Recette ajoutée aux favoris."
+        : "Recette retirée des favoris."
+    );
+  };
+
   return (
     <RecipeDetailsContent
-      key={
-        mappedRecipe.id
-      }
-      recipe={
-        mappedRecipe
-      }
+      key={mappedRecipe.id}
+      recipe={mappedRecipe}
       similarRecipes={
         mappedSimilarRecipes
+      }
+      isFavorite={
+        isFavorite(
+          mappedRecipe.id
+        )
+      }
+      onFavoriteToggle={
+        handleFavoriteToggle
       }
     />
   );

@@ -97,12 +97,14 @@ export default function RecipeFilters({
   const categoryParam = searchParams.get("category") ?? "";
   const difficultyParam = searchParams.get("difficulty") ?? "";
   const maxTimeParam = searchParams.get("maxTime") ?? "";
+  const favoritesParam = searchParams.get("favorites") ?? "";
 
   const hasActiveFilters = Boolean(
     searchParam ||
     categoryParam ||
     difficultyParam ||
-    maxTimeParam
+    maxTimeParam ||
+    favoritesParam
   );
 
   const updateFilter = (name, value) => {
@@ -131,6 +133,34 @@ export default function RecipeFilters({
     updateFilter("maxTime", event.target.value);
   };
 
+  const handleFavoritesChange = (
+    event
+  ) => {
+    const nextSearchParams =
+      new URLSearchParams(
+        searchParams
+      );
+
+    if (event.target.checked) {
+      nextSearchParams.set(
+        "favorites",
+        "1"
+      );
+    } else {
+      nextSearchParams.delete(
+        "favorites"
+      );
+    }
+
+    nextSearchParams.delete(
+      "page"
+    );
+
+    setSearchParams(
+      nextSearchParams
+    );
+  };
+
   const handleReset = () => {
     const nextSearchParams = new URLSearchParams(searchParams);
 
@@ -138,6 +168,7 @@ export default function RecipeFilters({
     nextSearchParams.delete("category");
     nextSearchParams.delete("difficulty");
     nextSearchParams.delete("maxTime");
+    nextSearchParams.delete("favorites");
     nextSearchParams.delete("page");
 
     setSearchParams(nextSearchParams);
@@ -219,6 +250,22 @@ export default function RecipeFilters({
             </option>
           ))}
         </Form.Select>
+      </Form.Group>
+
+      <Form.Group
+        className={styles.group}
+        controlId="recipe-favorites-filter"
+      >
+        <Form.Check
+          type="checkbox"
+          label="Mes favoris uniquement"
+          checked={
+            favoritesParam === "1"
+          }
+          onChange={
+            handleFavoritesChange
+          }
+        />
       </Form.Group>
 
       {hasActiveFilters ? (

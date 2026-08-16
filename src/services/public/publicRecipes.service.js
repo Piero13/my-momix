@@ -9,7 +9,18 @@ export async function getPublishedRecipes({
   difficulty = "",
   maxTime = null,
   sort = "",
+  favoriteIds = 1,
 } = {}) {
+  if (
+    Array.isArray(favoriteIds) &&
+    favoriteIds.length === 0
+  ) {
+    return {
+      data: [],
+      count: 0,
+    };
+  }
+  
   const from = (page - 1) * pageSize;
   const to = from + pageSize - 1;
 
@@ -41,6 +52,16 @@ export async function getPublishedRecipes({
       }
     )
     .eq("status", "published");
+
+  if (
+    Array.isArray(favoriteIds) &&
+    favoriteIds.length > 0
+  ) {
+    query = query.in(
+      "id",
+      favoriteIds
+    );
+  }
 
   const normalizedSearch = search.trim();
 
