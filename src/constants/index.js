@@ -6,3 +6,4 @@ export * from "./admin";
 export * from "./storage";
 export * from "./ingredients";
 export * from "./comments";
+export * from "./shoppingList";

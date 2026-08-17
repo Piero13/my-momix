@@ -13,12 +13,17 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
-import { AppProviders } from "@/providers";
+import { 
+  AppProviders,
+  ShoppingListProvider,
+} from "@/providers";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <AppProviders>
-      <App />
+      <ShoppingListProvider>
+        <App />
+      </ShoppingListProvider>
     </AppProviders>
   </React.StrictMode>
 );
