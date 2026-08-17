@@ -38,6 +38,8 @@ export function usePublishedRecipes({
   const [isLoading, setIsLoading] =
     useState(true);
   
+  const [error, setError] = useState(null);
+  
   const {
     favoriteIds,
   } = useFavorites();
@@ -210,8 +212,9 @@ export function usePublishedRecipes({
 
         setRecipes(data ?? []);
         setTotalRecipes(count ?? 0);
+        setError(null);
       })
-      .catch((error) => {
+      .catch((loadError) => {
         if (
           isCancelled ||
           requestId !==
@@ -222,11 +225,12 @@ export function usePublishedRecipes({
 
         console.error(
           "Unable to load published recipes:",
-          error
+          loadError
         );
 
         setRecipes([]);
         setTotalRecipes(0);
+        setError(loadError);
       })
       .finally(() => {
         if (
@@ -330,6 +334,8 @@ export function usePublishedRecipes({
 
     isLoading,
     isLoadingCategories,
+
+    error,
 
     handlePageChange,
     handlePageSizeChange,

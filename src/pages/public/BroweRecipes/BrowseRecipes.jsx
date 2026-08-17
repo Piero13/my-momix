@@ -2,7 +2,10 @@
  * Public recipe browsing page.
  */
 
-import { FiHeart } from "react-icons/fi";
+import { 
+  FiHeart,
+  FiAlertCircle,
+} from "react-icons/fi";
 
 import {
   RecipeFilters,
@@ -49,6 +52,8 @@ export default function BrowseRecipes() {
     pageSize,
 
     isLoading,
+
+    error,
 
     handlePageChange,
     handlePageSizeChange,
@@ -164,13 +169,19 @@ export default function BrowseRecipes() {
               <RecipeSort />
             </div>
 
-            {!isLoading &&
+            {error ? (
+              <EmptyState
+                icon={FiAlertCircle}
+                title="Impossible de charger les recettes"
+                description="Une erreur est survenue lors du chargement des recettes."
+              />
+            ) : !isLoading &&
             favoritesOnly &&
             mappedRecipes.length === 0 ? (
               <EmptyState
                 icon={FiHeart}
-                title="Aucune recette favorite"
-                description="Ajoutez des recettes à vos favoris pour les retrouver facilement ici."
+                title={"Aucune recette favorite"}
+                description={"Ajoutez des recettes à vos favoris pour les retrouver facilement ici."}
               />
             ) : (
               <RecipeGrid
@@ -183,6 +194,7 @@ export default function BrowseRecipes() {
             )}
 
             {!isLoading &&
+            !error &&
             totalRecipes > 0 ? (
               <AppPagination
                 currentPage={

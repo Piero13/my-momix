@@ -2,12 +2,15 @@
  * Public home page.
  */
 
+import { FiAlertCircle } from "react-icons/fi";
+
 import {
   Hero,
   LatestRecipes,
   PopularCategories,
   QuickSearch,
-} from "@/components/home";
+  EmptyState,
+} from "@/components";
 
 import {
   useHomeData,
@@ -22,6 +25,7 @@ export default function Home() {
     latestRecipes,
     popularCategories,
     isLoading,
+    error,
   } = useHomeData();
 
   const mappedLatestRecipes =
@@ -35,23 +39,25 @@ export default function Home() {
 
       <QuickSearch />
 
-      <LatestRecipes
-        recipes={
-          mappedLatestRecipes
-        }
-        loading={
-          isLoading
-        }
-      />
+      {error ? (
+        <EmptyState
+          icon={FiAlertCircle}
+          title="Impossible de charger les contenus"
+          description="Les recettes et catégories ne sont pas disponibles pour le moment."
+        />
+      ) : (
+        <>
+          <LatestRecipes
+            recipes={mappedLatestRecipes}
+            loading={isLoading}
+          />
 
-      <PopularCategories
-        categories={
-          popularCategories
-        }
-        loading={
-          isLoading
-        }
-      />
+          <PopularCategories
+            categories={popularCategories}
+            loading={isLoading}
+          />
+        </>
+      )}
     </>
   );
 }
