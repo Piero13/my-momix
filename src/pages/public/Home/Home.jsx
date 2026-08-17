@@ -17,6 +17,7 @@ import {
 } from "@/hooks";
 
 import {
+  mapPublicCategory,
   mapPublicRecipe,
 } from "@/utils";
 
@@ -31,6 +32,11 @@ export default function Home() {
   const mappedLatestRecipes =
     latestRecipes.map(
       mapPublicRecipe
+    );
+
+  const mappedPopularCategories =
+    popularCategories.map(
+      mapPublicCategory
     );
 
   return (
@@ -53,7 +59,7 @@ export default function Home() {
           />
 
           <PopularCategories
-            categories={popularCategories}
+            categories={mappedPopularCategories}
             loading={isLoading}
           />
         </>

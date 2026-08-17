@@ -17,6 +17,7 @@ export default function CategoryCard({ category }) {
     description,
     icon: Icon,
     recipeCount,
+    imageUrl,
   } = category;
 
   const hasRecipeCount =
@@ -34,13 +35,26 @@ export default function CategoryCard({ category }) {
           className={styles.link}
           aria-label={`Découvrir les recettes de la catégorie ${name}`}
         >
-          <div className={styles.iconWrapper}>
-            {Icon ? (
-              <Icon
-                className={styles.icon}
-                aria-hidden="true"
+          <div className={styles.media}>
+            {imageUrl ? (
+              <img
+                src={imageUrl}
+                alt=""
+                className={styles.image}
+                loading="lazy"
               />
-            ) : null}
+            ) : (
+              <div
+                className={styles.imageFallback}
+                aria-hidden="true"
+              >
+                {Icon ? (
+                  <Icon
+                    className={styles.icon}
+                  />
+                ) : null}
+              </div>
+            )}
           </div>
 
           <div className={styles.content}>
