@@ -2,29 +2,6 @@
  * Public recipe filter options.
  */
 
-export const RECIPE_CATEGORY_OPTIONS = [
-  {
-    value: "",
-    label: "Toutes les catégories",
-  },
-  {
-    value: "entrees",
-    label: "Entrées",
-  },
-  {
-    value: "plats",
-    label: "Plats",
-  },
-  {
-    value: "desserts",
-    label: "Desserts",
-  },
-  {
-    value: "soupes",
-    label: "Soupes",
-  },
-];
-
 export const RECIPE_DIFFICULTY_OPTIONS = [
   {
     value: "",

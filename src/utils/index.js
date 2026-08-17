@@ -5,8 +5,6 @@ export * from "./formatQuantity";
 export * from "./time";
 export * from "./scaleQuantity";
 export * from "./getTipLabels";
-export * from "./getSimilarRecipes";
-export * from "./mapRecipeDetailsToCard";
 export * from "./date";
 export * from "./mapRecipeFormToPayload";
 export * from "./mapRecipeToFormValues";
