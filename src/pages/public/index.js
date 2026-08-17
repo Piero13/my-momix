@@ -1,0 +1,10 @@
+export { default as About } from "./About";
+export { default as BrowseRecipes } from "./BrowseRecipes";
+export { default as Contact } from "./Contact";
+export { default as Home } from "./Home";
+export { default as NotFound } from "./NotFound";
+export { default as Privacy } from "./Privacy";
+export { default as RecipeDetails } from "./RecipeDetails";
+export { default as Terms } from "./Terms";
+export { default as Unauthorized } from "./Unauthorized";
+export { default as ShoppingList } from "./ShoppingList";

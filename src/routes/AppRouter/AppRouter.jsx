@@ -27,13 +27,14 @@ import ScrollToTop from "../ScrollToTop";
 import { ROUTES } from "@/constants";
 
 const Home = lazy(() => import("@/pages/public/Home"));
-const BrowseRecipes = lazy(() => import("@/pages/public/BroweRecipes"));
+const BrowseRecipes = lazy(() => import("@/pages/public/BrowseRecipes"));
 const RecipeDetails = lazy(() => import("@/pages/public/RecipeDetails"));
 
 const About = lazy(() => import("@/pages/public/About"));
 const Contact = lazy(() => import("@/pages/public/Contact"));
 const Privacy = lazy(() => import("@/pages/public/Privacy"));
 const Terms = lazy(() => import("@/pages/public/Terms"));
+const Shoppinglist = lazy(() => import("@/pages/public/ShoppingList"));
 
 const NotFound = lazy(() => import("@/pages/public/NotFound"));
 
@@ -74,6 +75,11 @@ export default function AppRouter() {
             <Route
               path={ROUTES.RECIPE_DETAILS}
               element={<RecipeDetails />}
+            />
+
+            <Route
+              path={ROUTES.SHOPPING_LIST}
+              element={<Shoppinglist />}
             />
 
             <Route

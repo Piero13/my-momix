@@ -11,6 +11,7 @@ import {
   FiStar,
   FiThermometer,
   FiUsers,
+  FiShoppingCart,
 } from "react-icons/fi";
 import { Link } from "react-router-dom";
 
@@ -46,6 +47,7 @@ export default function RecipeHero({
   onFavoriteToggle,
   onShare,
   onDownloadPdf,
+  onAddToShoppingList,
 }) {
   const {
     title,
@@ -204,6 +206,17 @@ export default function RecipeHero({
           {isFavorite
             ? "Retirer des favoris"
             : "Ajouter aux favoris"}
+        </AppButton>
+
+        <AppButton
+          type="button"
+          variant="outline-primary"
+          icon={<FiShoppingCart />}
+          onClick={
+            onAddToShoppingList
+          }
+        >
+          Ajouter à la liste de courses
         </AppButton>
 
         <AppButton

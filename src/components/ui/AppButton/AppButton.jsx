@@ -50,7 +50,11 @@ export default function AppButton({
             </span>
           ) : null}
 
-          <span className={styles.label}>{children}</span>
+          {icon && iconPosition === "center" ? (
+            <span className={styles.iconCenter} aria-hidden="true">
+              {icon}
+            </span>
+          ) : <span className={styles.label}>{children}</span>}
 
           {icon && iconPosition === "end" ? (
             <span className={styles.iconEnd} aria-hidden="true">

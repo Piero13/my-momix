@@ -1,0 +1,107 @@
+@use "@/styles/abstracts" as *;
+
+.item {
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-md;
+
+  padding: $spacing-lg;
+
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-xl;
+  box-shadow: $shadow-sm;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 auto;
+
+  margin-top: 0.15rem;
+
+  color: $color-primary-dark;
+
+  svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+}
+
+.content {
+  display: grid;
+  gap: $spacing-xs;
+
+  flex: 1;
+  min-width: 0;
+}
+
+.main {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: $spacing-sm;
+}
+
+.quantity {
+  flex: 0 0 auto;
+
+  color: $color-primary-dark;
+  font-weight: $font-weight-semibold;
+}
+
+.name {
+  color: $color-text;
+}
+
+.sources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+
+  color: $color-text-muted;
+  font-size: $font-size-xs;
+  line-height: 1.5;
+}
+
+.sourcesLabel {
+  font-weight: $font-weight-semibold;
+}
+
+.checked {
+  opacity: 0.65;
+
+  .name {
+    text-decoration: line-through;
+  }
+}
+
+.statusButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 auto;
+
+  margin-top: 0.15rem;
+  padding: 0;
+
+  border: 0;
+  background: transparent;
+
+  color: $color-primary-dark;
+  cursor: pointer;
+
+  svg {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+
+  &:focus-visible {
+    outline: 3px solid $color-primary;
+    outline-offset: 3px;
+    border-radius: 50%;
+  }
+}

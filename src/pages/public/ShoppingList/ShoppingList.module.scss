@@ -1,0 +1,60 @@
+@use "@/styles/abstracts" as *;
+
+.section {
+  min-height: 70vh;
+}
+
+.summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-md;
+
+  margin-bottom: $spacing-xl;
+
+  color: $color-text-light;
+  font-size: $font-size-sm;
+
+  strong {
+    color: $color-text;
+  }
+}
+
+.group {
+  display: grid;
+  gap: $spacing-md;
+
+  & + & {
+    margin-top: $spacing-xl;
+  }
+}
+
+.groupTitle {
+  margin: 0;
+
+  font-size: $font-size-lg;
+}
+
+.list {
+  display: grid;
+  gap: $spacing-md;
+
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+
+  margin-bottom: $spacing-xl;
+}
+
+@include tablet {
+  .actions {
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+}

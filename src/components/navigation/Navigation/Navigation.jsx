@@ -15,7 +15,10 @@ import { NAVIGATION_ITEMS, ROUTES } from "@/constants";
 
 import { AppButton } from "@/components/ui";
 
-import { useAuth } from "@/hooks";
+import { 
+  useAuth,
+  useShoppingList,
+} from "@/hooks";
 
 import { classNames } from "@/utils";
 
@@ -27,6 +30,10 @@ export default function Navigation({ onNavigate }) {
     isAdmin,
     signOut,
   } = useAuth();
+
+  const {
+    remainingItemsCount,
+  } = useShoppingList();
 
   const navigate = useNavigate();
 
@@ -56,22 +63,45 @@ export default function Navigation({ onNavigate }) {
 
   return (
     <Nav className={classNames(styles.navigation, "ms-auto")}>
-      {NAVIGATION_ITEMS.map(({ label, path }) => (
-        <NavLink
-          key={path}
-          to={path}
-          end={path === "/"}
-          onClick={onNavigate}
-          className={({ isActive }) =>
-            classNames(
-              styles.link,
-              isActive && styles.active
-            )
-          }
-        >
-          {label}
-        </NavLink>
-      ))}
+      {NAVIGATION_ITEMS.map(
+        ({
+          id,
+          label,
+          path,
+        }) => {
+          const showShoppingBadge =
+            id === "shopping-list" &&
+            remainingItemsCount > 0;
+
+          return (
+            <NavLink
+              key={id}
+              to={path}
+              end={path === ROUTES.HOME}
+              onClick={handleLinkClick}
+              className={({ isActive }) =>
+                classNames(
+                  styles.link,
+                  isActive && styles.active
+                )
+              }
+            >
+              <span>{label}</span>
+
+              {showShoppingBadge ? (
+                <span
+                  className={
+                    styles.shoppingBadge
+                  }
+                  aria-label={`${remainingItemsCount} articles restant à acheter`}
+                >
+                  {remainingItemsCount}
+                </span>
+              ) : null}
+            </NavLink>
+          );
+        }
+      )}
 
       {isAuthenticated && isAdmin ? (
         <NavLink

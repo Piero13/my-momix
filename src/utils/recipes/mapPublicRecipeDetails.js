@@ -88,6 +88,9 @@ export function mapPublicRecipeDetails({
         (item) => ({
           id: item.id,
 
+          ingredientId:
+            item.ingredients?.id ?? null,
+
           name:
             item.ingredients?.name ??
             "",

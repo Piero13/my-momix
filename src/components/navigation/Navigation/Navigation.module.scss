@@ -11,6 +11,7 @@
 
   display: inline-flex;
   align-items: center;
+  gap: 0.4rem;
 
   padding: $spacing-sm 0.75rem;
 
@@ -55,6 +56,25 @@
   &::after {
     transform: scaleX(1);
   }
+}
+
+.shoppingBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 1.4rem;
+  height: 1.4rem;
+  padding-inline: 0.35rem;
+
+  border-radius: 999px;
+
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
+
+  background-color: $color-primary;
+  color: $color-background;
 }
 
 @include mobile {

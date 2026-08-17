@@ -39,6 +39,7 @@ import {
 import {
   mapPublicRecipe,
   mapPublicRecipeDetails,
+  normalizeShoppingItem,
 } from "@/utils";
 
 import {
@@ -48,6 +49,7 @@ import {
 import {
   usePublishedRecipeDetails,
   useFavorites,
+  useShoppingList,
 } from "@/hooks";
 
 import styles from "./RecipeDetails.module.scss";
@@ -66,6 +68,10 @@ function RecipeDetailsContent({
   ] = useState(
     recipe.servings
   );
+
+  const {
+    addItems,
+  } = useShoppingList();
 
   const handleShare = async () => {
     const result =
@@ -134,6 +140,59 @@ function RecipeDetailsContent({
     );
   };
 
+  const handleAddToShoppingList = () => {
+    if (
+      !recipe?.ingredients?.length ||
+      !recipe.servings ||
+      !selectedServings
+    ) {
+      toast.error(
+        "Impossible d’ajouter les ingrédients à la liste."
+      );
+
+      return;
+    }
+
+    const ratio =
+      selectedServings /
+      recipe.servings;
+
+    const shoppingItems =
+      recipe.ingredients.map(
+        (ingredient) =>
+          normalizeShoppingItem({
+            ingredientId:
+              ingredient.ingredientId ??
+              ingredient.id,
+
+            name:
+              ingredient.name,
+
+            quantity:
+              Number(
+                ingredient.quantity ?? 0
+              ) * ratio,
+
+            unit:
+              ingredient.unit,
+
+            recipeId:
+              recipe.id,
+
+            recipeTitle:
+              recipe.title,
+          })
+      );
+
+    addItems(
+      shoppingItems
+    );
+
+    toast.success(
+      "Ingrédients ajoutés à la liste de courses."
+    );
+  };
+
   return (
     <article className={styles.page}>
       <Section
@@ -173,6 +232,7 @@ function RecipeDetailsContent({
             }
             onShare={handleShare}
             onDownloadPdf={handleDownloadPdf}
+            onAddToShoppingList={handleAddToShoppingList}
           />
 
           <div

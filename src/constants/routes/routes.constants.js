@@ -12,6 +12,7 @@ export const ROUTES = {
   CONTACT: "/contact",
   PRIVACY: "/confidentialite",
   TERMS: "/mentions-legales",
+  SHOPPING_LIST: "/liste-de-courses",
 
   // Authentication
   LOGIN: "/connexion",
