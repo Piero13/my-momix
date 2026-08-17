@@ -32,3 +32,7 @@ export function getEditRecipePath(
     recipeId
   );
 }
+
+export function getFavoriteRecipesPath() {
+  return `${ROUTES.BROWSE}?favorites=1`;
+}

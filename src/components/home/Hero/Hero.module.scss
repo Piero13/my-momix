@@ -228,10 +228,15 @@
   justify-content: center;
   gap: $spacing-md;
 
+  min-width: 10rem;
   width: max-content;
   max-width: 13rem;
 
   height: 40%;
+
+  transition: 
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .searchCard {
@@ -276,6 +281,30 @@
 .favoriteLabel {
   color: $color-text-light;
   font-size: $font-size-xs;
+}
+
+.floatingLink {
+  color: inherit;
+  text-decoration: none;
+
+  &:hover {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  &:focus-visible {
+    outline: 3px solid $color-primary;
+    outline-offset: 4px;
+    border-radius: $radius-xl;
+  }
+}
+
+.floatingLink:hover {
+  .searchCard,
+  .favoriteCard {
+    transform: translateY(-2px);
+    box-shadow: $shadow-md;
+  }
 }
 
 @media (min-width: $breakpoint-sm) {

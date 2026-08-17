@@ -2,11 +2,31 @@
  * Main hero section displayed on the public home page.
  */
 
-import { FiArrowRight, FiBookmark, FiClock, FiSearch } from "react-icons/fi";
-import { NavLink } from "react-router-dom";
+import {
+  FiArrowRight,
+  FiBookmark,
+  FiClock,
+  FiSearch,
+} from "react-icons/fi";
+import {
+  NavLink,
+} from "react-router-dom";
 
-import { AppButton, AppCard, PageContainer, Section } from "@/components/ui";
-import { ROUTES } from "@/constants";
+import {
+  AppButton,
+  AppCard,
+  PageContainer,
+  Section,
+} from "@/components/ui";
+
+import {
+  ROUTES,
+  getFavoriteRecipesPath,
+} from "@/constants";
+
+import {
+  useFavorites,
+} from "@/hooks";
 
 import styles from "./Hero.module.scss";
 
@@ -29,6 +49,10 @@ const HERO_BENEFITS = [
 ];
 
 export default function Hero() {
+  const {
+    favoriteCount,
+  } = useFavorites();
+
   return (
     <Section
       className={styles.hero}
@@ -42,7 +66,10 @@ export default function Hero() {
               Votre compagnon culinaire
             </p>
 
-            <h1 id="home-hero-title" className={styles.title}>
+            <h1
+              id="home-hero-title"
+              className={styles.title}
+            >
               Toutes vos recettes Thermomix,
               <span className={styles.highlight}>
                 {" "}
@@ -81,24 +108,47 @@ export default function Hero() {
               className={styles.benefits}
               aria-label="Avantages de MyMomix"
             >
-              {HERO_BENEFITS.map(({ id, label, icon: Icon }) => (
-                <li key={id} className={styles.benefit}>
-                  <span className={styles.benefitIcon} aria-hidden="true">
-                    <Icon />
-                  </span>
+              {HERO_BENEFITS.map(
+                ({
+                  id,
+                  label,
+                  icon: Icon,
+                }) => (
+                  <li
+                    key={id}
+                    className={styles.benefit}
+                  >
+                    <span
+                      className={styles.benefitIcon}
+                      aria-hidden="true"
+                    >
+                      <Icon />
+                    </span>
 
-                  <span>{label}</span>
-                </li>
-              ))}
+                    <span>{label}</span>
+                  </li>
+                )
+              )}
             </ul>
           </div>
 
-          <div className={styles.visual} aria-hidden="true">
-            <div className={styles.decorativeCircle} />
+          <div className={styles.visual}>
+            <div
+              className={styles.decorativeCircle}
+              aria-hidden="true"
+            />
 
-            <AppCard className={styles.recipeCard} padding="none">
+            <AppCard
+              className={styles.recipeCard}
+              padding="none"
+            >
               <div className={styles.recipeImage}>
-                <span className={styles.recipeEmoji}>🥕</span>
+                <span
+                  className={styles.recipeEmoji}
+                  aria-hidden="true"
+                >
+                  🥕
+                </span>
 
                 <span className={styles.recipeBadge}>
                   Facile
@@ -118,7 +168,7 @@ export default function Hero() {
 
                 <div className={styles.recipeMeta}>
                   <span>
-                    <FiClock />
+                    <FiClock aria-hidden="true" />
                     35 min
                   </span>
 
@@ -129,34 +179,63 @@ export default function Hero() {
               </div>
             </AppCard>
 
-            <AppCard className={styles.searchCard} padding="compact">
-              <span className={styles.searchIcon}>
-                <FiSearch />
-              </span>
-
-              <div>
-                <span className={styles.searchLabel}>
-                  Recherche rapide
+            <NavLink
+              to={ROUTES.BROWSE}
+              className={styles.floatingLink}
+              aria-label="Ouvrir la recherche de recettes"
+            >
+              <AppCard
+                className={styles.searchCard}
+                padding="compact"
+              >
+                <span
+                  className={styles.searchIcon}
+                  aria-hidden="true"
+                >
+                  <FiSearch />
                 </span>
 
-                <span className={styles.searchValue}>
-                  Soupe, dessert, saison…
-                </span>
-              </div>
-            </AppCard>
+                <div>
+                  <span className={styles.searchLabel}>
+                    Recherche rapide
+                  </span>
 
-            <AppCard className={styles.favoriteCard} padding="compact">
-              <span className={styles.favoriteIcon}>
-                <FiBookmark />
-              </span>
+                  <span className={styles.searchValue}>
+                    Soupe, dessert, saison…
+                  </span>
+                </div>
+              </AppCard>
+            </NavLink>
 
-              <div>
-                <span className={styles.favoriteValue}>24</span>
-                <span className={styles.favoriteLabel}>
-                  recettes favorites
+            <NavLink
+              to={getFavoriteRecipesPath()}
+              className={styles.floatingLink}
+              aria-label={`Voir mes ${favoriteCount} recettes favorites`}
+            >
+              <AppCard
+                className={styles.favoriteCard}
+                padding="compact"
+              >
+                <span
+                  className={styles.favoriteIcon}
+                  aria-hidden="true"
+                >
+                  <FiBookmark />
                 </span>
-              </div>
-            </AppCard>
+
+                <div>
+                  <span className={styles.favoriteValue}>
+                    {favoriteCount}
+                  </span>
+
+                  <span className={styles.favoriteLabel}>
+                    {favoriteCount > 1
+                      ? "recettes favorites"
+                      : "recette favorite"}
+                  </span>
+                </div>
+              </AppCard>
+            </NavLink>
           </div>
         </div>
       </PageContainer>
