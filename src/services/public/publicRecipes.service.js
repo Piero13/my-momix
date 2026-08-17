@@ -132,6 +132,38 @@ export async function getPublishedRecipes({
         }
       );
       break;
+    
+    case "rating-desc":
+      query = query
+        .order(
+          "average_rating",
+          {
+            ascending: false,
+          }
+        )
+        .order(
+          "ratings_count",
+          {
+            ascending: false,
+          }
+        );
+      break;
+
+    case "rating-asc":
+      query = query
+        .order(
+          "average_rating",
+          {
+            ascending: true,
+          }
+        )
+        .order(
+          "ratings_count",
+          {
+            ascending: false,
+          }
+        );
+      break;
 
     case "newest":
     default:

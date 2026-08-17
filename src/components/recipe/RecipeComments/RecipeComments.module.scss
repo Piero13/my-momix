@@ -1,0 +1,97 @@
+@use "@/styles/abstracts" as *;
+
+.section {
+  padding: $spacing-lg;
+
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-xl;
+  box-shadow: $shadow-sm;
+}
+
+@include tablet {
+  .section {
+    padding: $spacing-xl;
+  }
+}
+
+.list {
+  display: grid;
+  gap: $spacing-lg;
+
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+.item {
+  padding: $spacing-lg;
+
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-xl;
+  box-shadow: $shadow-sm;
+}
+
+.itemHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: $spacing-md;
+
+  margin-bottom: $spacing-md;
+}
+
+.author {
+  display: block;
+}
+
+.date {
+  display: block;
+
+  margin-top: 0.15rem;
+
+  color: $color-text-muted;
+  font-size: $font-size-xs;
+}
+
+.rating {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-xs;
+
+  flex-shrink: 0;
+
+  font-weight: $font-weight-semibold;
+
+  svg {
+    fill: currentColor;
+  }
+}
+
+.content {
+  margin: 0;
+
+  white-space: pre-line;
+
+  line-height: 1.7;
+}
+
+.empty {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+
+  padding: $spacing-lg;
+
+  color: $color-text-muted;
+
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-xl;
+
+  p {
+    margin: 0;
+  }
+}

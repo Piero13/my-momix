@@ -9,6 +9,7 @@ import {
   getPublishedRecipeSteps,
   getPublishedRecipeTips,
   getSimilarPublishedRecipes,
+  getPublishedRecipeComments,
 } from "@/services";
 
 export function usePublishedRecipeDetails(
@@ -37,6 +38,8 @@ export function usePublishedRecipeDetails(
     setSimilarRecipes,
   ] = useState([]);
 
+  const [comments, setComments] = useState([]);
+
   useEffect(() => {
     if (!slug) {
       return;
@@ -60,6 +63,7 @@ export function usePublishedRecipeDetails(
           recipeIngredients,
           recipeSteps,
           recipeTips,
+          recipeComments,
           similarRecipesData,
         ] = await Promise.all([
           getPublishedRecipeIngredients(
@@ -69,6 +73,9 @@ export function usePublishedRecipeDetails(
             recipeData.id
           ),
           getPublishedRecipeTips(
+            recipeData.id
+          ),
+          getPublishedRecipeComments(
             recipeData.id
           ),
           getSimilarPublishedRecipes({
@@ -92,6 +99,7 @@ export function usePublishedRecipeDetails(
         );
         setSteps(recipeSteps);
         setTips(recipeTips);
+        setComments(recipeComments);
         setSimilarRecipes(similarRecipesData)
       })
       .catch((loadError) => {
@@ -122,6 +130,7 @@ export function usePublishedRecipeDetails(
     ingredients,
     steps,
     tips,
+    comments,
     similarRecipes,
 
     isLoading,

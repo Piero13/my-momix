@@ -11,6 +11,8 @@ export const RECIPE_SORT = {
   TIME_DESC: "time-desc",
   DIFFICULTY_ASC: "difficulty-asc",
   DIFFICULTY_DESC: "difficulty-desc",
+  RATING_ASC: "rating-asc",
+  RATING_DESC: "rating-desc",
 };
 
 export const DEFAULT_RECIPE_SORT = RECIPE_SORT.DATE_DESC;
@@ -47,6 +49,14 @@ export const RECIPE_SORT_OPTIONS = [
   {
     value: RECIPE_SORT.DIFFICULTY_DESC,
     label: "Difficulté : décroissante",
+  },
+  {
+    value: RECIPE_SORT.RATING_DESC,
+    label: "Mieux notées",
+  },
+  {
+    value: RECIPE_SORT.RATING_ASC,
+    label: "Moins bien notées",
   },
 ];
 

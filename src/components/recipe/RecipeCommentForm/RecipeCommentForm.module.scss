@@ -1,0 +1,39 @@
+@use "@/styles/abstracts" as *;
+
+.section {
+  padding: $spacing-lg;
+
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-xl;
+  box-shadow: $shadow-sm;
+}
+
+.form {
+  display: grid;
+  gap: $spacing-lg;
+  padding: $spacing-lg;
+  background: $color-surface;
+  border-radius: $radius-xl;
+}
+
+.row {
+  display: grid;
+  gap: $spacing-lg;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+@include tablet {
+  .form {
+    padding: $spacing-xl;
+  }
+
+  .row {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+}

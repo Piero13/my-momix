@@ -183,6 +183,22 @@
   font-weight: $font-weight-semibold;
 }
 
+.recipeCardFooter {
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.ratingIcon {
+  color: $color-secondary;
+  fill: currentColor;
+}
+
+.ratingEnptyState {
+  font-size: $font-size-xs;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .image,
   .favoriteButton {

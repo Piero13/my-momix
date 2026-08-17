@@ -8,3 +8,5 @@ export { default as RecipeSteps } from "./RecipeSteps";
 export { default as RecipeTips } from "./RecipeTips";
 export { default as RecipeNutrition } from "./RecipeNutrition";
 export { default as SimilarRecipes } from "./SimilarRecipes";
+export { default as RecipeComments } from "./RecipeComments";
+export { default as RecipeCommentForm } from "./RecipeCommentForm";

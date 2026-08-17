@@ -27,6 +27,8 @@ import {
   LoadingScreen,
   PageContainer,
   Section,
+  RecipeComments,
+  RecipeCommentForm,
 } from "@/components";
 
 import {
@@ -52,6 +54,7 @@ import styles from "./RecipeDetails.module.scss";
 
 function RecipeDetailsContent({
   recipe,
+  comments,
   similarRecipes,
   isFavorite,
   onFavoriteToggle,
@@ -204,6 +207,14 @@ function RecipeDetailsContent({
               }
             />
 
+            <RecipeCommentForm
+              recipeId={recipe.id}
+            />
+
+            <RecipeComments
+              comments={comments}
+            />
+
             <SimilarRecipes
               recipes={
                 similarRecipes
@@ -231,6 +242,7 @@ export default function RecipeDetails() {
     ingredients,
     steps,
     tips,
+    comments,
     similarRecipes,
 
     isLoading,
@@ -335,6 +347,7 @@ export default function RecipeDetails() {
     <RecipeDetailsContent
       key={mappedRecipe.id}
       recipe={mappedRecipe}
+      comments={comments}
       similarRecipes={
         mappedSimilarRecipes
       }

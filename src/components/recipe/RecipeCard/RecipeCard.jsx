@@ -6,6 +6,7 @@ import {
   FiClock,
   FiHeart,
   FiUsers,
+  FiStar,
 } from "react-icons/fi";
 import { Link } from "react-router-dom";
 
@@ -29,6 +30,8 @@ export default function RecipeCard({
     totalTime,
     servings,
     difficulty,
+    averageRating,
+    ratingsCount,
   } = recipe;
 
   const handleFavoriteClick = (
@@ -162,15 +165,38 @@ export default function RecipeCard({
               ) : null}
             </div>
 
-            {difficulty ? (
-              <span
-                className={
-                  styles.difficulty
-                }
-              >
-                {difficulty}
-              </span>
-            ) : null}
+            <div className={styles.recipeCardFooter}>
+              {difficulty ? (
+                <span
+                  className={
+                    styles.difficulty
+                  }
+                >
+                  {difficulty}
+                </span>
+              ) : null}
+
+              {ratingsCount > 0 ? (
+                <span
+                  className={styles.metadataItem}
+                  aria-label={`${averageRating} sur 5, ${ratingsCount} avis`}
+                >
+                  <FiStar
+                    aria-hidden="true"
+                    className={styles.ratingIcon}
+                  />
+
+                  <span>
+                    {averageRating.toFixed(1)}
+                    {" "}
+                    ({ratingsCount})
+                  </span>
+                </span>
+              ) : (
+                <span className={styles.ratingEnptyState}>Aucun avis</span>
+              )}
+            </div>
+
           </div>
         </Link>
       </AppCard>

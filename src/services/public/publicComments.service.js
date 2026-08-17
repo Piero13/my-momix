@@ -24,3 +24,48 @@ export async function getPublishedRecipeComments(
 
   return data ?? [];
 }
+
+export async function createPublicComment({
+  recipeId,
+  authorName,
+  email,
+  content,
+  rating,
+}) {
+  const payload = {
+    recipe_id: recipeId,
+    author_name: authorName.trim(),
+    email:
+      email?.trim() || null,
+    content: content.trim(),
+    rating:
+      Number.isFinite(
+        Number(rating)
+      )
+        ? Number(rating)
+        : null,
+
+    approved: false,
+  };
+
+  const { data, error } = await supabase
+    .from("comments")
+    .insert(payload)
+    .select(`
+      id,
+      recipe_id,
+      author_name,
+      email,
+      content,
+      rating,
+      approved,
+      created_at
+    `)
+    .single();
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+}
