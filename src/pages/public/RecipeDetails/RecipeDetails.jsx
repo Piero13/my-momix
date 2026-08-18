@@ -33,9 +33,8 @@ import {
 } from "@/components";
 
 import {
-  generateRecipePdf,
   shareContent,
-} from "@/services";
+} from "@/services/share";
 
 import {
   mapPublicRecipe,
@@ -47,11 +46,9 @@ import {
   ROUTES,
 } from "@/constants";
 
-import {
-  usePublishedRecipeDetails,
-  useFavorites,
-  useShoppingList,
-} from "@/hooks";
+import { useShoppingList } from "@/hooks/shoppingList";
+import { useFavorites } from "@/hooks/favorites";
+import { usePublishedRecipeDetails } from "@/hooks/public";
 
 import styles from "./RecipeDetails.module.scss";
 
@@ -112,27 +109,34 @@ function RecipeDetailsContent({
     }
   };
 
-  const handleDownloadPdf = () => {
-    try {
-      generateRecipePdf({
-        recipe,
-        selectedServings,
-      });
+  const handleDownloadPdf =
+    async () => {
+      try {
+        const {
+          generateRecipePdf,
+        } = await import(
+          "@/services/pdf/recipe-pdf.service"
+        );
 
-      toast.success(
-        "Le PDF a été généré."
-      );
-    } catch (error) {
-      console.error(
-        "Recipe PDF generation failed:",
-        error
-      );
+        generateRecipePdf({
+          recipe,
+          selectedServings,
+        });
 
-      toast.error(
-        "Impossible de générer le PDF."
-      );
-    }
-  };
+        toast.success(
+          "Le PDF a été généré."
+        );
+      } catch (error) {
+        console.error(
+          "Recipe PDF generation failed:",
+          error
+        );
+
+        toast.error(
+          "Impossible de générer le PDF."
+        );
+      }
+    };
 
   const handleServingsChange = (
     nextServings

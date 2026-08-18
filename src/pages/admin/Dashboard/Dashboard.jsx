@@ -17,7 +17,7 @@ import {
 import {
   getDashboardMetrics,
   getRecentActivity,
-} from "@/services";
+} from "@/services/dashboard";
 
 import styles from "./Dashboard.module.scss";
 

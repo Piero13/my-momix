@@ -41,13 +41,13 @@ import {
 
 import {
   useRecipesManager,
-} from "@/hooks";
+} from "@/hooks/recipes";
 
 import {
   formatRelativeDate,
 } from "@/utils";
 
-import { getRecipeImageUrl } from "@/services";
+import { getRecipeImageUrl } from "@/services/recipes";
 
 import styles from "./RecipesManager.module.scss";
 

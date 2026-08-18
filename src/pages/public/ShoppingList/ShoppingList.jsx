@@ -18,9 +18,7 @@ import {
   ROUTES,
 } from "@/constants";
 
-import {
-  useShoppingList,
-} from "@/hooks";
+import { useShoppingList } from "@/hooks/shoppingList";
 
 import styles from "./ShoppingList.module.scss";
 

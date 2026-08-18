@@ -12,7 +12,7 @@ import {
   removeShoppingListItem,
   toggleShoppingListItem,
   updateShoppingListItem,
-} from "@/services";
+} from "@/services/shoppingList";
 
 import {
   ShoppingListContext,

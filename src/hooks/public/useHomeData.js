@@ -6,7 +6,7 @@ import {
 import {
   getLatestPublishedRecipes,
   getPopularCategories,
-} from "@/services";
+} from "@/services/public";
 
 export function useHomeData() {
   const [latestRecipes, setLatestRecipes] =

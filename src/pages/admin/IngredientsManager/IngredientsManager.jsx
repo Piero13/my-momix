@@ -34,7 +34,7 @@ import {
 
 import {
   useIngredientsManager,
-} from "@/hooks";
+} from "@/hooks/ingredients";
 
 import {
   formatRelativeDate,
@@ -45,7 +45,7 @@ import {
   findIngredientByName,
   updateIngredient,
   deleteIngredient,
-} from "@/services";
+} from "@/services/ingredients";
 
 export default function IngredientsManager() {
   const [

@@ -20,7 +20,7 @@ import {
 
 import {
   useAppSettingsForm,
-} from "@/hooks";
+} from "@/hooks/settings";
 
 import styles from "./Settings.module.scss";
 

@@ -18,10 +18,8 @@ import {
   EmptyState,
 } from "@/components";
 
-import {
-  useFavorites,
-  usePublishedRecipes,
-} from "@/hooks";
+import {usePublishedRecipes} from "@/hooks/public";
+import { useFavorites } from "@/hooks/favorites";
 
 import {
   mapPublicRecipe,

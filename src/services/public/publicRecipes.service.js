@@ -123,6 +123,42 @@ export async function getPublishedRecipes({
         }
       );
       break;
+    
+    case "time-asc":
+      query = query.order(
+        "total_time",
+        {
+          ascending: true,
+        }
+      );
+      break;
+
+    case "time-desc":
+      query = query.order(
+        "total_time",
+        {
+          ascending: false,
+        }
+      );
+      break;
+
+    case "difficulty-asc":
+      query = query.order(
+        "difficulty_order",
+        {
+          ascending: true,
+        }
+      );
+      break;
+
+    case "difficulty-desc":
+      query = query.order(
+        "difficulty_order",
+        {
+          ascending: false,
+        }
+      );
+      break;
 
     case "rating":
       query = query.order(

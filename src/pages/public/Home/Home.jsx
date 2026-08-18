@@ -14,7 +14,7 @@ import {
 
 import {
   useHomeData,
-} from "@/hooks";
+} from "@/hooks/public";
 
 import {
   mapPublicCategory,

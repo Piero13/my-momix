@@ -36,13 +36,13 @@ import {
 
 import {
   useCommentsManager,
-} from "@/hooks";
+} from "@/hooks/comments";
 
 import {
   approveComment,
   deleteComment,
   unapproveComment,
-} from "@/services";
+} from "@/services/comments";
 
 import {
   formatRelativeDate,

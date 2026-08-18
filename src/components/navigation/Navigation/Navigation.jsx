@@ -15,10 +15,8 @@ import { NAVIGATION_ITEMS, ROUTES } from "@/constants";
 
 import { AppButton } from "@/components/ui";
 
-import { 
-  useAuth,
-  useShoppingList,
-} from "@/hooks";
+import {  useAuth } from "@/hooks/auth";
+import { useShoppingList } from "@/hooks/shoppingList";
 
 import { classNames } from "@/utils";
 

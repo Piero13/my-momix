@@ -33,10 +33,10 @@ import {
   updateCategory,
   moveCategory,
   deleteCategory,
-} from "@/services";
+} from "@/services/categories";
 
 import { PAGINATION } from "@/constants";
-import { useCategoriesManager } from "@/hooks";
+import { useCategoriesManager } from "@/hooks/categories";
 import { formatRelativeDate } from "@/utils";
 
 import styles from "./CategoriesManager.module.scss"

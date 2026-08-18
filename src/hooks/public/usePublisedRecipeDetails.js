@@ -10,7 +10,7 @@ import {
   getPublishedRecipeTips,
   getSimilarPublishedRecipes,
   getPublishedRecipeComments,
-} from "@/services";
+} from "@/services/public";
 
 export function usePublishedRecipeDetails(
   slug
