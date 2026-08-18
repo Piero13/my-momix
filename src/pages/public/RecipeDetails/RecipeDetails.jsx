@@ -17,6 +17,7 @@ import {
 } from "react-router-dom";
 
 import {
+  PageSeo,
   RecipeHero,
   RecipeIngredients,
   RecipeSteps,
@@ -60,6 +61,7 @@ function RecipeDetailsContent({
   similarRecipes,
   isFavorite,
   onFavoriteToggle,
+  structureData,
 }) {
 
   const [
@@ -194,96 +196,117 @@ function RecipeDetailsContent({
   };
 
   return (
-    <article className={styles.page}>
-      <Section
-        className={styles.heroSection}
-        spacing="large"
-        labelledBy="recipe-title"
-      >
-        <PageContainer>
-          <nav
-            className={
-              styles.backNavigation
-            }
-            aria-label="Navigation de retour"
-          >
-            <Link
-              to={ROUTES.BROWSE}
+    <>
+      <PageSeo
+        title={
+          recipe.metaTitle ||
+          `${recipe.title} | MyMomix`
+        }
+        description={
+          recipe.metaDescription ||
+          recipe.description ||
+          ""
+        }
+        image={recipe.imageUrl}
+        url={window.location.href}
+        type="article"
+        structuredData={
+          structureData
+        }
+      />
+
+      <article className={styles.page}>
+        <Section
+          className={styles.heroSection}
+          spacing="large"
+          labelledBy="recipe-title"
+        >
+          <PageContainer>
+            <nav
               className={
-                styles.backLink
+                styles.backNavigation
+              }
+              aria-label="Navigation de retour"
+            >
+              <Link
+                to={ROUTES.BROWSE}
+                className={
+                  styles.backLink
+                }
+              >
+                <FiArrowLeft
+                  aria-hidden="true"
+                />
+
+                <span>
+                  Retour aux recettes
+                </span>
+              </Link>
+            </nav>
+
+            <RecipeHero
+              recipe={recipe}
+              servings={selectedServings}
+              isFavorite={isFavorite}
+              onFavoriteToggle={
+                onFavoriteToggle
+              }
+              onShare={handleShare}
+              onDownloadPdf={handleDownloadPdf}
+              onAddToShoppingList={handleAddToShoppingList}
+            />
+
+            <div
+              className={
+                styles.recipeContent
               }
             >
-              <FiArrowLeft
-                aria-hidden="true"
+              <RecipeIngredients
+                ingredients={
+                  recipe.ingredients
+                }
+                originalServings={
+                  recipe.servings
+                }
+                selectedServings={
+                  selectedServings
+                }
+                onServingsChange={
+                  handleServingsChange
+                }
               />
 
-              <span>
-                Retour aux recettes
-              </span>
-            </Link>
-          </nav>
+              <RecipeSteps
+                steps={
+                  recipe.steps
+                }
+              />
 
-          <RecipeHero
-            recipe={recipe}
-            servings={selectedServings}
-            isFavorite={isFavorite}
-            onFavoriteToggle={
-              onFavoriteToggle
-            }
-            onShare={handleShare}
-            onDownloadPdf={handleDownloadPdf}
-            onAddToShoppingList={handleAddToShoppingList}
-          />
+              <RecipeTips
+                tips={
+                  recipe.tips
+                }
+              />
 
-          <div
-            className={
-              styles.recipeContent
-            }
-          >
-            <RecipeIngredients
-              ingredients={
-                recipe.ingredients
-              }
-              originalServings={
-                recipe.servings
-              }
-              selectedServings={
-                selectedServings
-              }
-              onServingsChange={
-                handleServingsChange
-              }
-            />
+              <RecipeCommentForm
+                recipeId={recipe.id}
+              />
 
-            <RecipeSteps
-              steps={
-                recipe.steps
-              }
-            />
+              <RecipeComments
+                comments={comments}
+              />
 
-            <RecipeTips
-              tips={
-                recipe.tips
-              }
-            />
+              <SimilarRecipes
+                recipes={
+                  similarRecipes
+                }
+              />
+            </div>
+          </PageContainer>
+        </Section>
+      </article>    
+    </>
 
-            <RecipeCommentForm
-              recipeId={recipe.id}
-            />
-
-            <RecipeComments
-              comments={comments}
-            />
-
-            <SimilarRecipes
-              recipes={
-                similarRecipes
-              }
-            />
-          </div>
-        </PageContainer>
-      </Section>
-    </article>
   );
 }
 
@@ -340,6 +363,102 @@ export default function RecipeDetails() {
         similarRecipes,
       ]
     );
+  
+  const recipeStructuredData =
+    useMemo(() => {
+      if (!mappedRecipe) {
+        return null;
+      }
+
+      return {
+        "@context":
+          "https://schema.org",
+
+        "@type":
+          "Recipe",
+
+        name:
+          mappedRecipe.title,
+
+        description:
+          mappedRecipe.metaDescription ||
+          mappedRecipe.description ||
+          undefined,
+
+        image:
+          mappedRecipe.imageUrl
+            ? [mappedRecipe.imageUrl]
+            : undefined,
+
+        recipeYield:
+          mappedRecipe.servings
+            ? `${mappedRecipe.servings} personnes`
+            : undefined,
+
+        recipeCategory:
+          mappedRecipe.category ||
+          undefined,
+
+        aggregateRating:
+          mappedRecipe.ratingsCount > 0
+            ? {
+                "@type":
+                  "AggregateRating",
+
+                ratingValue:
+                  mappedRecipe.averageRating,
+
+                ratingCount:
+                  mappedRecipe.ratingsCount,
+
+                bestRating: 5,
+                worstRating: 1,
+              }
+            : undefined,
+
+        recipeIngredient:
+          mappedRecipe.ingredients
+            ?.map((ingredient) => {
+              const quantity =
+                ingredient.quantity ?? "";
+
+              const unit =
+                ingredient.unit ?? "";
+
+              const name =
+                ingredient.name ?? "";
+
+              return [
+                quantity,
+                unit,
+                name,
+              ]
+                .filter(
+                  (value) =>
+                    value !== ""
+                )
+                .join(" ");
+            })
+            .filter(Boolean),
+
+        recipeInstructions:
+          mappedRecipe.steps
+            ?.map((step) => ({
+              "@type":
+                "HowToStep",
+
+              position:
+                step.order,
+
+              text:
+                step.description,
+            }))
+            .filter(
+              (step) =>
+                step.text
+            ),
+      };
+    }, [mappedRecipe]);
 
   if (isLoading) {
     return (
@@ -418,6 +537,9 @@ export default function RecipeDetails() {
       }
       onFavoriteToggle={
         handleFavoriteToggle
+      }
+      structureData={
+        recipeStructuredData
       }
     />
   );
