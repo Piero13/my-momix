@@ -17,20 +17,25 @@ import {
 } from "react-router-dom";
 
 import {
-  PageSeo,
   RecipeHero,
   RecipeIngredients,
   RecipeSteps,
   RecipeTips,
   SimilarRecipes,
-  AppButton,
-  EmptyState,
-  LoadingScreen,
-  PageContainer,
-  Section,
   RecipeComments,
   RecipeCommentForm,
-} from "@/components";
+} from "@/components/recipe";
+
+import { PageSeo } from "@/components/seo";
+
+import { LoadingScreen } from "@/components/feedback"
+  
+import {
+  PageContainer,
+  Section,
+  AppButton,
+  EmptyState,
+} from "@/components/ui"
 
 import {
   shareContent,

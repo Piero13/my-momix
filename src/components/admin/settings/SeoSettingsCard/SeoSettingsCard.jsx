@@ -45,7 +45,7 @@ export default function SeoSettingsCard() {
 
   const previewUrl =
     publicUrl?.trim() ||
-    "https://mymomix.app";
+    "https://my-momix.netlify.app";
 
   const metaTitleLength =
     metaTitle?.length ?? 0;

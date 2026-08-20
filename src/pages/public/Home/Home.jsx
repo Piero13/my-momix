@@ -9,8 +9,15 @@ import {
   LatestRecipes,
   PopularCategories,
   QuickSearch,
-  EmptyState,
-} from "@/components";
+} from "@/components/home";
+
+import { 
+  PageSeo
+} from "@/components/seo";
+
+import { 
+  EmptyState
+} from "@/components/ui"
 
 import {
   useHomeData,
@@ -41,6 +48,11 @@ export default function Home() {
 
   return (
     <>
+      <PageSeo
+        title="Accueil | MyMomix"
+        description="Découvrez toutes les recettes MyMomix et filtrez-les selon vos envies, votre temps et votre niveau."
+      />
+
       <Hero />
 
       <QuickSearch />

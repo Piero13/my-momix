@@ -13,6 +13,7 @@ import {
   Section,
   SectionHeader,
 } from "@/components/ui";
+
 import { ROUTES } from "@/constants";
 
 import styles from "./QuickSearch.module.scss";

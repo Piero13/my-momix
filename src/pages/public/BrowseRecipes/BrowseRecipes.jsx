@@ -11,12 +11,17 @@ import {
   RecipeFilters,
   RecipeGrid,
   RecipeSort,
+} from "@/components/recipe";
+
+import { PageSeo } from "@/components/seo";
+
+import { 
+  EmptyState,
   AppPagination,
-  PageContainer,
   Section,
   SectionHeader,
-  EmptyState,
-} from "@/components";
+  PageContainer,
+} from "@/components/ui";
 
 import {usePublishedRecipes} from "@/hooks/public";
 import { useFavorites } from "@/hooks/favorites";
@@ -74,147 +79,154 @@ export default function BrowseRecipes() {
   };
 
   return (
-    <Section
-      className={styles.section}
-      spacing="large"
-      labelledBy="browse-recipes-title"
-    >
-      <PageContainer>
-        <SectionHeader
-          headingId="browse-recipes-title"
-          eyebrow="Toutes les recettes"
-          title="Trouvez votre prochaine recette"
-          description="Recherchez et filtrez les recettes selon vos envies, votre temps et votre niveau."
-        />
+    <>
+      <PageSeo
+        title="Accueil | MyMomix"
+        description="Découvrez toutes les recettes MyMomix et filtrez-les selon vos envies, votre temps et votre niveau."
+      />
+      <Section
+        className={styles.section}
+        spacing="large"
+        labelledBy="browse-recipes-title"
+      >
+        <PageContainer>
+          <SectionHeader
+            headingId="browse-recipes-title"
+            eyebrow="Toutes les recettes"
+            title="Trouvez votre prochaine recette"
+            description="Recherchez et filtrez les recettes selon vos envies, votre temps et votre niveau."
+          />
 
-        {hasActiveFilters ? (
-          <div
-            className={styles.activeContext}
-            aria-live="polite"
-          >
-            {hasActiveSearch ? (
-              <p className={styles.contextItem}>
-                Recherche :{" "}
-                <strong>
-                  {searchQuery}
-                </strong>
-              </p>
-            ) : null}
-
-            {hasActiveCategory ? (
-              <p className={styles.contextItem}>
-                Catégorie :{" "}
-                <strong>
-                  {categorySlug}
-                </strong>
-              </p>
-            ) : null}
-
-            {hasActiveDifficulty ? (
-              <p className={styles.contextItem}>
-                Difficulté :{" "}
-                <strong>
-                  {difficultySlug}
-                </strong>
-              </p>
-            ) : null}
-
-            {hasActiveMaxTime ? (
-              <p className={styles.contextItem}>
-                Durée maximum :{" "}
-                <strong>
-                  {maxTime} min
-                </strong>
-              </p>
-            ) : null}
-          </div>
-        ) : null}
-
-        <div className={styles.content}>
-          <aside
-            className={styles.filters}
-            aria-label="Filtres des recettes"
-          >
-            <RecipeFilters 
-              categories={categories}
-            />
-          </aside>
-
-          <div className={styles.results}>
+          {hasActiveFilters ? (
             <div
-              className={
-                styles.resultsToolbar
-              }
+              className={styles.activeContext}
+              aria-live="polite"
             >
-              <p
-                className={
-                  styles.resultsCount
-                }
-                aria-live="polite"
-              >
-                {isLoading
-                  ? "Chargement des recettes…"
-                  : (
-                    <>
-                      {totalRecipes}{" "}
-                      {totalRecipes > 1
-                        ? "recettes trouvées"
-                        : "recette trouvée"}
-                    </>
-                  )}
-              </p>
+              {hasActiveSearch ? (
+                <p className={styles.contextItem}>
+                  Recherche :{" "}
+                  <strong>
+                    {searchQuery}
+                  </strong>
+                </p>
+              ) : null}
 
-              <RecipeSort />
+              {hasActiveCategory ? (
+                <p className={styles.contextItem}>
+                  Catégorie :{" "}
+                  <strong>
+                    {categorySlug}
+                  </strong>
+                </p>
+              ) : null}
+
+              {hasActiveDifficulty ? (
+                <p className={styles.contextItem}>
+                  Difficulté :{" "}
+                  <strong>
+                    {difficultySlug}
+                  </strong>
+                </p>
+              ) : null}
+
+              {hasActiveMaxTime ? (
+                <p className={styles.contextItem}>
+                  Durée maximum :{" "}
+                  <strong>
+                    {maxTime} min
+                  </strong>
+                </p>
+              ) : null}
             </div>
+          ) : null}
 
-            {error ? (
-              <EmptyState
-                icon={FiAlertCircle}
-                title="Impossible de charger les recettes"
-                description="Une erreur est survenue lors du chargement des recettes."
+          <div className={styles.content}>
+            <aside
+              className={styles.filters}
+              aria-label="Filtres des recettes"
+            >
+              <RecipeFilters 
+                categories={categories}
               />
-            ) : !isLoading &&
-            favoritesOnly &&
-            mappedRecipes.length === 0 ? (
-              <EmptyState
-                icon={FiHeart}
-                title={"Aucune recette favorite"}
-                description={"Ajoutez des recettes à vos favoris pour les retrouver facilement ici."}
-              />
-            ) : (
-              <RecipeGrid
-                recipes={mappedRecipes}
-                isFavorite={isFavorite}
-                onFavoriteToggle={
-                  handleFavoriteToggle
-                }
-              />
-            )}
+            </aside>
 
-            {!isLoading &&
-            !error &&
-            totalRecipes > 0 ? (
-              <AppPagination
-                currentPage={
-                  currentPage
+            <div className={styles.results}>
+              <div
+                className={
+                  styles.resultsToolbar
                 }
-                totalItems={
-                  totalRecipes
-                }
-                pageSize={
-                  pageSize
-                }
-                onPageChange={
-                  handlePageChange
-                }
-                onPageSizeChange={
-                  handlePageSizeChange
-                }
-              />
-            ) : null}
+              >
+                <p
+                  className={
+                    styles.resultsCount
+                  }
+                  aria-live="polite"
+                >
+                  {isLoading
+                    ? "Chargement des recettes…"
+                    : (
+                      <>
+                        {totalRecipes}{" "}
+                        {totalRecipes > 1
+                          ? "recettes trouvées"
+                          : "recette trouvée"}
+                      </>
+                    )}
+                </p>
+
+                <RecipeSort />
+              </div>
+
+              {error ? (
+                <EmptyState
+                  icon={FiAlertCircle}
+                  title="Impossible de charger les recettes"
+                  description="Une erreur est survenue lors du chargement des recettes."
+                />
+              ) : !isLoading &&
+              favoritesOnly &&
+              mappedRecipes.length === 0 ? (
+                <EmptyState
+                  icon={FiHeart}
+                  title={"Aucune recette favorite"}
+                  description={"Ajoutez des recettes à vos favoris pour les retrouver facilement ici."}
+                />
+              ) : (
+                <RecipeGrid
+                  recipes={mappedRecipes}
+                  isFavorite={isFavorite}
+                  onFavoriteToggle={
+                    handleFavoriteToggle
+                  }
+                />
+              )}
+
+              {!isLoading &&
+              !error &&
+              totalRecipes > 0 ? (
+                <AppPagination
+                  currentPage={
+                    currentPage
+                  }
+                  totalItems={
+                    totalRecipes
+                  }
+                  pageSize={
+                    pageSize
+                  }
+                  onPageChange={
+                    handlePageChange
+                  }
+                  onPageSizeChange={
+                    handlePageSizeChange
+                  }
+                />
+              ) : null}
+            </div>
           </div>
-        </div>
-      </PageContainer>
-    </Section>
+        </PageContainer>
+      </Section>
+    </>
+
   );
 }

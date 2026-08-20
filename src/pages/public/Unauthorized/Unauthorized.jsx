@@ -7,8 +7,9 @@ import {
   PageContainer,
   Section,
 } from "@/components/ui";
+
 import { ROUTES } from "@/constants";
-import { useAuth } from "@/hooks";
+import { useAuth } from "@/hooks/auth";
 
 import styles from "./Unauthorized.module.scss";
 
