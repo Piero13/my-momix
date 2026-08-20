@@ -19,10 +19,10 @@ import {
   PublicLayout,
 } from "@/layouts";
 
-import ProtectedAdminRoute from "../ProtectedAdminRoute";
-import ProtectedGuestRoute from "../ProtectedGuestRoute";
+import ProtectedAdminRoute from "../ProtectedAdminRoute/ProtectedAdminRoute";
+import ProtectedGuestRoute from "../ProtectedGuestRoute/ProtectedGuestRoute";
 
-import ScrollToTop from "../ScrollToTop";
+import ScrollToTop from "../ScrollToTop/ScrollToTop";
 
 import { ROUTES } from "@/constants";
 
