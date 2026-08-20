@@ -84,7 +84,7 @@ export default function AppPagination({
             disabled={!canGoPrevious}
             onClick={handlePrevious}
             aria-label="Page précédente"
-          />
+          >Précédent</Pagination.Prev>
 
           <Pagination.Item active>
             {currentPage}
