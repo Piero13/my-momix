@@ -1,1 +1,1 @@
-export { default as LoadingScreen } from "./LoadingScreen/indexTemp";
+export { default as LoadingScreen } from "./LoadingScreen";
