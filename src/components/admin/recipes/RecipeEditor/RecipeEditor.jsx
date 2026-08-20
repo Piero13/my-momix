@@ -183,14 +183,14 @@ export default function RecipeEditor({
           <TipsCard />
 
           <SeoCard />
-        </div>
 
-        <aside className={styles.sideColumn}>
-          <ImageCard />
+          <div className={styles.mainColumnFooter}>
+            <ImageCard />
 
-          <PublicationCard />
-
-          <div className={styles.actions}>
+            <PublicationCard />
+          </div>
+          
+        <div className={styles.actions}>
             <AppButton
               type="button"
               variant="outline-secondary"
@@ -219,7 +219,7 @@ export default function RecipeEditor({
               ? "Modifications non enregistrées"
               : "Toutes les modifications sont enregistrées"}
           </p>
-        </aside>
+        </div>
       </form>
 
       <AdminConfirmModal

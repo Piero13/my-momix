@@ -1,11 +1,7 @@
 @use "@/styles/abstracts" as *;
 
 .editor {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
   gap: $spacing-xl;
-
-  align-items: start;
 }
 
 .mainColumn,
@@ -18,9 +14,10 @@
   gap: $spacing-xl;
 }
 
-.sideColumn {
+.mainColumnFooter {
   display: grid;
-  gap: $spacing-lg;
+  grid-template-columns: minmax(0 1fr);
+  gap: $spacing-xl;
 }
 
 @include desktop {
@@ -36,17 +33,16 @@
     gap: $spacing-2xl;
   }
 
-  .sideColumn {
-    position: sticky;
-    top: calc(
-      $header-height + $spacing-lg
-    );
+  .mainColumnFooter {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $spacing-xl;
   }
 }
 
 .actions {
   display: grid;
-  gap: $spacing-sm;
+  gap: $spacing-lg;
 }
 
 @include tablet {
