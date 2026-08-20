@@ -1,4 +1,4 @@
 export { default as AppRouter } from "./AppRouter/index.js";
-export * from "./ScrollToTop/indexTemp.js";
-export * from "./ProtectedAdminRoute/indexTemp.js";
+export * from "./ScrollToTop/index.js";
+export * from "./ProtectedAdminRoute/index.js";
 export * from "./ProtectedGuestRoute/index.js"
