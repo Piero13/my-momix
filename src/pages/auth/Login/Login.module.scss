@@ -10,6 +10,33 @@
   justify-content: center;
 }
 
+.backNavigation {
+  width: 100%;
+  display: inline-flex;
+  justify-content: center;
+  margin: $spacing-xl auto;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-sm;
+
+  color: $color-text-light;
+  text-decoration: none;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+
+  transition:
+    color $transition-fast,
+    transform $transition-fast;
+
+  &:hover {
+    color: $color-primary;
+    transform: translateX(-$spacing-xs);
+  }
+}
+
 .card {
   width: 100%;
   max-width: 32rem;

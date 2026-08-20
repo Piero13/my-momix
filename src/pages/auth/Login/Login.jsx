@@ -3,7 +3,9 @@
  */
 
 import { useState } from "react";
-import { Form } from "react-bootstrap";
+import { 
+  Form,
+} from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import {
@@ -12,10 +14,12 @@ import {
   FiLock,
   FiLogIn,
   FiMail,
+  FiArrowLeft,
 } from "react-icons/fi";
 import {
   useLocation,
   useNavigate,
+  Link
 } from "react-router-dom";
 
 import {
@@ -23,6 +27,7 @@ import {
   PageContainer,
   Section,
 } from "@/components/ui";
+
 import { ROUTES } from "@/constants";
 import { useAuth } from "@/hooks";
 import { LOGIN_VALIDATION } from "@/validators";
@@ -92,7 +97,8 @@ export default function Login() {
       spacing="large"
       labelledBy="login-title"
     >
-      <PageContainer>
+
+      <PageContainer>      
         <div className={styles.wrapper}>
           <div className={styles.card}>
             <header className={styles.header}>
@@ -240,6 +246,27 @@ export default function Login() {
                   ? "Connexion en cours…"
                   : "Se connecter"}
               </AppButton>
+              <nav
+                className={
+                  styles.backNavigation
+                }
+                aria-label="Navigation de retour"
+              >
+                <Link
+                  to={ROUTES.HOME}
+                  className={
+                    styles.backLink
+                  }
+                >
+                  <FiArrowLeft
+                    aria-hidden="true"
+                  />
+
+                  <span>
+                    Retour à l'accueil
+                  </span>
+                </Link>
+              </nav>  
             </Form>
           </div>
         </div>
