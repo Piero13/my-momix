@@ -211,6 +211,7 @@ export default function RecipeHero({
         <AppButton
           type="button"
           variant="outline-primary"
+          className={styles.actionButton}
           icon={<FiShoppingCart />}
           onClick={
             onAddToShoppingList
