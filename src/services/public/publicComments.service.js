@@ -51,17 +51,6 @@ export async function createPublicComment({
   const { data, error } = await supabase
     .from("comments")
     .insert(payload)
-    .select(`
-      id,
-      recipe_id,
-      author_name,
-      email,
-      content,
-      rating,
-      approved,
-      created_at
-    `)
-    .single();
 
   if (error) {
     throw error;
