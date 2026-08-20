@@ -11,7 +11,7 @@ import {
   Routes,
 } from "react-router-dom";
 
-import LoadingScreen from "@/components/feedback/LoadingScreen";
+import LoadingScreen from "@/components/feedback/LoadingScreen/LoadingScreen";
 
 import {
   AdminLayout,
