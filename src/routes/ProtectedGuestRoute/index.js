@@ -1,1 +1,1 @@
-export { default } from "./ProtectedGuestRoute";
+export { default as ProtectedGuestRoute } from "./ProtectedGuestRoute.jsx";
