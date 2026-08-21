@@ -1,0 +1,60 @@
+@use "@/styles/abstracts" as *;
+
+.section {
+  position: relative;
+  overflow: hidden;
+}
+
+.decorativeShape {
+  position: absolute;
+
+  top: -8rem;
+  right: -6rem;
+
+  width: 36rem;
+  height: 36rem;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba($color-primary, 0.12),
+      transparent 70%
+    );
+
+  pointer-events: none;
+}
+
+.content {
+  max-width: 52rem;
+}
+
+.eyebrow {
+  margin-bottom: $spacing-sm;
+
+  color: $color-primary;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.title {
+  margin-bottom: $spacing-lg;
+  color: $color-text;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.description {
+  margin-bottom: $spacing-md;
+
+  color: $color-text-light;
+  font-size: $font-size-lg;
+  line-height: 1.7;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}

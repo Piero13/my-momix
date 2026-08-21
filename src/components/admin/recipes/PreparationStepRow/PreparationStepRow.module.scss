@@ -45,6 +45,10 @@
   justify-content: flex-start;
 }
 
+.stepMetaToggleBtn {
+  margin: $spacing-md 0;
+}
+
 .thermomixSettings {
   display: grid;
   grid-template-columns: minmax(0, 1fr);

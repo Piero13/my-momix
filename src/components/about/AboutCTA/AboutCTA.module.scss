@@ -1,0 +1,17 @@
+@use "@/styles/abstracts" as *;
+
+.section {
+  text-align: center;
+}
+
+.content {
+  max-width: 48rem;
+  margin-inline: auto;
+}
+
+.action {
+  display: flex;
+  justify-content: center;
+
+  margin-top: $spacing-lg;
+}

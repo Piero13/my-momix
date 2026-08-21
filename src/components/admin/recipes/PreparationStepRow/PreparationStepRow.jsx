@@ -102,6 +102,7 @@ export default function PreparationStepRow({
           <AppButton
             type="button"
             variant="outline-secondary"
+            className={styles.stepMetaToggleBtn}
             onClick={() => {
               setValue(
                 `steps.${index}.hasThermomixSettings`,
