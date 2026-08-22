@@ -28,6 +28,7 @@ export const ROUTES = {
   INGREDIENTS: "/admin/ingredients",
   COMMENTS: "/admin/commentaires",
   SETTINGS: "/admin/parametres",
+  CONTACT_MESSAGES: "/admin/messages",
 
   // Fallback
   NOT_FOUND: "*",

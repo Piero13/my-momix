@@ -8,6 +8,7 @@ import {
   FiMessageSquare,
   FiSettings,
   FiTag,
+  FiMail,
 } from "react-icons/fi";
 
 import { ROUTES } from "@/constants/routes";
@@ -43,6 +44,12 @@ export const ADMIN_NAVIGATION_ITEMS = [
     path: ROUTES.COMMENTS,
     icon: FiMessageSquare,
     badgeKey: "pendingComments",
+  },
+  {
+    key: "messages",
+    label: "Messagerie",
+    path: ROUTES.CONTACT_MESSAGES,
+    icon: FiMail,
   },
   {
     key: "settings",

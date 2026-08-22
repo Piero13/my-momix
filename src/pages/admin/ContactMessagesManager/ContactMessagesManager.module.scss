@@ -1,0 +1,38 @@
+@use "@/styles/abstracts" as *;
+
+.tableWrapper {
+  margin-top: $spacing-xl;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 0.3rem 0.6rem;
+
+  border-radius: 999px;
+
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+}
+
+.status-new {
+  background-color:
+    rgba($color-warning, 0.12);
+  color:
+    $color-warning-dark;
+}
+
+.status-read {
+  background-color:
+    rgba($color-primary, 0.1);
+  color:
+    $color-primary-dark;
+}
+
+.status-archived {
+  background-color:
+    rgba($color-text-light, 0.1);
+  color:
+    $color-text-light;
+}

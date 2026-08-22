@@ -47,7 +47,8 @@ const IngredientsManager = lazy(() => import("@/pages/admin/IngredientsManager")
 const CommentsManager = lazy(() => import("@/pages/admin/CommentsManager"));
 const Settings = lazy(() => import("@/pages/admin/Settings"));
 const RecipeCreate = lazy(() => import("@/pages/admin/RecipeCreate"));
-const RecipeEdit = lazy(() => import("@/pages/admin/RecipeEdit"))
+const RecipeEdit = lazy(() => import("@/pages/admin/RecipeEdit"));
+const ContactMessagesManager = lazy (() => import("@/pages/admin/ContactMessagesManager"));
 
 export default function AppRouter() {
   return (
@@ -169,6 +170,11 @@ export default function AppRouter() {
               <Route
                 path={ROUTES.SETTINGS}
                 element={<Settings />}
+              />
+
+              <Route 
+                path={ROUTES.CONTACT_MESSAGES}
+                element={<ContactMessagesManager />}
               />
             </Route>
           </Route>

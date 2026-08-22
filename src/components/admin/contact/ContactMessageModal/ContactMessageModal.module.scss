@@ -1,0 +1,42 @@
+@use "@/styles/abstracts" as *;
+
+.meta {
+  display: grid;
+  gap: $spacing-md;
+
+  margin-bottom: $spacing-xl;
+
+  @include tablet {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+  }
+}
+
+.meta > div,
+.content {
+  display: grid;
+  gap: $spacing-xs;
+}
+
+.label {
+  color: $color-text-light;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+}
+
+.value {
+  color: $color-text;
+}
+
+.content {
+  padding-top: $spacing-lg;
+
+  border-top: 1px solid $color-border;
+
+  p {
+    margin: 0;
+
+    white-space: pre-wrap;
+    line-height: 1.7;
+  }
+}
