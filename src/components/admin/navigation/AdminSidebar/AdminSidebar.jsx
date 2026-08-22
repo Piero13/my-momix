@@ -14,6 +14,7 @@ import styles from "./AdminSidebar.module.scss";
 
 export default function AdminSidebar({
   pendingCommentsCount = 0,
+  pendingMessagesCount = 0,
   onNavigate,
 }) {
   const { user, signOut, isLoading } = useAuth();
@@ -41,11 +42,37 @@ export default function AdminSidebar({
   };
 
   const getBadgeCount = (badgeKey) => {
+    switch (badgeKey) {
+      case "pendingComments":
+        return pendingCommentsCount;
+
+      case "pendingMessages":
+        return pendingMessagesCount;
+
+      default:
+        return 0;
+    }
+  };
+
+  const getBadgeAriaLabel = (
+    badgeKey,
+    badgeCount
+  ) => {
     if (badgeKey === "pendingComments") {
-      return pendingCommentsCount;
+      return `${badgeCount} commentaire${
+        badgeCount > 1 ? "s" : ""
+      } à modérer`;
     }
 
-    return 0;
+    if (badgeKey === "pendingMessages") {
+      return `${badgeCount} message${
+        badgeCount > 1 ? "s" : ""
+      } en attente`;
+    }
+
+    return `${badgeCount} notification${
+      badgeCount > 1 ? "s" : ""
+    }`;
   };
 
   return (
@@ -124,9 +151,12 @@ export default function AdminSidebar({
                     {badgeCount > 0 ? (
                       <span
                         className={styles.badge}
-                        aria-label={`${badgeCount} commentaire${
-                          badgeCount > 1 ? "s" : ""
-                        } à modérer`}
+                        aria-label={
+                          getBadgeAriaLabel(
+                            badgeKey,
+                            badgeCount
+                          )
+                        }
                       >
                         {badgeCount > 99
                           ? "99+"

@@ -2,19 +2,45 @@
  * Main administration layout.
  */
 
-import { useState } from "react";
+import {
+  useEffect,
+  useState,
+} from "react";
+
 import Offcanvas from "react-bootstrap/Offcanvas";
-import { Outlet } from "react-router-dom";
+
+import {
+  Outlet,
+} from "react-router-dom";
 
 import {
   AdminHeader,
   AdminSidebar,
 } from "@/components/admin";
 
+import { getPendingCommentsCount } from "@/services";
+
+import {
+  getNewContactMessagesCount,
+} from "@/services/contactAdmin";
+
 import styles from "./AdminLayout.module.scss";
 
 export default function AdminLayout() {
-  const [showSidebar, setShowSidebar] = useState(false);
+  const [
+    showSidebar,
+    setShowSidebar,
+  ] = useState(false);
+
+  const [
+    pendingCommentsCount,
+    setPendingCommentsCount,
+  ] = useState(0);
+
+  const [
+    pendingMessagesCount,
+    setPendingMessagesCount,
+  ] = useState(0);
 
   const handleOpenSidebar = () => {
     setShowSidebar(true);
@@ -24,17 +50,64 @@ export default function AdminLayout() {
     setShowSidebar(false);
   };
 
+  useEffect(() => {
+    let isCancelled = false;
+
+    const loadPendingCounts =
+      async () => {
+        try {
+          const [
+            commentsCount,
+            messagesCount,
+          ] = await Promise.all([
+            getPendingCommentsCount(),
+            getNewContactMessagesCount(),
+          ]);
+
+          if (isCancelled) {
+            return;
+          }
+
+          setPendingCommentsCount(
+            commentsCount
+          );
+
+          setPendingMessagesCount(
+            messagesCount
+          );
+        } catch (error) {
+          console.error(
+            "Unable to load admin notification counts:",
+            error
+          );
+        }
+      };
+
+    loadPendingCounts();
+
+    return () => {
+      isCancelled = true;
+    };
+  }, []);
+
   return (
     <div className={styles.layout}>
       <div className={styles.desktopSidebar}>
         <AdminSidebar
-          pendingCommentsCount={0}
+          pendingCommentsCount={
+            pendingCommentsCount
+          }
+          pendingMessagesCount={
+            pendingMessagesCount
+          }
         />
       </div>
 
       <div className={styles.main}>
         <AdminHeader
-          onMenuToggle={handleOpenSidebar}
+          onMenuToggle={
+            handleOpenSidebar
+          }
         />
 
         <main
@@ -48,9 +121,13 @@ export default function AdminLayout() {
       <Offcanvas
         show={showSidebar}
         placement="start"
-        className={styles.mobileSidebar}
+        className={
+          styles.mobileSidebar
+        }
         aria-labelledby="admin-sidebar-title"
-        onHide={handleCloseSidebar}
+        onHide={
+          handleCloseSidebar
+        }
       >
         <Offcanvas.Header closeButton>
           <Offcanvas.Title id="admin-sidebar-title">
@@ -60,8 +137,15 @@ export default function AdminLayout() {
 
         <Offcanvas.Body>
           <AdminSidebar
-            pendingCommentsCount={0}
-            onNavigate={handleCloseSidebar}
+            pendingCommentsCount={
+              pendingCommentsCount
+            }
+            pendingMessagesCount={
+              pendingMessagesCount
+            }
+            onNavigate={
+              handleCloseSidebar
+            }
           />
         </Offcanvas.Body>
       </Offcanvas>

@@ -50,6 +50,7 @@ export const ADMIN_NAVIGATION_ITEMS = [
     label: "Messagerie",
     path: ROUTES.CONTACT_MESSAGES,
     icon: FiMail,
+    badgeKey: "pendingMessages",
   },
   {
     key: "settings",
