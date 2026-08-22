@@ -1,24 +1,26 @@
-/**
- * Contact page.
- */
+import {
+  ContactForm,
+  ContactHero,
+  ContactInfos,
+} from "@/components/contact";
 
-import styles from "./Contact.module.scss";
-
-// Constants
-
-// Hooks
-
-// Local state
-
-// Memoized values
-
-// Handlers
-
+import {
+  PageSeo,
+} from "@/components/seo";
 
 export default function Contact() {
   return (
-    <main className={styles.page}>
-      <h1>Contact</h1>
-    </main>
+    <>
+      <PageSeo
+        title="Contact | MyMomix"
+        description="Contactez MyMomix pour poser une question, signaler un problème ou proposer une amélioration."
+      />
+
+      <ContactHero />
+
+      <ContactForm />
+
+      <ContactInfos />
+    </>
   );
 }

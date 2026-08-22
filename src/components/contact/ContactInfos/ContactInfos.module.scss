@@ -1,0 +1,54 @@
+@use "@/styles/abstracts" as *;
+
+.grid {
+  display: grid;
+  gap: $spacing-lg;
+
+  margin-top: $spacing-xl;
+}
+
+.card {
+  height: 100%;
+}
+
+.cardContent {
+  display: grid;
+  gap: $spacing-sm;
+}
+
+.iconWrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 2.75rem;
+  height: 2.75rem;
+
+  border-radius: $radius-lg;
+
+  background-color: rgba($color-primary, 0.08);
+  color: $color-primary;
+
+  svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+}
+
+.title {
+  margin: 0;
+}
+
+.description {
+  margin: 0;
+
+  color: $color-text-light;
+  line-height: 1.65;
+}
+
+@include tablet {
+  .grid {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+  }
+}
