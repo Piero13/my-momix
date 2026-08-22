@@ -5,6 +5,7 @@
 import { supabase } from "@/lib";
 
 import { getPendingCommentsCount } from "./comments.service";
+import { getNewContactMessagesCount } from "../contactAdmin";
 
 /**
  * Counts rows from a Supabase table.
@@ -93,6 +94,7 @@ export async function getDashboardMetrics() {
     categories,
     pendingComments,
     approvedComments,
+    pendingMessages,
   ] = await Promise.all([
     getRecipesCount(),
     getPublishedRecipesCount(),
@@ -101,6 +103,7 @@ export async function getDashboardMetrics() {
     getCategoriesCount(),
     getPendingCommentsCount(),
     getApprovedCommentsCount(),
+    getNewContactMessagesCount(),
   ]);
 
   return {
@@ -111,5 +114,6 @@ export async function getDashboardMetrics() {
     categories,
     pendingComments,
     approvedComments,
+    pendingMessages,
   };
 }

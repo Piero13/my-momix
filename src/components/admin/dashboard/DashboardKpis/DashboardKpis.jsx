@@ -8,6 +8,7 @@ import {
   FiEdit3,
   FiFolder,
   FiMessageSquare,
+  FiMail,
 } from "react-icons/fi";
 
 import AdminKpiCard from "../AdminKpiCard";
@@ -37,6 +38,7 @@ export default function DashboardKpis({
     draftRecipes = 0,
     categories = 0,
     pendingComments = 0,
+    pendingMessages = 0,
   } = metrics ?? {};
 
   const publishedPercentage =
@@ -102,6 +104,22 @@ export default function DashboardKpis({
               pendingComments > 1 ? "s" : ""
             } en attente`
           : "Modération à jour",
+    },
+    {
+      key: "messages",
+      title: "Nouveaux messages",
+      value: pendingMessages,
+      icon: FiMail,
+      variant:
+        pendingMessages > 0
+          ? "warning"
+          : "success",
+      helper:
+        pendingMessages > 0
+          ? `${pendingMessages} message${
+              pendingMessages > 1 ? "s" : ""
+            } en attente`
+          : "Aucun nouveau message",
     },
   ];
 
